@@ -137,7 +137,7 @@
 
     <delete id="deleteByLogic" parameterType="java.lang.String">
         UPDATE channel SET
-        del_flag = ${@com.goldplusgold.common.enumeration.DelFlagEnum@YES.getValue()},
+        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
         update_date = current_timestamp()
         WHERE id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">
