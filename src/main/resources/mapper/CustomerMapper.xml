@@ -44,6 +44,13 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where user_name = #{userName}
+    </select>
+
     <insert id="insert" parameterType="com.mybatis.test.model.Customer">
         insert into customer (
         id,

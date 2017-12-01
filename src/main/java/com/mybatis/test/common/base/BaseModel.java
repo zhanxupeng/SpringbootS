@@ -1,7 +1,10 @@
 package com.mybatis.test.common.base;
 
 
+import com.mybatis.test.common.config.GlobalConstant;
+import com.mybatis.test.common.enumeration.DelFlagEnum;
 import com.mybatis.test.common.util.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -27,12 +30,12 @@ public abstract class BaseModel {
     //删除标志
     protected String delFlag;
 
-    protected void init() {
+    public void init() {
         id = IdGen.uuid();
-        delFlag = "0";
-        remarks = "";
-        createBy = "0";
-        updateBy = "0";
+        delFlag = DelFlagEnum.NO.getValue();
+        remarks = StringUtils.EMPTY;
+        createBy = GlobalConstant.ADMIN;
+        updateBy = GlobalConstant.ADMIN;
         createDate = DateUtil.getCurrentDate();
         updateDate = DateUtil.getCurrentDate();
     }
