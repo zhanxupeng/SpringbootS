@@ -62,7 +62,12 @@ public class ShiroConfiguration {
 
         //rest接口
         filterChainDefinitionMap.put("/rest/customer/userNameCheck", "anon");
+        filterChainDefinitionMap.put("/rest/dictionary/securityQuestion", "anon");
+        filterChainDefinitionMap.put("/rest/dictionary/humanQuestion", "anon");
 
+        //view页面
+        filterChainDefinitionMap.put("/view/customer/register", "anon");
+        filterChainDefinitionMap.put("/view/customer/registerView", "anon");
 
         filterChainDefinitionMap.put("/index", "anon");
 

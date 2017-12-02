@@ -27,6 +27,8 @@ public class RCustomerController extends BaseController {
         return result(getCheckResult(customer));
     }
 
+
+
     private BoolVM getCheckResult(Customer customer) {
         BoolVM boolVM = new BoolVM();
         boolVM.setStatus(true);

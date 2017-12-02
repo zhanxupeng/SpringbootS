@@ -27,7 +27,7 @@ public abstract class BaseModel {
     //删除标志
     protected String delFlag;
 
-    protected void init() {
+    public void init() {
         id = IdGen.uuid();
         delFlag = "0";
         remarks = "";

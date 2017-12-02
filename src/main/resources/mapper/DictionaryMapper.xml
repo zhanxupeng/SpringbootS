@@ -16,14 +16,14 @@
 
     <sql id="Base_Column_List">
         id,
-        type,
-        key,
+        `type`,
+        `key`,
         label,
         remarks,
         create_by,
         create_date,
-        update_by, u
-        pdate_date,
+        update_by,
+        update_date,
         del_flag
     </sql>
 
@@ -37,8 +37,8 @@
     <insert id="insert" parameterType="com.mybatis.test.model.Dictionary">
         insert into dictionary (
         id,
-        type,
-        key,
+        `type`,
+        `key`,
         label,
         remarks,
         create_by,
@@ -63,10 +63,10 @@
         update dictionary
         <set>
             <if test="type != null">
-                type = #{type,jdbcType=VARCHAR},
+                `type` = #{type,jdbcType=VARCHAR},
             </if>
             <if test="key != null">
-                key = #{key,jdbcType=VARCHAR},
+                `key` = #{key,jdbcType=VARCHAR},
             </if>
             <if test="label != null">
                 label = #{label,jdbcType=VARCHAR},
@@ -110,4 +110,13 @@
             #{id}
         </foreach>
     </delete>
+    
+    <select id="getByType" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM dictionary
+        where `type` = #{type}
+    </select>
+
+
 </mapper>
