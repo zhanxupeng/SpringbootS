@@ -7,4 +7,8 @@ import com.mybatis.test.service.common.IBaseDBService;
  * Created by 占大帅 on 2017/12/2.
  */
 public interface ICustomerService extends IBaseDBService<Customer> {
+    /**
+     * 根据用户名查找用户
+     */
+    Customer getByUserName(String userName);
 }

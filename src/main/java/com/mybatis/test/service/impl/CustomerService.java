@@ -11,4 +11,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class CustomerService extends BaseDBService<CustomerMapper, Customer> implements ICustomerService {
+    @Override
+    public Customer getByUserName(String userName) {
+        return getRepo().getByUserName(userName);
+    }
 }

@@ -60,6 +60,10 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/user/reg", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");//静态资源跳过
 
+        //rest接口
+        filterChainDefinitionMap.put("/rest/customer/userNameCheck", "anon");
+
+
         filterChainDefinitionMap.put("/index", "anon");
 
         filterChainDefinitionMap.put("/**", "authc");

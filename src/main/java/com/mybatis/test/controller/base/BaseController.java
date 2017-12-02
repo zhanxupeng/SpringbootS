@@ -22,7 +22,7 @@ public abstract class BaseController {
         return new Response<Boolean>(e.getCode(), e.getMessage());
     }
 
-    protected Response result(Boolean resultBoolean) {
-        return new Response<Boolean>(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage()).setData(resultBoolean);
+    protected <T> Response result(T t) {
+        return new Response<T>(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage()).setData(t);
     }
 }

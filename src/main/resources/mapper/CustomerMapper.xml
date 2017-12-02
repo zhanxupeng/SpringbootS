@@ -144,4 +144,11 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="getByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where user_name = #{userName,jdbcType=VARCHAR}
+    </select>
 </mapper>
