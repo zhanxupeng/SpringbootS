@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.test.repo.CustomerMapper">
+    <resultMap id="BaseResultMap" type="com.mybatis.test.model.Customer">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="head_picture" property="headPicture" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="praise" property="praise" jdbcType="INTEGER"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="autograph" property="autograph" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        user_name,
+        nick_name,
+        password,
+        head_picture,
+        sex,
+        praise,
+        city,
+        autograph,
+        remarks,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        del_flag
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.mybatis.test.model.Customer">
+        insert into customer (
+        id,
+        user_name,
+        nick_name,
+        password,
+        head_picture,
+        sex,
+        praise,
+        city,
+        autograph,
+        remarks,
+        create_by,
+        create_date,
+        update_by,
+        update_date, del_flag
+        )values (
+        #{id,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},
+        #{nickName,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{headPicture,jdbcType=VARCHAR},
+        #{sex,jdbcType=TINYINT},
+        #{praise,jdbcType=INTEGER},
+        #{city,jdbcType=VARCHAR},
+        #{autograph,jdbcType=VARCHAR},
+        #{remarks,jdbcType=VARCHAR},
+        #{createBy,jdbcType=VARCHAR},
+        #{createDate,jdbcType=TIMESTAMP},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateDate,jdbcType=TIMESTAMP},
+        #{delFlag,jdbcType=VARCHAR})
+  </insert>
+
+    <update id="update" parameterType="com.mybatis.test.model.Customer">
+        update customer
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="headPicture != null">
+                head_picture = #{headPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="praise != null">
+                praise = #{praise,jdbcType=INTEGER},
+            </if>
+            <if test="city != null">
+                city = #{city,jdbcType=VARCHAR},
+            </if>
+            <if test="autograph != null">
+                autograph = #{autograph,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from customer
+        where id IN
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByLogic" parameterType="java.lang.String">
+        UPDATE customer SET
+        del_flag =${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
+        update_date = current_timestamp()
+        WHERE id IN
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

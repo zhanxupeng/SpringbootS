@@ -57,8 +57,11 @@ public class ShiroConfiguration {
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/toLogin", "anon");
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/user/reg","anon");
-        filterChainDefinitionMap.put("/static/**","anon");//静态资源跳过
+        filterChainDefinitionMap.put("/user/reg", "anon");
+        filterChainDefinitionMap.put("/static/**", "anon");//静态资源跳过
+
+        filterChainDefinitionMap.put("/index", "anon");
+
         filterChainDefinitionMap.put("/**", "authc");
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
