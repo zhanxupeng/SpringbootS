@@ -1,5 +1,6 @@
 package com.mybatis.test.controller.business;
 
+import com.mybatis.test.common.config.UserUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class HelloController {
 
     @RequestMapping("/{index}")
     public String getUrl(@PathVariable("index") String index) {
+        System.out.println("index:" + UserUtils.getUser());
         return index;
     }
 

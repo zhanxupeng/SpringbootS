@@ -51,4 +51,8 @@ public class User {
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
+
+    public String toString() {
+        return String.format("[id=%s,username=%s,password=%s,delete=%s,createDate=%s]", id, username, password, delete, createDate);
+    }
 }

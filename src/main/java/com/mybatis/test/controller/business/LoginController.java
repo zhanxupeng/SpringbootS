@@ -1,5 +1,6 @@
 package com.mybatis.test.controller.business;
 
+import com.mybatis.test.common.config.UserUtils;
 import com.mybatis.test.model.User;
 import com.mybatis.test.repo.UserMapper;
 import org.apache.shiro.SecurityUtils;
@@ -46,12 +47,13 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         subject.login(token);
         //登录成功后会跳转到successUrl配置的链接，不用管下面返回的链接
-        mav.setViewName("redirect:/success");
+        mav.setViewName("redirect:/index");
         return mav;
     }
 
     @RequestMapping(value = "/index")
     public String index() {
+        System.out.println("index:" + UserUtils.getUser());
         return "index";
     }
 

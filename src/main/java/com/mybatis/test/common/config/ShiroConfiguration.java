@@ -69,8 +69,6 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/view/customer/register", "anon");
         filterChainDefinitionMap.put("/view/customer/registerView", "anon");
 
-        filterChainDefinitionMap.put("/index", "anon");
-
         filterChainDefinitionMap.put("/**", "authc");
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
@@ -86,8 +84,7 @@ public class ShiroConfiguration {
 
     @Bean
     public MyShiroRealm myShiroRealm() {
-        MyShiroRealm myShiroRealm = new MyShiroRealm();
-        return myShiroRealm;
+        return new MyShiroRealm();
     }
 
     @Bean
