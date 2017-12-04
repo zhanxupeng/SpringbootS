@@ -16,8 +16,8 @@
 
     <sql id="Base_Column_List">
         id,
-        type,
-        key,
+        `type`,
+        `key`,
         label,
         remarks,
         create_by,
@@ -37,8 +37,8 @@
     <insert id="insert" parameterType="com.mybatis.test.model.Dictionary">
         insert into dictionary (
         id,
-        type,
-        key,
+        `type`,
+        `key`,
         label,
         remarks,
         create_by,
@@ -57,16 +57,16 @@
         #{updateBy,jdbcType=VARCHAR},
         #{updateDate,jdbcType=TIMESTAMP},
         #{delFlag,jdbcType=VARCHAR})
-    </insert>
+  </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Dictionary">
         update dictionary
         <set>
             <if test="type != null">
-                type = #{type,jdbcType=VARCHAR},
+                `type` = #{type,jdbcType=VARCHAR},
             </if>
             <if test="key != null">
-                key = #{key,jdbcType=VARCHAR},
+                `key` = #{key,jdbcType=VARCHAR},
             </if>
             <if test="label != null">
                 label = #{label,jdbcType=VARCHAR},
@@ -95,21 +95,28 @@
 
     <delete id="delete" parameterType="java.lang.String">
         delete from dictionary
-        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
-        update_date = current_timestamp()
-        WHERE id IN
+        where id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">
             #{id}
         </foreach>
     </delete>
 
     <delete id="deleteByLogic" parameterType="java.lang.String">
-        UPDATE customer SET
-        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
+        UPDATE dictionary SET
+        del_flag =${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
         update_date = current_timestamp()
         WHERE id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">
             #{id}
         </foreach>
     </delete>
+    
+    <select id="getByType" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM dictionary
+        where `type` = #{type}
+    </select>
+
+
 </mapper>

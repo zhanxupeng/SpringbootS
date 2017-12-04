@@ -1,26 +1,11 @@
 package com.mybatis.test.controller.business.customer.viewmodel;
 
+/**
+ * Created by 占大帅 on 2017/12/2.
+ */
 public class BoolVM {
-
-    public BoolVM() {
-        this.status = false;
-    }
-
-    public BoolVM(boolean status) {
-        this.status = status;
-    }
-
-    /**
-     * 返回客户端状态
-     */
     private boolean status;
-
-
-    /**
-     * 返回信息
-     */
     private String info;
-
 
     public boolean isStatus() {
         return status;

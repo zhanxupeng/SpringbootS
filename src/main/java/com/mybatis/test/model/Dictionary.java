@@ -2,7 +2,7 @@ package com.mybatis.test.model;
 
 import com.mybatis.test.common.base.BaseModel;
 
-public class Dictionary extends BaseModel{
+public class Dictionary extends BaseModel {
     private String type;
 
     private String key;

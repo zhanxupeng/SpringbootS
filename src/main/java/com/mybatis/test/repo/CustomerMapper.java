@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CustomerMapper extends BaseMapper<Customer> {
     /**
-     * 根据用户名查找用户信息
+     * 根据用户名查找用户
      */
-    Customer selectByUserName(@Param("userName") String userName);
+    Customer getByUserName(@Param("userName") String userName);
 }

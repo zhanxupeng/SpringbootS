@@ -12,7 +12,7 @@ public class Customer extends BaseModel {
 
     private String headPicture;
 
-    private Byte sex;
+    private int sex;
 
     private Integer praise;
 
@@ -52,11 +52,11 @@ public class Customer extends BaseModel {
         this.headPicture = headPicture;
     }
 
-    public Byte getSex() {
+    public int getSex() {
         return sex;
     }
 
-    public void setSex(Byte sex) {
+    public void setSex(int sex) {
         this.sex = sex;
     }
 

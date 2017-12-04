@@ -44,13 +44,6 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
-    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="string">
-        select
-        <include refid="Base_Column_List"/>
-        from customer
-        where user_name = #{userName}
-    </select>
-
     <insert id="insert" parameterType="com.mybatis.test.model.Customer">
         insert into customer (
         id,
@@ -66,8 +59,7 @@
         create_by,
         create_date,
         update_by,
-        update_date,
-        del_flag
+        update_date, del_flag
         )values (
         #{id,jdbcType=VARCHAR},
         #{userName,jdbcType=VARCHAR},
@@ -84,7 +76,7 @@
         #{updateBy,jdbcType=VARCHAR},
         #{updateDate,jdbcType=TIMESTAMP},
         #{delFlag,jdbcType=VARCHAR})
-    </insert>
+  </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Customer">
         update customer
@@ -145,11 +137,18 @@
 
     <delete id="deleteByLogic" parameterType="java.lang.String">
         UPDATE customer SET
-        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
+        del_flag =${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
         update_date = current_timestamp()
         WHERE id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">
             #{id}
         </foreach>
     </delete>
+
+    <select id="getByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from customer
+        where user_name = #{userName,jdbcType=VARCHAR}
+    </select>
 </mapper>

@@ -13,7 +13,6 @@
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
     </resultMap>
-
     <sql id="Base_Column_List">
         id,
         question,
@@ -45,8 +44,8 @@
         create_date,
         update_by,
         update_date,
-        del_flag
-        )values (
+        del_flag)
+        values (
         #{id,jdbcType=VARCHAR},
         #{question,jdbcType=VARCHAR},
         #{answer,jdbcType=VARCHAR},
@@ -95,9 +94,7 @@
 
     <delete id="delete" parameterType="java.lang.String">
         delete from question
-        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
-        update_date = current_timestamp()
-        WHERE id IN
+        where id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">
             #{id}
         </foreach>
@@ -105,7 +102,7 @@
 
     <delete id="deleteByLogic" parameterType="java.lang.String">
         UPDATE question SET
-        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
+        del_flag =${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
         update_date = current_timestamp()
         WHERE id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">

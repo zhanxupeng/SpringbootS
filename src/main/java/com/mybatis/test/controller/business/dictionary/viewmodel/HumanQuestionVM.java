@@ -1,14 +1,11 @@
-package com.mybatis.test.model;
+package com.mybatis.test.controller.business.dictionary.viewmodel;
 
-import com.mybatis.test.common.base.BaseModel;
-
-public class Question extends BaseModel {
-
+/**
+ * Created by 占大帅 on 2017/12/2.
+ */
+public class HumanQuestionVM {
     private String question;
-
     private String answer;
-
-    private String customerId;
 
     public String getQuestion() {
         return question;
@@ -24,13 +21,5 @@ public class Question extends BaseModel {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
     }
 }
