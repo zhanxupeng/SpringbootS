@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 public class CustomerService extends BaseDBService<CustomerMapper, Customer> implements ICustomerService {
     @Override
     public Customer selectByUserName(String userName) {
-        return getRepo().selectByUserName(userName);
+        return getRepo().getByUserName(userName);
     }
 }

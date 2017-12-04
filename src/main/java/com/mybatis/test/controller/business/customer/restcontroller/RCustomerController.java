@@ -4,7 +4,7 @@ import com.mybatis.test.common.base.Response;
 import com.mybatis.test.controller.base.BaseController;
 import com.mybatis.test.controller.business.customer.viewmodel.BoolVM;
 import com.mybatis.test.model.Customer;
-import com.mybatis.test.service.api.ICustomerService;
+import com.mybatis.test.service.api.customer.ICustomerService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ public class RCustomerController extends BaseController {
 
     @GetMapping("userNameCheck")
     public Response checkUserName(String userName) {
-        Customer customer = customerService.getByUserName(userName);
+        Customer customer = customerService.selectByUserName(userName);
         return result(getCheckResult(customer));
     }
 
