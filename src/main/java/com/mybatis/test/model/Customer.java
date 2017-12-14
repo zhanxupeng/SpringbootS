@@ -20,6 +20,10 @@ public class Customer extends BaseModel {
 
     private String autograph;
 
+    private int popularity;
+
+    private int activeValue;
+
     public String getUserName() {
         return userName;
     }
@@ -82,5 +86,21 @@ public class Customer extends BaseModel {
 
     public void setAutograph(String autograph) {
         this.autograph = autograph;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public int getActiveValue() {
+        return activeValue;
+    }
+
+    public void setActiveValue(int activeValue) {
+        this.activeValue = activeValue;
     }
 }

@@ -17,6 +17,8 @@
         <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
+        <result column="popularity" property="popularity" javaType="INTEGER"/>
+        <result column="active_value" property="activeValue" javaType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -34,7 +36,9 @@
         create_date,
         update_by,
         update_date,
-        del_flag
+        del_flag,
+        popularity,
+        active_value
     </sql>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -59,7 +63,10 @@
         create_by,
         create_date,
         update_by,
-        update_date, del_flag
+        update_date,
+        del_flag,
+        popularity,
+        active_value
         )values (
         #{id,jdbcType=VARCHAR},
         #{userName,jdbcType=VARCHAR},
@@ -75,7 +82,9 @@
         #{createDate,jdbcType=TIMESTAMP},
         #{updateBy,jdbcType=VARCHAR},
         #{updateDate,jdbcType=TIMESTAMP},
-        #{delFlag,jdbcType=VARCHAR})
+        #{delFlag,jdbcType=VARCHAR},
+        #{popularity,jdbcType=INTEGER},
+        #{activeValue,jdbcType=INTEGER})
   </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Customer">
@@ -122,6 +131,12 @@
             </if>
             <if test="delFlag != null">
                 del_flag = #{delFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="popularity != 0">
+                popularity = #{popularity,jdbcType=INTEGER},
+            </if>
+            <if test="activeValue != 0">
+                active_value = #{activeValue,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
