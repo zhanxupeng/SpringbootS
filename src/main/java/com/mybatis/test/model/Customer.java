@@ -2,6 +2,8 @@ package com.mybatis.test.model;
 
 import com.mybatis.test.common.base.BaseModel;
 
+import java.util.Date;
+
 public class Customer extends BaseModel {
 
     private String userName;
@@ -23,6 +25,8 @@ public class Customer extends BaseModel {
     private int popularity;
 
     private int activeValue;
+
+    private Date latestActiveDate;
 
     public String getUserName() {
         return userName;
@@ -102,5 +106,13 @@ public class Customer extends BaseModel {
 
     public void setActiveValue(int activeValue) {
         this.activeValue = activeValue;
+    }
+
+    public Date getLatestActiveDate() {
+        return latestActiveDate;
+    }
+
+    public void setLatestActiveDate(Date latestActiveDate) {
+        this.latestActiveDate = latestActiveDate;
     }
 }
