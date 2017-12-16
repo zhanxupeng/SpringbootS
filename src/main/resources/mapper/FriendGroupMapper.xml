@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.test.repo.FriendGroupMapper">
+    <resultMap id="BaseResultMap" type="com.mybatis.test.model.FriendGroup">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="customer_id" property="customerId" jdbcType="VARCHAR"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
+        <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        customer_id,
+        remarks,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        del_flag,
+        group_name
+    </sql>
+
+    <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from friend_group
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.mybatis.test.model.FriendGroup">
+    insert into friend_group (
+        id,
+        customer_id,
+        remarks,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        del_flag,
+        group_name
+        )values (
+        #{id,jdbcType=VARCHAR},
+        #{customerId,jdbcType=VARCHAR},
+        #{remarks,jdbcType=VARCHAR},
+        #{createBy,jdbcType=VARCHAR},
+        #{createDate,jdbcType=TIMESTAMP},
+        #{updateBy,jdbcType=VARCHAR},
+        #{updateDate,jdbcType=TIMESTAMP},
+        #{delFlag,jdbcType=VARCHAR},
+        #{groupName,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.mybatis.test.model.FriendGroup">
+        update friend_group
+        <set>
+            <if test="customerId != null">
+                customer_id = #{customerId,jdbcType=VARCHAR},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from friend_group
+        where id IN
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByLogic" parameterType="java.lang.String">
+        UPDATE friend_group SET
+        del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
+        update_date = current_timestamp()
+        WHERE id IN
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
