@@ -1,21 +1,21 @@
 package com.mybatis.test.common.config;
 
-import com.mybatis.test.model.User;
+import com.mybatis.test.model.Customer;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-public class UserUtils {
+public class CustomerUtils {
     /**
      * 获取当前登录用户
      */
-    public static User getUser() {
+    public static Customer getCustomer() {
         Subject subject = getSubject();
         Object principal = subject.getPrincipal();
         if (principal != null) {
             System.out.println(principal);
-            return (User) principal;
+            return (Customer) principal;
         }
-        return new User();
+        return new Customer();
     }
 
     /**

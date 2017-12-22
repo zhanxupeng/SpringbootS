@@ -1,6 +1,6 @@
 package com.mybatis.test.controller.business;
 
-import com.mybatis.test.common.config.UserUtils;
+import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.model.User;
 import com.mybatis.test.repo.UserMapper;
 import org.apache.shiro.SecurityUtils;
@@ -53,7 +53,7 @@ public class LoginController {
 
     @RequestMapping(value = "/index")
     public String index() {
-        System.out.println("index:" + UserUtils.getUser());
+        System.out.println("index:" + CustomerUtils.getCustomer());
         return "index";
     }
 

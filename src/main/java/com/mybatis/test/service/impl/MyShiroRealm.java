@@ -1,7 +1,7 @@
 package com.mybatis.test.service.impl;
 
-import com.mybatis.test.model.User;
-import com.mybatis.test.repo.UserMapper;
+import com.mybatis.test.model.Customer;
+import com.mybatis.test.repo.CustomerMapper;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,14 +13,10 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import javax.annotation.Resource;
 
-/**
- * Created by 占大帅 on 2017/11/26.
- */
 public class MyShiroRealm extends AuthorizingRealm {
 
-
     @Resource
-    private UserMapper userMapper;
+    private CustomerMapper customerMapper;
 
     /**
      * 认证信息.(身份验证)
@@ -33,18 +29,15 @@ public class MyShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        System.out.println("MyShiroRealm.doGetAuthenticationInfo()");
-
-
         //获取用户的输入的账号.
-        String username = (String) token.getPrincipal();
+        String userName = (String) token.getPrincipal();
         System.out.println(token.getCredentials());
 
         //通过username从数据库中查找 User对象，如果找到，没找到.
         //实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        User userInfo = userMapper.selectByUsername(username);
-        System.out.println("----->>userInfo=" + userInfo);
-        if (userInfo == null) {
+        Customer customer = customerMapper.getByUserName(userName);
+        System.out.println("----->>userInfo=" + customer);
+        if (customer == null) {
             return null;
         }
 
@@ -61,8 +54,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         //加密方式;
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                userInfo, //用户名
-                userInfo.getPassword(), //密码
+                customer, //用户名
+                customer.getPassword(), //密码
                 getName()  //realm name
         );
 

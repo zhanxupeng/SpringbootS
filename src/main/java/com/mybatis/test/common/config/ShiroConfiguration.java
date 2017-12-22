@@ -1,3 +1,4 @@
+/*
 package com.mybatis.test.common.config;
 
 import com.mybatis.test.service.impl.MyShiroRealm;
@@ -13,12 +14,11 @@ import javax.servlet.DispatcherType;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * Created by 占大帅 on 2017/11/26.
- */
+
 @Configuration
 public class ShiroConfiguration {
-    @Bean
+*/
+/*    @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
         filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
@@ -26,9 +26,11 @@ public class ShiroConfiguration {
         filterRegistration.addUrlPatterns("/*");
         filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
         return filterRegistration;
-    }
+    }*//*
 
-    /**
+
+    */
+/**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。
      * 注意：单独一个ShiroFilterFactoryBean配置是或报错的，以为在
      * 初始化ShiroFilterFactoryBean的时候需要注入：SecurityManager
@@ -37,7 +39,9 @@ public class ShiroConfiguration {
      * 1、一个URL可以配置多个Filter，使用逗号分隔
      * 2、当设置多个过滤器时，全部验证通过，才视为通过
      * 3、部分过滤器可指定参数，如perms，roles
-     */
+     *//*
+
+
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         System.out.println("ShiroConfiguration.shirFilter()");
@@ -64,10 +68,15 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/rest/customer/userNameCheck", "anon");
         filterChainDefinitionMap.put("/rest/dictionary/securityQuestion", "anon");
         filterChainDefinitionMap.put("/rest/dictionary/humanQuestion", "anon");
+        filterChainDefinitionMap.put("/rest/customer/register", "anon");
 
         //view页面
         filterChainDefinitionMap.put("/view/customer/register", "anon");
         filterChainDefinitionMap.put("/view/customer/registerView", "anon");
+        filterChainDefinitionMap.put("/user/index", "anon");
+
+        filterChainDefinitionMap.put("/user/upload", "anon");
+        filterChainDefinitionMap.put("/upload", "anon");
 
         filterChainDefinitionMap.put("/**", "authc");
 
@@ -95,3 +104,4 @@ public class ShiroConfiguration {
         return securityManager;
     }
 }
+*/

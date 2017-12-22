@@ -14,9 +14,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by 占大帅 on 2017/12/2.
- */
 @RestController
 @RequestMapping("rest/dictionary")
 public class RDictionaryController extends BaseController {
@@ -24,28 +21,28 @@ public class RDictionaryController extends BaseController {
     private IDictionaryService dictionaryService;
 
     @GetMapping("securityQuestion")
-    public Response getSecurityQuestion(){
-        List<Dictionary> dictionaryList=dictionaryService.getSecurityQuestion();
+    public Response getSecurityQuestion() {
+        List<Dictionary> dictionaryList = dictionaryService.getSecurityQuestion();
         return result(getSecurityQuestionVMList(dictionaryList));
     }
 
 
     @GetMapping("humanQuestion")
-    public Response getHumanQuestion(){
-        Dictionary dictionary=dictionaryService.getHumanCheckQuestion();
-        return  result(getHumanQuestionVM(dictionary));
+    public Response getHumanQuestion() {
+        Dictionary dictionary = dictionaryService.getHumanCheckQuestion();
+        return result(getHumanQuestionVM(dictionary));
     }
 
-    private HumanQuestionVM getHumanQuestionVM(Dictionary dictionary){
-        HumanQuestionVM humanQuestionVM=new HumanQuestionVM();
+    private HumanQuestionVM getHumanQuestionVM(Dictionary dictionary) {
+        HumanQuestionVM humanQuestionVM = new HumanQuestionVM();
         humanQuestionVM.setAnswer(dictionary.getKey());
         humanQuestionVM.setQuestion(dictionary.getLabel());
         return humanQuestionVM;
     }
 
-    private List<SecurityQuestionVM> getSecurityQuestionVMList(List<Dictionary> dictionaryList){
-        return dictionaryList.stream().map(x->{
-            SecurityQuestionVM securityQuestionVM=new SecurityQuestionVM();
+    private List<SecurityQuestionVM> getSecurityQuestionVMList(List<Dictionary> dictionaryList) {
+        return dictionaryList.stream().map(x -> {
+            SecurityQuestionVM securityQuestionVM = new SecurityQuestionVM();
             securityQuestionVM.setKey(x.getKey());
             securityQuestionVM.setQuestion(x.getLabel());
             return securityQuestionVM;

@@ -17,9 +17,9 @@
         <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
-        <result column="popularity" property="popularity" javaType="INTEGER"/>
-        <result column="active_value" property="activeValue" javaType="INTEGER"/>
-        <result column="latest_active_date" property="latestActiveDate" javaType="TIMESTAMP"/>
+        <result column="popularity" property="popularity" jdbcType="INTEGER"/>
+        <result column="active_value" property="activeValue" jdbcType="INTEGER"/>
+        <result column="latest_active_date" property="latestActiveDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
