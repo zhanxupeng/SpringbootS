@@ -21,7 +21,7 @@
 <button type="button" class="layui-btn upload-img" id="test1">
     <i class="layui-icon">&#xe67c;</i>上传头像
 </button>
-<img id="myHead" src="image/url">
+<img id="myHead" src="image/show">
 <span class="loading"></span>
 </div>
 <script src="../static/jquery/jquery-3.2.1.js"></script>
@@ -34,10 +34,10 @@
             //执行实例
             var uploadInst = upload.render({
                 elem: '#test1' //绑定元素
-                , url: '/test/upload/' //上传接口
+                , url: '/test/upload' //上传接口
                 , done: function (res) {
                     //上传完毕回调
-                    var value = "/image/url?imageName=" + res.url;
+                    var value = res.url;
                     $myHead.attr("src", value);
                     console.log(value);
                 }

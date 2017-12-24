@@ -1,3 +1,4 @@
+/*
 package com.mybatis.test.controller.business;
 
 import com.mybatis.test.common.config.CustomerUtils;
@@ -12,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
+*/
 /**
  * Created by 占大帅 on 2017/11/26.
- */
+ *//*
+
 @Controller
 public class LoginController {
 
@@ -63,3 +66,4 @@ public class LoginController {
         return "login";
     }
 }
+*/

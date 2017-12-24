@@ -156,8 +156,8 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
                             //执行上传实例
                             upload.render({
                                 elem: '#uploadImg'
-                                , url: '/api/upload/'
-                                , size: 200
+                                , url: '/image/upload'
+                                , size: 500
                                 , done: function (res) {
                                     if (res.status == 0) {
                                         image.val(res.url);
@@ -335,12 +335,12 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
 
     if (elemSigninMain[0]) {
         /*
-        fly.json('/sign/status', function(res){
-          if(!res.data) return;
-          signRender.token = res.data.token;
-          signRender(res.data);
-        });
-        */
+         fly.json('/sign/status', function(res){
+         if(!res.data) return;
+         signRender.token = res.data.token;
+         signRender(res.data);
+         });
+         */
     }
     //签到点击事件
     $('body').on('click', '#LAY_signin', function () {

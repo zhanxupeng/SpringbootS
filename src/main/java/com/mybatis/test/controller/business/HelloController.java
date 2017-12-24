@@ -1,48 +1,21 @@
+/*
 package com.mybatis.test.controller.business;
 
-import com.mybatis.test.common.config.CustomerUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Controller
 public class HelloController {
 
-    @RequestMapping("/")
-    public String getIndex() {
-        return "index";
-    }
 
-    @RequestMapping("{index}")
-    public String getUrl(@PathVariable("index") String index) {
-        System.out.println("index:" + CustomerUtils.getCustomer());
-        return index;
-    }
-
-    @RequestMapping("user/{index}")
-    public String getUser(@PathVariable("index") String index) {
-        return "user/" + index;
-    }
-
-    @RequestMapping("jie/{index}")
-    public String getJie(@PathVariable("index") String index) {
-        return "jie/" + index;
-    }
-
-    @RequestMapping("test/{index}")
-    public String getTest(@PathVariable("index") String index) {
-        return "test/" + index;
-    }
+    private final static String DEFAULT_PATH = "G:\\lunwen\\picture";
 
     @GetMapping("test")
     public String test(Model model) {
@@ -60,27 +33,6 @@ public class HelloController {
         return "test";
     }
 
-    @GetMapping("image/url")
-    public void imageUlr(String imageName, HttpServletResponse response) throws IOException {
-        String imagePath;
-        if (StringUtils.isNotBlank(imageName)) {
-            imagePath = "E:\\lunwen\\picture\\" + imageName;
-        } else {
-            imagePath = "E:\\lunwen\\picture\\28_140425143005_2.jpg";
-        }
-        FileInputStream inputStream = new FileInputStream(new File(imagePath));
-        response.setContentType("multipart/form-data");
-        ServletOutputStream out = response.getOutputStream();
-        int i;
-        byte[] buffer = new byte[4096];
-        while ((i = inputStream.read(buffer)) != -1) {
-            out.write(buffer, 0, i);
-        }
-        out.flush();
-        inputStream.close();
-        out.close();
-    }
-
     @PostMapping("test/upload")
     @ResponseBody
     public Map testUpload(MultipartFile file) throws IOException {
@@ -89,7 +41,7 @@ public class HelloController {
         //自定义的文件名称
         String newFileName = String.valueOf(System.currentTimeMillis()) + fileName;
 
-        File currentFile = new File("E:\\lunwen\\picture", newFileName);
+        File currentFile = new File(DEFAULT_PATH, newFileName);
         if (!currentFile.getParentFile().exists()) {
             currentFile.getParentFile().mkdirs();
         }
@@ -101,7 +53,13 @@ public class HelloController {
 
         Map<String, Object> map = new TreeMap<>();
 
-        map.put("url", newFileName);
+        //图片保存路径
+        String urlStr = "\\image\\show?imagePath=" + URLEncoder.encode(DEFAULT_PATH + "\\" + newFileName, "utf-8");
+
+        System.out.println(urlStr);
+
+        map.put("url", urlStr);
         return map;
     }
 }
+*/
