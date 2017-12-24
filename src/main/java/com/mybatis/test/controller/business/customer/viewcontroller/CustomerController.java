@@ -32,6 +32,39 @@ public class CustomerController extends BaseController {
     private IQuestionService questionService;
 
     /**
+     * 基本设置
+     */
+    @GetMapping("setView")
+    public String setView() {
+        return "user/set";
+    }
+
+    /**
+     * 我的消息
+     */
+    @GetMapping("messageView")
+    public String messageView(){
+        return "user/message";
+    }
+
+    /**
+     * 我的主页
+     */
+    @GetMapping("home")
+    public String home(){
+        return "user/home";
+    }
+
+    /**
+     * 用户中心
+     */
+    @GetMapping("indexView")
+    public String indexView(){
+        return "user/index";
+    }
+
+
+    /**
      * 登录页面
      */
     @GetMapping("loginView")
@@ -70,14 +103,6 @@ public class CustomerController extends BaseController {
     }
 
     /**
-     * 用户主页
-     */
-    @GetMapping("indexView")
-    public String indexView() {
-        return "user/index";
-    }
-
-    /**
      * 注册页面
      */
     @GetMapping("registerView")
@@ -97,14 +122,6 @@ public class CustomerController extends BaseController {
         map.put("action", "/loginView");
         map.put("msg", "注册成功，请登录");
         return map;
-    }
-
-    /**
-     * 设置我的信息
-     */
-    @GetMapping("set")
-    public String set() {
-        return "user/set";
     }
 
     /**
