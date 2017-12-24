@@ -1,19 +1,31 @@
 package com.mybatis.test.controller.business.dynamic.viewcontroller;
 
 import com.mybatis.test.common.config.CustomerUtils;
+import com.mybatis.test.common.enumeration.DynamicTypeEnum;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.DynamicPM;
+import com.mybatis.test.controller.business.dynamic.paramsmodel.ReplyDynamicPM;
+import com.mybatis.test.controller.business.dynamic.viewmodel.CommentsDetailVM;
+import com.mybatis.test.controller.business.dynamic.viewmodel.DynamicDetailVM;
+import com.mybatis.test.model.Comments;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.Dynamic;
+import com.mybatis.test.service.api.comments.ICommentsService;
+import com.mybatis.test.service.api.customer.ICustomerService;
+import com.mybatis.test.service.api.dictionary.IDictionaryService;
 import com.mybatis.test.service.api.dynamic.IDynamicService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("dynamic")
@@ -21,6 +33,15 @@ public class DynamicController {
 
     @Resource
     private IDynamicService dynamicService;
+
+    @Resource
+    private ICustomerService customerService;
+
+    @Resource
+    private IDictionaryService dictionaryService;
+
+    @Resource
+    private ICommentsService commentsService;
 
     @GetMapping("addView")
     public String addView() {
@@ -39,8 +60,57 @@ public class DynamicController {
     }
 
     @GetMapping("detailView")
-    public String detailView(String dynamicId) {
+    public String detailView(String dynamicId, Model model) {
+        if (StringUtils.isBlank(dynamicId)) {
+            dynamicId = "7fc4f86bb4164591b9cbabaaa5693b2b";
+        }
+        Dynamic dynamic = dynamicService.selectById(dynamicId);
+        Customer customer = customerService.selectById(dynamic.getCustomerId());
+        String label = dictionaryService.getLabel(DynamicTypeEnum.getLabelByValue(dynamic.getFirstTitle()), dynamic.getSecondTitle());
+        //这里还要加上评论
+        List<Comments> commentsList = commentsService.getDynamicComments(dynamicId);
+        List<CommentsDetailVM> list = getCommentsDetailVMList(commentsList);
+        DynamicDetailVM dynamicDetailVM = new DynamicDetailVM(customer, dynamic, label, list);
+        model.addAttribute("dynamic", dynamicDetailVM);
         return "jie/detail";
+    }
+
+    /**
+     * 评论接口，这个接口需要登录
+     */
+    @PostMapping("reply")
+    @ResponseBody
+    public Map reply(ReplyDynamicPM replyDynamicPM) {
+        saveComments(replyDynamicPM);
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        map.put("action", "/dynamic/detailView?dynamicId=" + replyDynamicPM.getComments().getDynamicId());
+        map.put("msg", "评论成功~");
+        return map;
+    }
+
+    private List<CommentsDetailVM> getCommentsDetailVMList(List<Comments> commentsList) {
+        return commentsList.stream().map(x -> {
+            Customer customer = customerService.selectById(x.getCustomerId());
+            return new CommentsDetailVM(x, customer);
+        }).collect(Collectors.toList());
+    }
+
+    private void saveComments(ReplyDynamicPM replyDynamicPM) {
+        Comments comments = replyDynamicPM.getComments();
+        comments.init();
+        comments.setCustomerId(CustomerUtils.getCustomer().getId());
+        comments.setPraise(0);
+        commentsService.insert(comments);
+
+        //更新动态，人气加5，评论加1
+        Dynamic dynamic = dynamicService.selectById(comments.getDynamicId());
+        dynamic.preUpdate();
+        dynamic.setPopularity(dynamic.getPopularity() + 5);
+        dynamic.setCommentsNumber(dynamic.getCommentsNumber() + 1);
+        dynamicService.update(dynamic);
+
+        //这里还要考虑给用户发消息，暂时未写
     }
 
     private String save(DynamicPM dynamicPM) {
@@ -50,6 +120,7 @@ public class DynamicController {
         dynamic.setCustomerId(customer.getId());
         dynamic.setPopularity(1);
         dynamic.setPraise(0);
+        dynamic.setCommentsNumber(0);
         dynamicService.insert(dynamic);
         return dynamic.getId();
     }

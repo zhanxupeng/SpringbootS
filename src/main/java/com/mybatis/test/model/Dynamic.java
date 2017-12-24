@@ -2,7 +2,7 @@ package com.mybatis.test.model;
 
 import com.mybatis.test.common.base.BaseModel;
 
-public class Dynamic extends BaseModel{
+public class Dynamic extends BaseModel {
     private String customerId;
 
     private String firstTitle;
@@ -18,6 +18,8 @@ public class Dynamic extends BaseModel{
     private Integer popularity;
 
     private Integer praise;
+
+    private Integer commentsNumber;
 
     public String getCustomerId() {
         return customerId;
@@ -81,5 +83,13 @@ public class Dynamic extends BaseModel{
 
     public void setPraise(Integer praise) {
         this.praise = praise;
+    }
+
+    public Integer getCommentsNumber() {
+        return commentsNumber;
+    }
+
+    public void setCommentsNumber(Integer commentsNumber) {
+        this.commentsNumber = commentsNumber;
     }
 }

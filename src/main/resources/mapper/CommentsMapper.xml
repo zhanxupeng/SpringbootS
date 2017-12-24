@@ -5,7 +5,7 @@
         <id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="customer_id" property="customerId" jdbcType="VARCHAR"/>
         <result column="dynamic_id" property="dynamicId" jdbcType="VARCHAR"/>
-        <result column="comments_id" property="commentsId" jdbcType="VARCHAR"/>
+        <result column="to_customer_id" property="toCustomerId" jdbcType="VARCHAR"/>
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="praise" property="praise" jdbcType="INTEGER"/>
         <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
@@ -20,7 +20,7 @@
         id,
         customer_id,
         dynamic_id,
-        comments_id,
+        to_customer_id,
         content,
         praise,
         remarks,
@@ -43,7 +43,7 @@
         id,
         customer_id,
         dynamic_id,
-        comments_id,
+        to_customer_id,
         content,
         praise,
         remarks,
@@ -56,7 +56,7 @@
         #{id,jdbcType=VARCHAR},
         #{customerId,jdbcType=VARCHAR},
         #{dynamicId,jdbcType=VARCHAR},
-        #{commentsId,jdbcType=VARCHAR},
+        #{toCustomerId,jdbcType=VARCHAR},
         #{content,jdbcType=VARCHAR},
         #{praise,jdbcType=INTEGER},
         #{remarks,jdbcType=VARCHAR},
@@ -76,8 +76,8 @@
             <if test="dynamicId != null">
                 dynamic_id = #{dynamicId,jdbcType=VARCHAR},
             </if>
-            <if test="commentsId != null">
-                comments_id = #{commentsId,jdbcType=VARCHAR},
+            <if test="toCustomerId != null">
+                to_customer_id = #{toCustomerId,jdbcType=VARCHAR},
             </if>
             <if test="content != null">
                 content = #{content,jdbcType=VARCHAR},
@@ -124,4 +124,13 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="getByDynamic" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM comments
+        where dynamic_id=#{dynamicId}
+        and del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        order by create_date desc
+    </select>
 </mapper>

@@ -87,6 +87,9 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/test", "anon");
         filterChainDefinitionMap.put("/test/upload", "anon");
 
+        //authc接口
+        filterChainDefinitionMap.put("/dynamic/reply", "authc");
+
 
 /*        filterChainDefinitionMap.put("/toLogin", "anon");
         filterChainDefinitionMap.put("/login", "anon");

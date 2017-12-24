@@ -40,6 +40,11 @@ public abstract class BaseModel {
         updateDate = DateUtil.getCurrentDate();
     }
 
+    public void preUpdate() {
+        updateBy = GlobalConstant.ADMIN;
+        updateDate = DateUtil.getCurrentDate();
+    }
+
     public String getId() {
         return id;
     }

@@ -12,5 +12,10 @@ public interface DictionaryMapper extends BaseMapper<Dictionary> {
     /**
      * 根据类型查找
      */
-    List<Dictionary> getByType(@Param("type")String type);
+    List<Dictionary> getByType(@Param("type") String type);
+
+    /**
+     * 根据类型和键值查找
+     */
+    Dictionary getByTypeAndKey(@Param("type") String type, @Param("key") String key);
 }

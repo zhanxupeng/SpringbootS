@@ -110,7 +110,7 @@
             #{id}
         </foreach>
     </delete>
-    
+
     <select id="getByType" parameterType="string" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -118,5 +118,11 @@
         where `type` = #{type}
     </select>
 
+    <select id="getByTypeAndKey" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM dictionary
+        WHERE `type`=#{type} and `key`=#{key}
+    </select>
 
 </mapper>

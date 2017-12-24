@@ -2,13 +2,13 @@ package com.mybatis.test.model;
 
 import com.mybatis.test.common.base.BaseModel;
 
-public class Comments extends BaseModel{
+public class Comments extends BaseModel {
 
     private String customerId;
 
     private String dynamicId;
 
-    private String commentsId;
+    private String toCustomerId;
 
     private String content;
 
@@ -30,12 +30,12 @@ public class Comments extends BaseModel{
         this.dynamicId = dynamicId;
     }
 
-    public String getCommentsId() {
-        return commentsId;
+    public String getToCustomerId() {
+        return toCustomerId;
     }
 
-    public void setCommentsId(String commentsId) {
-        this.commentsId = commentsId;
+    public void setToCustomerId(String toCustomerId) {
+        this.toCustomerId = toCustomerId;
     }
 
     public String getContent() {

@@ -17,6 +17,7 @@
         <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
         <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="del_flag" property="delFlag" jdbcType="VARCHAR"/>
+        <result column="comments_number" property="commentsNumber" javaType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -34,7 +35,8 @@
         create_date,
         update_by,
         update_date,
-        del_flag
+        del_flag,
+        comments_number
     </sql>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -60,7 +62,8 @@
         create_date,
         update_by,
         update_date,
-        del_flag
+        del_flag,
+        comments_number
         )values (
         #{id,jdbcType=VARCHAR},
         #{customerId,jdbcType=VARCHAR},
@@ -76,7 +79,8 @@
         #{createDate,jdbcType=TIMESTAMP},
         #{updateBy,jdbcType=VARCHAR},
         #{updateDate,jdbcType=TIMESTAMP},
-        #{delFlag,jdbcType=VARCHAR})
+        #{delFlag,jdbcType=VARCHAR},
+        #{commentsNumber,jdbcType=INTEGER})
     </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Dynamic">
@@ -123,6 +127,9 @@
             </if>
             <if test="delFlag != null">
                 del_flag = #{delFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="commentsNumber !=null">
+                comments_number = #{commentsNumber,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}

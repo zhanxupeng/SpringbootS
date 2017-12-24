@@ -23,4 +23,9 @@ public interface IDictionaryService extends IBaseDBService<Dictionary> {
      * 获取动态二级标题列表
      */
     List<Dictionary> getDynamicSecondTitle(String firstTitle);
+
+    /**
+     * 根据类型和键值获取标签
+     */
+    String getLabel(String type, String key);
 }

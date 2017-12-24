@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by 占大帅 on 2017/12/2.
- */
 @Service
 public class DictionaryService extends BaseDBService<DictionaryMapper, Dictionary> implements IDictionaryService {
     @Override
@@ -30,5 +27,10 @@ public class DictionaryService extends BaseDBService<DictionaryMapper, Dictionar
     @Override
     public List<Dictionary> getDynamicSecondTitle(String firstTitle) {
         return getRepo().getByType(DynamicTypeEnum.getLabelByValue(firstTitle));
+    }
+
+    @Override
+    public String getLabel(String type, String key) {
+        return getRepo().getByTypeAndKey(type, key).getLabel();
     }
 }
