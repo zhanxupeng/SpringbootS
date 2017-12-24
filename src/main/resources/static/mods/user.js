@@ -167,15 +167,15 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function (exports) {
 
             upload.render({
                 elem: '.upload-img'
-                , url: '/customer/upload/'
+                , url: '/image/upload/'
                 , size: 500
                 , before: function () {
                     avatarAdd.find('.loading').show();
                 }
                 , done: function (res) {
                     if (res.status == 0) {
-                        $.post('/user/set/', {
-                            avatar: res.url
+                        $.post('/customer/changeHead/', {
+                            headPicture: res.url
                         }, function (res) {
                             location.reload();
                         });
@@ -216,14 +216,14 @@ layui.define(['laypage', 'fly', 'element', 'flow'], function (exports) {
 
 
         /*
-        fly.json('/message/find/', {}, function(res){
-          var html = laytpl(tpl).render(res);
-          dom.minemsg.html(html);
-          if(res.rows.length > 0){
-            delAll.removeClass('layui-hide');
-          }
-        });
-        */
+         fly.json('/message/find/', {}, function(res){
+         var html = laytpl(tpl).render(res);
+         dom.minemsg.html(html);
+         if(res.rows.length > 0){
+         delAll.removeClass('layui-hide');
+         }
+         });
+         */
 
         //阅读后删除
         dom.minemsg.on('click', '.mine-msg li .fly-delete', function () {

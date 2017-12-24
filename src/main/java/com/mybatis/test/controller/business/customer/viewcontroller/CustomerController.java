@@ -3,6 +3,7 @@ package com.mybatis.test.controller.business.customer.viewcontroller;
 import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.controller.base.BaseController;
+import com.mybatis.test.controller.business.customer.parammodel.BaseDataPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.BoolVM;
@@ -32,6 +33,40 @@ public class CustomerController extends BaseController {
     private IQuestionService questionService;
 
     /**
+     * 修改我的资料
+     */
+    @PostMapping("set")
+    @ResponseBody
+    public Map set(BaseDataPM baseDataPM) {
+        Customer customer = baseDataPM.getCustomer();
+        customer.setId(CustomerUtils.getCustomer().getId());
+        customerService.update(customer);
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        map.put("action", "/customer/setView");
+        map.put("msg", "修改成功");
+        return map;
+    }
+
+    /**
+     * 上传头像
+     */
+    @PostMapping("changeHead")
+    @ResponseBody
+    public Map changeHead(String headPicture) {
+        Customer customer = new Customer();
+        customer.preUpdate();
+        customer.setHeadPicture(headPicture);
+        customerService.update(customer);
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        map.put("action", "/customer/setView");
+        map.put("msg", "修改成功");
+        return map;
+    }
+
+
+    /**
      * 基本设置
      */
     @GetMapping("setView")
@@ -43,7 +78,7 @@ public class CustomerController extends BaseController {
      * 我的消息
      */
     @GetMapping("messageView")
-    public String messageView(){
+    public String messageView() {
         return "user/message";
     }
 
@@ -51,7 +86,7 @@ public class CustomerController extends BaseController {
      * 我的主页
      */
     @GetMapping("home")
-    public String home(){
+    public String home() {
         return "user/home";
     }
 
@@ -59,7 +94,7 @@ public class CustomerController extends BaseController {
      * 用户中心
      */
     @GetMapping("indexView")
-    public String indexView(){
+    public String indexView() {
         return "user/index";
     }
 

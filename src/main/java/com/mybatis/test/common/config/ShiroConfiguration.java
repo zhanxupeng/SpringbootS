@@ -63,12 +63,6 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/dynamic/detailView", "anon");//动态详情页面
 
-        //都需要登录，暂时匿名，方便调试
-        filterChainDefinitionMap.put("/customer/setView","anon");//基本设置
-        filterChainDefinitionMap.put("/customer/messageView","anon");//我的消息
-        filterChainDefinitionMap.put("/customer/home","anon");//我的主页
-        filterChainDefinitionMap.put("/customer/indexView","anon");//用户中心
-
         //接口anon
         filterChainDefinitionMap.put("/customer/login", "anon");//登录接口
         filterChainDefinitionMap.put("/customer/register", "anon");//注册接口
@@ -94,8 +88,15 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/test/upload", "anon");
 
         //authc接口
-        filterChainDefinitionMap.put("/dynamic/reply", "authc");
+        filterChainDefinitionMap.put("/dynamic/reply", "authc");//评论动态
+        filterChainDefinitionMap.put("/customer/set", "authc");//修改用户基本信息
+        filterChainDefinitionMap.put("/customer/changeHead", "authc");//修改用户头像
 
+        //authc页面
+        filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
+        filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
+        filterChainDefinitionMap.put("/customer/home", "authc");//我的主页
+        filterChainDefinitionMap.put("/customer/indexView", "authc");//用户中心
 
 /*        filterChainDefinitionMap.put("/toLogin", "anon");
         filterChainDefinitionMap.put("/login", "anon");

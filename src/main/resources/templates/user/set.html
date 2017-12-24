@@ -48,7 +48,8 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/customer/setView"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    </dd>
                     <dd><a href="/customer/home"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
@@ -107,11 +108,11 @@
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-form layui-form-pane layui-tab-item layui-show">
-                    <form method="post">
+                    <form action="/customer/set" method="post">
                         <div class="layui-form-item">
                             <label for="L_username" class="layui-form-label">昵称</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="L_username" name="username" required lay-verify="required"
+                                <input type="text" id="L_username" name="nickName" required lay-verify="required"
                                        autocomplete="off" value="" class="layui-input">
                             </div>
                             <div class="layui-inline">
@@ -131,12 +132,13 @@
                         <div class="layui-form-item layui-form-text">
                             <label for="L_sign" class="layui-form-label">签名</label>
                             <div class="layui-input-block">
-                                <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="sign" autocomplete="off"
+                                <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="autograph" autocomplete="off"
                                           class="layui-textarea" style="height: 80px;"></textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+                            <button class="layui-btn" alert="true" key="set-mine" lay-filter="*" lay-submit>确认修改
+                            </button>
                         </div>
                     </form>
                 </div>
