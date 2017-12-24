@@ -104,26 +104,10 @@ layui.define('fly', function (exports) {
         , reply: function (li) { //回复
             var val = dom.content.val();
             var aite = '@' + li.find('.fly-detail-user cite').text().replace(/\s/g, '');
-            dom.content.focus()
+            dom.content.focus();
+            $("#toCustomerId").val(li.find('.fly-detail-user input[type=hidden]').val());//隐藏域保存id
             if (val.indexOf(aite) !== -1) return;
             dom.content.val(aite + ' ' + val);
-        }
-        , accept: function (li) { //采纳
-            var othis = $(this);
-            layer.confirm('是否采纳该回答为最佳答案？', function (index) {
-                layer.close(index);
-                fly.json('/api/jieda-accept/', {
-                    id: li.data('id')
-                }, function (res) {
-                    if (res.status === 0) {
-                        $('.jieda-accept').remove();
-                        li.addClass('jieda-daan');
-                        li.find('.detail-about').append('<i class="iconfont icon-caina" title="最佳答案"></i>');
-                    } else {
-                        layer.msg(res.msg);
-                    }
-                });
-            });
         }
         , edit: function (li) { //编辑
             fly.json('/jie/getDa/', {

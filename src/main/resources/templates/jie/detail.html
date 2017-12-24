@@ -41,6 +41,7 @@
         <ul id="inLogin" class="layui-nav fly-nav-user layui-hide">
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
+                    <input id="customerId" type="hidden" value=""/>
                     <cite id="nickName" class="layui-hide-xs">贤心</cite>
                     <img id="myHead"
                          src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
@@ -159,6 +160,7 @@
                                     <div class="fly-detail-user">
                                         <a href="" class="fly-link">
                                             <cite th:text="${comments.nickName}">贤心</cite>
+                                            <input type="hidden" th:value="${comments.customerId}">
                                         </a>
 
                                     </div>
@@ -171,14 +173,14 @@
                                     <p>香菇那个蓝瘦，这是一条孤零零的评论</p>
                                 </div>
                                 <div class="jieda-reply">
-                                                <span class="jieda-zan" type="zan">
-                                                    <i class="iconfont icon-zan"></i>
-                                                    <em th:text="${comments.praise}">66</em>
-                                                </span>
+                                    <span class="jieda-zan" type="zan">
+                                        <i class="iconfont icon-zan"></i>
+                                        <em th:text="${comments.praise}">66</em>
+                                    </span>
                                     <span type="reply">
-                                                    <i class="iconfont icon-svgmoban53"></i>
-                                                        回复
-                                                </span>
+                                        <i class="iconfont icon-svgmoban53"></i>
+                                        回复
+                                    </span>
                                     <div class="jieda-admin">
                                         <span type="edit">编辑</span>
                                         <span type="del">删除</span>
@@ -270,7 +272,7 @@
                         <div class="layui-form-item layui-form-text">
                             <a name="comment"></a>
                             <input id="toCustomerId" name="toCustomerId" type="hidden" th:value="${dynamic.customerId}">
-                            <input id="dynamicId" name="dynamicId" type="hidden" th:value="${dynamic.dynamicId}">
+                            <input id="dynamicId" name="dynamicId" type="hidden" th:value="${dynamic.dynamicId}" lay-verify="loginCheck">
                             <div class="layui-input-block">
                                 <textarea id="L_content" name="content" required lay-verify="required"
                                           placeholder="请输入内容" class="layui-textarea fly-editor"
@@ -407,11 +409,25 @@
                     $unLogin.addClass("layui-hide");
                     $("#nickName").text(data.nickName);
                     $("#myHead").attr("src", data.headPicture);
+                    $("#customerId").val(data.id);
                 }
             },
             error: function () {
 
             }
+        });
+    });
+
+    layui.use('form',function () {
+        var form =layui.form;
+        form.verify({
+            loginCheck: function(value){ //value：表单的值、item：表单的DOM对象
+                var $customerId=$("#customerId");
+                if($customerId.val()==null||$customerId.val()==''){
+                    return "必须要登录才能评论哦，快去登录吧"
+                }
+            }
+
         });
     });
 </script>

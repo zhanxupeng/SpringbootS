@@ -51,10 +51,10 @@ public class DynamicController {
     @PostMapping("add")
     @ResponseBody
     public Map add(DynamicPM dynamicPM) {
-        save(dynamicPM);
+        String dynamicId= save(dynamicPM);
         Map<String, Object> map = new TreeMap<>();
         map.put("status", 0);
-        map.put("action", "/dynamic/addView");
+        map.put("action", "/dynamic/detailView?dynamicId="+dynamicId);
         map.put("msg", "发布成功，去看一看吧");
         return map;
     }
@@ -71,6 +71,9 @@ public class DynamicController {
         List<Comments> commentsList = commentsService.getDynamicComments(dynamicId);
         List<CommentsDetailVM> list = getCommentsDetailVMList(commentsList);
         DynamicDetailVM dynamicDetailVM = new DynamicDetailVM(customer, dynamic, label, list);
+        //用户查看，需要把人气加1
+        dynamic.setPopularity(dynamic.getPopularity()+1);
+        dynamicService.update(dynamic);
         model.addAttribute("dynamic", dynamicDetailVM);
         return "jie/detail";
     }
