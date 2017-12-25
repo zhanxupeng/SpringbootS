@@ -308,58 +308,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
         }
 
     };
-
-    //签到
-    var tplSignin = ['{{# if(d.signed){ }}'
-        , '<button class="layui-btn layui-btn-disabled">今日已签到</button>'
-        , '<span>获得了<cite>{{ d.experience }}</cite>飞吻</span>'
-        , '{{# } else { }}'
-        , '<button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>'
-        , '<span>可获得<cite>{{ d.experience }}</cite>飞吻</span>'
-        , '{{# } }}'].join('')
-        , tplSigninDay = '已连续签到<cite>{{ d.days }}</cite>天'
-
-        , signRender = function (data) {
-        laytpl(tplSignin).render(data, function (html) {
-            elemSigninMain.html(html);
-        });
-        laytpl(tplSigninDay).render(data, function (html) {
-            elemSigninDays.html(html);
-        });
-    }
-
-        , elemSigninHelp = $('#LAY_signinHelp')
-        , elemSigninTop = $('#LAY_signinTop')
-        , elemSigninMain = $('.fly-signin-main')
-        , elemSigninDays = $('.fly-signin-days');
-
-    if (elemSigninMain[0]) {
-        /*
-         fly.json('/sign/status', function(res){
-         if(!res.data) return;
-         signRender.token = res.data.token;
-         signRender(res.data);
-         });
-         */
-    }
-    //签到点击事件
-    $('body').on('click', '#LAY_signin', function () {
-        var othis = $(this);
-        if (othis.hasClass(DISABLED)) return;
-
-        fly.json('/sign/in', {
-            token: signRender.token || 1
-        }, function (res) {
-            signRender(res.data);
-        }, {
-            error: function () {
-                othis.removeClass(DISABLED);
-            }
-        });
-
-        othis.addClass(DISABLED);
-    });
-
+    var elemSigninHelp = $('#LAY_signinHelp');
     //签到说明
     elemSigninHelp.on('click', function () {
         layer.open({
@@ -369,10 +318,10 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
             , shade: 0.8
             , shadeClose: true
             , content: ['<div class="layui-text" style="padding: 20px;">'
-                , '<blockquote class="layui-elem-quote">“签到”可获得社区飞吻，规则如下</blockquote>'
+                , '<blockquote class="layui-elem-quote">“签到”可获得活跃值，规则如下</blockquote>'
                 , '<table class="layui-table">'
                 , '<thead>'
-                , '<tr><th>连续签到天数</th><th>每天可获飞吻</th></tr>'
+                , '<tr><th>连续签到天数</th><th>每天可获活跃值</th></tr>'
                 , '</thead>'
                 , '<tbody>'
                 , '<tr><td>＜5</td><td>5</td></tr>'
@@ -383,7 +332,7 @@ layui.define(['layer', 'laytpl', 'form', 'element', 'upload', 'util'], function 
                 , '</table>'
                 , '<ul>'
                 , '<li>中间若有间隔，则连续天数重新计算</li>'
-                , '<li style="color: #FF5722;">不可利用程序自动签到，否则飞吻清零</li>'
+                , '<li style="color: #FF5722;">不可利用程序自动签到，否则活跃值清零</li>'
                 , '</ul>'
                 , '</div>'].join('')
         });

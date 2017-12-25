@@ -41,13 +41,15 @@
         <ul id="inLogin" class="layui-nav fly-nav-user layui-hide">
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
+                    <input id="customerId" type="hidden" value=""/>
                     <cite id="nickName" class="layui-hide-xs">贤心</cite>
                     <img id="myHead"
                          src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/customer/setView"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    </dd>
                     <dd><a href="/customer/home"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
@@ -620,17 +622,22 @@
                     <i class="fly-mid"></i>
                     <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
                     <i class="fly-mid"></i>
-                    <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
+                    <span id="continueSignText" class="fly-signin-days layui-hide">
+                        已连续签到
+                        <cite id="continueSignCount">16</cite>
+                        天
+                    </span>
                 </div>
                 <div class="fly-panel-main fly-signin-main">
-                    <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
-                    <span>可获得<cite>5</cite>飞吻</span>
-
+                    <div id="unSignIn" class="layui-hide">
+                        <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
+                        <span>可获得<cite id="unSignInValue">5</cite>活跃值</span>
+                    </div>
                     <!-- 已签到状态 -->
-                    <!--
-                    <button class="layui-btn layui-btn-disabled">今日已签到</button>
-                    <span>获得了<cite>20</cite>飞吻</span>
-                    -->
+                    <div id="inSignIn" class="layui-hide">
+                        <button class="layui-btn layui-btn-disabled">今日已签到</button>
+                        <span>获得了<cite id="inSignInValue">20</cite>活跃值</span>
+                    </div>
                 </div>
             </div>
 
@@ -836,26 +843,129 @@
     }).extend({
         fly: 'index'
     }).use('fly');
-    $(document).ready(function () {
-        var $unLogin = $("#unLogin");
-        var $inLogin = $("#inLogin");
-        $.ajax({
-            url: '/customer/information',
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                if (data.id != null && data.id != '') {
-                    //说明用户已经登录，改为登录状态
-                    $inLogin.removeClass("layui-hide");
-                    $unLogin.addClass("layui-hide");
-                    $("#nickName").text(data.nickName);
-                    $("#myHead").attr("src", data.headPicture);
-                }
-            },
-            error: function () {
 
-            }
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        $(document).ready(function () {
+            var $unLogin = $("#unLogin");
+            var $inLogin = $("#inLogin");
+            var $customerId = $("#customerId");
+            $.ajax({
+                url: '/customer/information',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.id != null && data.id != '') {
+                        //说明用户已经登录，改为登录状态
+                        $inLogin.removeClass("layui-hide");
+                        $unLogin.addClass("layui-hide");
+                        $("#nickName").text(data.nickName);
+                        $("#myHead").attr("src", data.headPicture);
+                        $customerId.val(data.id);
+                    }
+                },
+                error: function () {
+
+                }
+            });
+
+            initSignIn();
+
+            //签到模块
+            var $signIn = $("#LAY_signin");
+            $signIn.click(function () {
+                if ($customerId.val() == null || $customerId.val() == '') {
+                    layer.msg('必须登录才可以签到哦', {icon: 5});
+                } else {
+                    $.ajax({
+                        url: '/customer/sign',
+                        type: 'get',
+                        dataType: 'json',
+                        success: function (data) {
+                            //签到是否成功 signFlag ,提示信息 signMessage
+                            if (data.signFlag) {
+                                layer.alert(data.signMessage, {icon: 6});
+                                initSignIn();
+                            } else {
+                                layer.msg(data.signMessage, {icon: 5});
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+                }
+            });
+
         });
+
+        //初始化签到模块
+        function initSignIn() {
+            $.ajax({
+                url: '/customer/signIn',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    //是否登录 loginFlag,今日是否签到 signInFlag ,是否显示连续签到天数 showSignInCountFlag
+                    //连续签到天数 continueActiveCount,签到获得活跃值 activeValue
+                    var $continueSignText = $("#continueSignText");
+                    var $continueSignCount = $("#continueSignCount");
+                    var $unSignIn = $("#unSignIn");
+                    var $unSignInValue = $("#unSignInValue");
+                    var $inSignIn = $("#inSignIn");
+                    var $inSignInValue = $("#inSignInValue");
+                    if (data.loginFlag) {//已经登录
+                        if (data.signInFlag) {//今日已经签到
+                            //连续签到显示
+                            $continueSignText.removeClass("layui-hide");
+                            $continueSignCount.text(data.continueActiveCount);
+                            //未签到隐藏
+                            $unSignIn.removeClass("layui-hide");
+                            $unSignIn.addClass("layui-hide");
+                            //已经签到显示
+                            $inSignIn.removeClass("layui-hide");
+                            $inSignInValue.text(data.activeValue);
+                        } else {//今日还未签到
+                            if (data.showSignInCountFlag) {//连续签到
+                                //连续签到显示
+                                $continueSignText.removeClass("layui-hide");
+                                $continueSignCount.text(data.continueActiveCount);
+                                //未签到显示
+                                $unSignIn.removeClass("layui-hide");
+                                $unSignInValue.text(data.activeValue);
+                                //已经签到隐藏
+                                $inSignIn.removeClass("layui-hide");
+                                $inSignIn.addClass("layui-hide");
+                            } else {//已经断签
+                                //连续签到隐藏
+                                $continueSignText.removeClass("layui-hide");
+                                $continueSignText.addClass("layui-hide");
+                                //未签到显示
+                                $unSignIn.removeClass("layui-hide");
+                                $unSignInValue.text(data.activeValue);
+                                //已经签到隐藏
+                                $inSignIn.removeClass("layui-hide");
+                                $inSignIn.addClass("layui-hide");
+                            }
+                        }
+                    } else {//未登录
+                        //连续签到隐藏
+                        $continueSignText.removeClass("layui-hide");
+                        $continueSignText.addClass("layui-hide");
+                        //未签到显示
+                        $unSignIn.removeClass("layui-hide");
+                        //已经签到隐藏
+                        $inSignIn.removeClass("layui-hide");
+                        $inSignIn.addClass("layui-hide");
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+
     });
 </script>
 

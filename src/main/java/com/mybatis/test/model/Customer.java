@@ -28,6 +28,8 @@ public class Customer extends BaseModel {
 
     private Date latestActiveDate;
 
+    private Integer continueActiveCount;
+
     public String getUserName() {
         return userName;
     }
@@ -114,5 +116,13 @@ public class Customer extends BaseModel {
 
     public void setLatestActiveDate(Date latestActiveDate) {
         this.latestActiveDate = latestActiveDate;
+    }
+
+    public Integer getContinueActiveCount() {
+        return continueActiveCount;
+    }
+
+    public void setContinueActiveCount(Integer continueActiveCount) {
+        this.continueActiveCount = continueActiveCount;
     }
 }

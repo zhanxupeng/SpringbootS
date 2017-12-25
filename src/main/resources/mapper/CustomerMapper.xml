@@ -20,6 +20,7 @@
         <result column="popularity" property="popularity" jdbcType="INTEGER"/>
         <result column="active_value" property="activeValue" jdbcType="INTEGER"/>
         <result column="latest_active_date" property="latestActiveDate" jdbcType="TIMESTAMP"/>
+        <result column="continue_active_count" property="continueActiveCount" javaType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -40,7 +41,8 @@
         del_flag,
         popularity,
         active_value,
-        latest_active_date
+        latest_active_date,
+        continue_active_count
     </sql>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -69,7 +71,8 @@
         del_flag,
         popularity,
         active_value,
-        latest_active_date
+        latest_active_date,
+        continue_active_count
         )values (
         #{id,jdbcType=VARCHAR},
         #{userName,jdbcType=VARCHAR},
@@ -88,7 +91,8 @@
         #{delFlag,jdbcType=VARCHAR},
         #{popularity,jdbcType=INTEGER},
         #{activeValue,jdbcType=INTEGER},
-        #{latestActiveDate,jdbcType=TIMESTAMP})
+        #{latestActiveDate,jdbcType=TIMESTAMP},
+        #{continueActiveCount,jdbcType=INTEGER})
   </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Customer">
@@ -144,6 +148,9 @@
             </if>
             <if test="latestActiveDate != null">
                 latest_active_date = #{latestActiveDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="continueActiveCount != null">
+                continue_active_count = #{continueActiveCount,jdbcType=INTEGER},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}
