@@ -3,9 +3,7 @@ package com.mybatis.test.controller.common;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-/**
- * Created by 占大帅 on 2017/12/23.
- */
+
 @Controller
 public class IndexController {
     /**
@@ -19,5 +17,13 @@ public class IndexController {
     @GetMapping("404")
     public String error() {
         return "other/404";
+    }
+
+    /**
+     * 分页测试
+     */
+    @GetMapping("page")
+    public String page() {
+        return "page";
     }
 }
