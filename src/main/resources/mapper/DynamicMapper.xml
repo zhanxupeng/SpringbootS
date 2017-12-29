@@ -152,4 +152,12 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="getCountByAppointCategory" resultType="int">
+        SELECT count(*)
+        FROM dynamic a
+        WHERE a.first_title = #{firstTitle}
+        AND a.second_title = #{secondTitle}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+    </select>
 </mapper>

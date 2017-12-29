@@ -10,6 +10,11 @@ public class CurrentTitlePM {
      */
     private String secondTitle;
 
+    /**
+     * 总数目
+     */
+    private int count;
+
     public String getFirstTitle() {
         return firstTitle;
     }
@@ -24,5 +29,13 @@ public class CurrentTitlePM {
 
     public void setSecondTitle(String secondTitle) {
         this.secondTitle = secondTitle;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }
