@@ -14,7 +14,7 @@ public class Customer extends BaseModel {
 
     private String headPicture;
 
-    private int sex;
+    private Integer sex;
 
     private Integer praise;
 
@@ -62,11 +62,11 @@ public class Customer extends BaseModel {
         this.headPicture = headPicture;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
 

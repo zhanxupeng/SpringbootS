@@ -3,9 +3,11 @@ package com.mybatis.test.controller.business.customer.viewcontroller;
 import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.controller.base.BaseController;
+import com.mybatis.test.controller.business.customer.paramsmodel.BasicInformationPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.BoolVM;
+import com.mybatis.test.controller.business.customer.viewmodel.CustomerInformationVM;
 import com.mybatis.test.controller.business.customer.viewmodel.SignInVM;
 import com.mybatis.test.controller.business.customer.viewmodel.SignVM;
 import com.mybatis.test.model.Customer;
@@ -16,6 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,8 +58,37 @@ public class CustomerController extends BaseController {
      * 基本设置
      */
     @GetMapping("setView")
-    public String setView() {
+    public String setView(Model model) {
+        Customer customer = customerService.selectById(CustomerUtils.getCustomer().getId());
+        model.addAttribute("customerInformation", new CustomerInformationVM(customer));
         return "user/set";
+    }
+
+    /**
+     * 修改我的资料
+     */
+    @PostMapping("setBasic")
+    @ResponseBody
+    public Map setBasic(BasicInformationPM basicInformationPM) {
+        Customer customer = basicInformationPM.getCustomer();
+        customer.setId(CustomerUtils.getCustomer().getId());
+        customerService.update(customer);
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        map.put("action", "redirect:/customer/setView");
+        map.put("msg", "修改成功");
+        return map;
+    }
+
+    /**
+     * 修改头像
+     */
+    @PostMapping("modifyHead")
+    @ResponseBody
+    public void modifyHead(BasicInformationPM basicInformationPM) {
+        Customer customer = basicInformationPM.getCustomer();
+        customer.setId(CustomerUtils.getCustomer().getId());
+        customerService.update(customer);
     }
 
     /**
@@ -160,8 +192,10 @@ public class CustomerController extends BaseController {
     @GetMapping("information")
     @ResponseBody
     public Customer getCustomer() {
-        return CustomerUtils.getCustomer();
+        Customer customer = customerService.selectById(CustomerUtils.getCustomer().getId());
+        return customer;
     }
+
 
     private BoolVM getCheckResult(Customer customer) {
         BoolVM boolVM = new BoolVM();

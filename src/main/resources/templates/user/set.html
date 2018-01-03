@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>帐号设置</title>
@@ -105,19 +105,30 @@
                 <li class="layui-this" lay-id="info">我的资料</li>
                 <li lay-id="avatar">头像</li>
                 <li lay-id="pass">密码</li>
+                <li lay-id="photo">相册</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-form layui-form-pane layui-tab-item layui-show">
-                    <form method="post">
+                    <form action="/customer/setBasic" method="post">
                         <div class="layui-form-item">
                             <label for="L_username" class="layui-form-label">昵称</label>
                             <div class="layui-input-inline">
-                                <input type="text" id="L_username" name="username" required lay-verify="required"
-                                       autocomplete="off" value="" class="layui-input">
+                                <input type="text" id="L_username" name="nickName" required lay-verify="required"
+                                       autocomplete="off" value="" class="layui-input"
+                                       th:value="${customerInformation.nickName}">
                             </div>
                             <div class="layui-inline">
-                                <div class="layui-input-inline">
+                                <div class="layui-input-inline" th:if="${customerInformation.sex}==0">
                                     <input type="radio" name="sex" value="0" checked title="男">
+                                    <input type="radio" name="sex" value="1" title="女">
+                                </div>
+                                <div class="layui-input-inline" th:if="${customerInformation.sex}==1">
+                                    <input type="radio" name="sex" value="0" title="男">
+                                    <input type="radio" name="sex" value="1" checked title="女">
+                                </div>
+                                <div class="layui-input-inline"
+                                     th:if="${customerInformation.sex}==''">
+                                    <input type="radio" name="sex" value="0" title="男">
                                     <input type="radio" name="sex" value="1" title="女">
                                 </div>
                             </div>
@@ -126,18 +137,22 @@
                             <label for="L_city" class="layui-form-label">城市</label>
                             <div class="layui-input-inline">
                                 <input type="text" id="L_city" name="city" autocomplete="off" value=""
-                                       class="layui-input">
+                                       class="layui-input" th:value="${customerInformation.city}">
                             </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
                             <label for="L_sign" class="layui-form-label">签名</label>
                             <div class="layui-input-block">
-                                <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="sign" autocomplete="off"
-                                          class="layui-textarea" style="height: 80px;"></textarea>
+                                <textarea placeholder="随便写些什么刷下存在感" id="L_sign" name="autograph" autocomplete="off"
+                                          class="layui-textarea" style="height: 80px;"
+                                          th:text="${customerInformation.autograph}">
+                                </textarea>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <button class="layui-btn" key="set-mine" lay-filter="*" lay-submit>确认修改</button>
+                            <button class="layui-btn" alert="true" key="set-mine" lay-filter="*" lay-submit>
+                                确认修改
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -149,7 +164,7 @@
                             <button type="button" class="layui-btn upload-img">
                                 <i class="layui-icon">&#xe67c;</i>上传头像
                             </button>
-                            <img src="/static/images/avatar/0.jpg">
+                            <img src="/static/images/avatar/0.jpg" th:src="${customerInformation.headPicture}">
                             <span class="loading"></span>
                         </div>
                     </div>
@@ -184,6 +199,9 @@
                             </button>
                         </div>
                     </form>
+                </div>
+                <div class="layui-form layui-form-pane layui-tab-item">
+                    <span>正在赶进度。。。</span>
                 </div>
             </div>
 

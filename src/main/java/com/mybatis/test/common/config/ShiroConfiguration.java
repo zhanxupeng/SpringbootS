@@ -94,11 +94,13 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/dynamic/reply", "authc");
         filterChainDefinitionMap.put("/dynamic/addView", "authc");//添加动态
 
+        filterChainDefinitionMap.put("/customer/setBasic", "authc");//修改我的信息
+        filterChainDefinitionMap.put("/customer/modifyHead", "authc");//修改用户头像
         //authc页面
-        filterChainDefinitionMap.put("/customer/setView", "anon");//基本设置
-        filterChainDefinitionMap.put("/customer/messageView", "anon");//我的消息
-        filterChainDefinitionMap.put("/customer/home", "anon");//我的主页
-        filterChainDefinitionMap.put("/customer/indexView", "anon");//用户中心
+        filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
+        filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
+        filterChainDefinitionMap.put("/customer/home", "authc");//我的主页
+        filterChainDefinitionMap.put("/customer/indexView", "authc");//用户中心
 
         filterChainDefinitionMap.put("/**", "authc");
 
