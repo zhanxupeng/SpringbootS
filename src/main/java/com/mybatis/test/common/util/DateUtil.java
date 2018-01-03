@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.function.UnaryOperator;
@@ -109,5 +110,11 @@ public class DateUtil {
         LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
         localDateTime = unaryOperator.apply(localDateTime);
         return new Date(localDateTime.atZone(zoneId).toInstant().toEpochMilli());
+    }
+
+    public static int getPastDays(Date startDate, Date endDate) {
+        Duration duration = Duration.between(LocalDateTime.of(getLocalDateTime(startDate).toLocalDate(), LocalTime.MIN)
+                , LocalDateTime.of(getLocalDateTime(endDate).toLocalDate(), LocalTime.MIN));
+        return (int) duration.toDays();
     }
 }

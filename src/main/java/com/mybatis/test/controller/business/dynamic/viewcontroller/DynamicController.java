@@ -1,12 +1,18 @@
 package com.mybatis.test.controller.business.dynamic.viewcontroller;
 
+import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.common.enumeration.DynamicTypeEnum;
+import com.mybatis.test.controller.base.BaseController;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.CurrentTitlePM;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.DynamicPM;
+import com.mybatis.test.controller.business.dynamic.paramsmodel.DynamicPagePM;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.ReplyDynamicPM;
 import com.mybatis.test.controller.business.dynamic.viewmodel.CommentsDetailVM;
+import com.mybatis.test.controller.business.dynamic.viewmodel.CurrentTitleVM;
 import com.mybatis.test.controller.business.dynamic.viewmodel.DynamicDetailVM;
+import com.mybatis.test.controller.business.dynamic.viewmodel.DynamicIntroductionVM;
+import com.mybatis.test.domain.DynamicIntroduction;
 import com.mybatis.test.model.Comments;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.Dictionary;
@@ -31,7 +37,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("dynamic")
-public class DynamicController {
+public class DynamicController extends BaseController {
 
     @Resource
     private IDynamicService dynamicService;
@@ -50,15 +56,30 @@ public class DynamicController {
      */
     @GetMapping("index")
     public String index(CurrentTitlePM currentTitlePM, Model model) {
-        if (DynamicTypeEnum.isNeedLogin(currentTitlePM.getFirstTitle(), currentTitlePM.getSecondTitle())) {
-            return "redirect:user/login";
+        if (DynamicTypeEnum.isNeedLogin(currentTitlePM.getFirstTitle(), currentTitlePM.getSecondTitle())
+                && StringUtils.isBlank(CustomerUtils.getCustomer().getId())) {
+            return "redirect:/user/login";
         }
         List<Dictionary> moodList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_MOOD.getValue());
         List<Dictionary> topicList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_TOPIC.getValue());
+        currentTitlePM.setCount(dynamicService.getCountByAppointCategory(currentTitlePM.getFirstTitle(),
+                currentTitlePM.getSecondTitle()));
         model.addAttribute("moodList", moodList);
         model.addAttribute("topicList", topicList);
         model.addAttribute("category", currentTitlePM);
         return "jie/index";
+    }
+
+    /**
+     * 分页查询
+     */
+    @PostMapping("page")
+    @ResponseBody
+    public Response page(DynamicPagePM dynamicPagePM) {
+        List<DynamicIntroduction> list = dynamicService.findDynamicIntroductionList(dynamicPagePM.getDynamicPage());
+        List<DynamicIntroductionVM> dynamicIntroductionVMList = list.stream().map(DynamicIntroductionVM::new)
+                .collect(Collectors.toList());
+        return result(dynamicIntroductionVMList);
     }
 
     @GetMapping("addView")
@@ -84,7 +105,8 @@ public class DynamicController {
         }
         Dynamic dynamic = dynamicService.selectById(dynamicId);
         Customer customer = customerService.selectById(dynamic.getCustomerId());
-        String label = dictionaryService.getLabel(DynamicTypeEnum.getLabelByValue(dynamic.getFirstTitle()), dynamic.getSecondTitle());
+        String label = dictionaryService.getLabel(DynamicTypeEnum.getLabelByValue(dynamic.getFirstTitle()),
+                dynamic.getSecondTitle());
         //这里还要加上评论
         List<Comments> commentsList = commentsService.getDynamicComments(dynamicId);
         List<CommentsDetailVM> list = getCommentsDetailVMList(commentsList);
@@ -93,6 +115,13 @@ public class DynamicController {
         dynamic.setPopularity(dynamic.getPopularity() + 1);
         dynamicService.update(dynamic);
         model.addAttribute("dynamic", dynamicDetailVM);
+
+        List<Dictionary> moodList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_MOOD.getValue());
+        List<Dictionary> topicList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_TOPIC.getValue());
+        model.addAttribute("moodList", moodList);
+        model.addAttribute("topicList", topicList);
+        //还有当前分类，用于正确显示导航栏目
+        model.addAttribute("category", new CurrentTitleVM(dynamic.getFirstTitle(), dynamic.getSecondTitle()));
         return "jie/detail";
     }
 

@@ -73,11 +73,14 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/image/show", "anon");//显示图片接口
         filterChainDefinitionMap.put("/image/upload", "anon");//上传图片
 
+        filterChainDefinitionMap.put("/", "anon");//默认页面
         filterChainDefinitionMap.put("/index", "anon");//主页
         filterChainDefinitionMap.put("/customer/information", "anon");//用户信息
 
         filterChainDefinitionMap.put("/customer/signIn", "anon");//签到栏信息
         filterChainDefinitionMap.put("/customer/sign", "anon");//用户签到
+
+        filterChainDefinitionMap.put("/dynamic/page", "anon");//分页查询动态
 
         filterChainDefinitionMap.put("/404", "anon");
 
