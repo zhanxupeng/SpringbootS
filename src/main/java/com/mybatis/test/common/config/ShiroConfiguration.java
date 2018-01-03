@@ -84,42 +84,21 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/404", "anon");
 
-        //发动态接口，暂时匿名，方便调试
-        filterChainDefinitionMap.put("/dynamic/addView", "anon");
-        filterChainDefinitionMap.put("/rest/dictionary/dynamicSecondTopic", "anon");
+        filterChainDefinitionMap.put("/rest/dictionary/dynamicSecondTopic", "anon");//动态二级标题
 
 
         //测试
-        filterChainDefinitionMap.put("/test", "anon");
-        filterChainDefinitionMap.put("/test/upload", "anon");
-        filterChainDefinitionMap.put("/page", "anon");
         filterChainDefinitionMap.put("/dynamic/index", "anon");
 
         //authc接口
         filterChainDefinitionMap.put("/dynamic/reply", "authc");
+        filterChainDefinitionMap.put("/dynamic/addView", "authc");//添加动态
 
         //authc页面
         filterChainDefinitionMap.put("/customer/setView", "anon");//基本设置
         filterChainDefinitionMap.put("/customer/messageView", "anon");//我的消息
         filterChainDefinitionMap.put("/customer/home", "anon");//我的主页
         filterChainDefinitionMap.put("/customer/indexView", "anon");//用户中心
-
-/*        filterChainDefinitionMap.put("/toLogin", "anon");
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/user/reg", "anon");
-        //rest接口
-        filterChainDefinitionMap.put("/rest/customer/userNameCheck", "anon");
-        filterChainDefinitionMap.put("/rest/dictionary/securityQuestion", "anon");
-        filterChainDefinitionMap.put("/rest/dictionary/humanQuestion", "anon");
-        filterChainDefinitionMap.put("/rest/customer/register", "anon");
-
-        //view页面
-        filterChainDefinitionMap.put("/view/customer/register", "anon");
-        filterChainDefinitionMap.put("/view/customer/registerView", "anon");
-        filterChainDefinitionMap.put("/user/index", "anon");
-
-        filterChainDefinitionMap.put("/user/upload", "anon");
-        filterChainDefinitionMap.put("/upload", "anon");*/
 
         filterChainDefinitionMap.put("/**", "authc");
 

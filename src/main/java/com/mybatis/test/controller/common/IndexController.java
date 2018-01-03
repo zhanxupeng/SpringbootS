@@ -27,11 +27,4 @@ public class IndexController {
         return "other/404";
     }
 
-    /**
-     * 分页测试
-     */
-    @GetMapping("page")
-    public String page() {
-        return "page";
-    }
 }
