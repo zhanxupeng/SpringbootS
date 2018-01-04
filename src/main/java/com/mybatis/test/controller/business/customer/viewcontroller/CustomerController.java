@@ -131,7 +131,7 @@ public class CustomerController extends BaseController {
     @ResponseBody
     public Map login(String userName, String password) {
         Map<String, Object> map = new TreeMap<>();
-        map.put("status", 1);
+        //map.put("status", 1);
 
         Customer customer = customerService.selectByUserName(userName);
         if (customer == null) {
