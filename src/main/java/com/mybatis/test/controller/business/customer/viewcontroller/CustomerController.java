@@ -3,10 +3,11 @@ package com.mybatis.test.controller.business.customer.viewcontroller;
 import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.controller.base.BaseController;
-import com.mybatis.test.controller.business.customer.parammodel.BaseDataPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.BoolVM;
+import com.mybatis.test.controller.business.customer.viewmodel.SignInVM;
+import com.mybatis.test.controller.business.customer.viewmodel.SignVM;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.Question;
 import com.mybatis.test.service.api.question.IQuestionService;
@@ -33,38 +34,22 @@ public class CustomerController extends BaseController {
     private IQuestionService questionService;
 
     /**
-     * 修改我的资料
+     * 获取签到信息
      */
-    @PostMapping("set")
+    @GetMapping("signIn")
     @ResponseBody
-    public Map set(BaseDataPM baseDataPM) {
-        Customer customer = baseDataPM.getCustomer();
-        customer.setId(CustomerUtils.getCustomer().getId());
-        customerService.update(customer);
-        Map<String, Object> map = new TreeMap<>();
-        map.put("status", 0);
-        map.put("action", "/customer/setView");
-        map.put("msg", "修改成功");
-        return map;
+    public SignInVM getSignIn() {
+        return new SignInVM(customerService.getSignIn());
     }
 
     /**
-     * 上传头像
+     * 用户签到
      */
-    @PostMapping("changeHead")
+    @GetMapping("sign")
     @ResponseBody
-    public Map changeHead(String headPicture) {
-        Customer customer = new Customer();
-        customer.preUpdate();
-        customer.setHeadPicture(headPicture);
-        customerService.update(customer);
-        Map<String, Object> map = new TreeMap<>();
-        map.put("status", 0);
-        map.put("action", "/customer/setView");
-        map.put("msg", "修改成功");
-        return map;
+    public SignVM sign() {
+        return new SignVM(customerService.sign());
     }
-
 
     /**
      * 基本设置
@@ -154,7 +139,7 @@ public class CustomerController extends BaseController {
         save(registerCustomerPM);
         Map<String, Object> map = new TreeMap<>();
         map.put("status", 0);
-        map.put("action", "/loginView");
+        map.put("action", "/customer/loginView");
         map.put("msg", "注册成功，请登录");
         return map;
     }
@@ -196,7 +181,7 @@ public class CustomerController extends BaseController {
         customer.setNickName(registerCustomerPM.getNickName());
         customer.setPassword(registerCustomerPM.getPassword());
         customer.setSex(registerCustomerPM.getSex());
-        customer.setHeadPicture("image\\show?imagePath=G%3A%5Clunwen%5Cpicture%5C15140023287112.jpg");//默认头像
+        customer.setHeadPicture("\\image\\show?imagePath=G%3A%5Clunwen%5Cpicture%5C15140023287112.jpg");//默认头像
         customerService.insert(customer);
         if (registerCustomerPM.isSecurity()) {
             for (SecurityQuestionPM securityQuestionPM : registerCustomerPM.getSecurityQuestionPMList()) {

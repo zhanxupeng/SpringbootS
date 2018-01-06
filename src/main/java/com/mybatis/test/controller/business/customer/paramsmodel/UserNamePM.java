@@ -1,4 +1,4 @@
-package com.mybatis.test.controller.business.customer.parammodel;
+package com.mybatis.test.controller.business.customer.paramsmodel;
 
 public class UserNamePM {
     //用户名

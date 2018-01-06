@@ -2,12 +2,14 @@ package com.mybatis.test.controller.business.dynamic.viewcontroller;
 
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.common.enumeration.DynamicTypeEnum;
+import com.mybatis.test.controller.business.dynamic.paramsmodel.CurrentTitlePM;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.DynamicPM;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.ReplyDynamicPM;
 import com.mybatis.test.controller.business.dynamic.viewmodel.CommentsDetailVM;
 import com.mybatis.test.controller.business.dynamic.viewmodel.DynamicDetailVM;
 import com.mybatis.test.model.Comments;
 import com.mybatis.test.model.Customer;
+import com.mybatis.test.model.Dictionary;
 import com.mybatis.test.model.Dynamic;
 import com.mybatis.test.service.api.comments.ICommentsService;
 import com.mybatis.test.service.api.customer.ICustomerService;
@@ -43,6 +45,22 @@ public class DynamicController {
     @Resource
     private ICommentsService commentsService;
 
+    /**
+     * 查看动态
+     */
+    @GetMapping("index")
+    public String index(CurrentTitlePM currentTitlePM, Model model) {
+        if (DynamicTypeEnum.isNeedLogin(currentTitlePM.getFirstTitle(), currentTitlePM.getSecondTitle())) {
+            return "redirect:user/login";
+        }
+        List<Dictionary> moodList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_MOOD.getValue());
+        List<Dictionary> topicList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_TOPIC.getValue());
+        model.addAttribute("moodList", moodList);
+        model.addAttribute("topicList", topicList);
+        model.addAttribute("category", currentTitlePM);
+        return "jie/index";
+    }
+
     @GetMapping("addView")
     public String addView() {
         return "jie/add";
@@ -51,10 +69,10 @@ public class DynamicController {
     @PostMapping("add")
     @ResponseBody
     public Map add(DynamicPM dynamicPM) {
-        String dynamicId= save(dynamicPM);
+        String dynamicId = save(dynamicPM);
         Map<String, Object> map = new TreeMap<>();
         map.put("status", 0);
-        map.put("action", "/dynamic/detailView?dynamicId="+dynamicId);
+        map.put("action", "/dynamic/detailView?dynamicId=" + dynamicId);
         map.put("msg", "发布成功，去看一看吧");
         return map;
     }
@@ -72,7 +90,7 @@ public class DynamicController {
         List<CommentsDetailVM> list = getCommentsDetailVMList(commentsList);
         DynamicDetailVM dynamicDetailVM = new DynamicDetailVM(customer, dynamic, label, list);
         //用户查看，需要把人气加1
-        dynamic.setPopularity(dynamic.getPopularity()+1);
+        dynamic.setPopularity(dynamic.getPopularity() + 1);
         dynamicService.update(dynamic);
         model.addAttribute("dynamic", dynamicDetailVM);
         return "jie/detail";

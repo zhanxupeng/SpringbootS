@@ -16,10 +16,14 @@
         </a>
         <ul class="layui-nav fly-nav layui-hide-xs">
             <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>心情</a>
+                <a href="/dynamic/index?firstTitle=1&secondTitle=3">
+                    <i class="iconfont icon-jiaoliu"></i>心情
+                </a>
             </li>
             <li class="layui-nav-item">
-                <a href="case/case.html"><i class="iconfont icon-iconmingxinganli"></i>话题</a>
+                <a href="/dynamic/index?firstTitle=2&secondTitle=1">
+                    <i class="iconfont icon-iconmingxinganli"></i>话题
+                </a>
             </li>
         </ul>
 
@@ -41,13 +45,15 @@
         <ul id="inLogin" class="layui-nav fly-nav-user layui-hide">
             <li class="layui-nav-item">
                 <a class="fly-nav-avatar" href="javascript:;">
+                    <input id="customerId" type="hidden" value=""/>
                     <cite id="nickName" class="layui-hide-xs">贤心</cite>
                     <img id="myHead"
                          src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg">
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/customer/setView"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    </dd>
                     <dd><a href="/customer/home"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
@@ -64,15 +70,18 @@
     <div class="layui-container">
         <ul class="layui-clear">
             <li class="layui-hide-xs layui-this"><a href="/">推荐</a></li>
-            <li><a href="jie/index.html">好友圈</a></li>
-            <li><a href="jie/index.html">身边<span class="layui-badge-dot"></span></a></li>
-            <li><a href="jie/index.html">校园</a></li>
+            <li><a href="/dynamic/index?firstTitle=1&secondTitle=1" class="loginCheck">好友圈</a></li>
+            <li><a href="/dynamic/index?firstTitle=1&secondTitle=2" class="loginCheck">身边<span
+                    class="layui-badge-dot"></span></a></li>
+            <li><a href="/dynamic/index?firstTitle=1&secondTitle=3">校园</a></li>
             <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
 
             <!-- 用户登入后显示 -->
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a href="user/index.html">我的动态</a></li>
-            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                    href="user/index.html#collection">我的收藏</a>
+            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
+                <a href="user/index.html" class="loginCheck">我的动态</a>
+            </li>
+            <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block">
+                <a href="user/index.html#collection" class="loginCheck">我的收藏</a>
             </li>
         </ul>
 
@@ -92,144 +101,26 @@
         <div class="layui-col-md8">
             <div class="fly-panel">
 
+                <div class="layui-carousel" id="test1">
+                    <div carousel-item>
+                        <a href="/dynamic/index?firstTitle=1&secondTitle=3">
+                            <img src="../static/images/other/catoo.jpg" width="100%" height="100%">
+                        </a>
+                        <a href="/dynamic/index?firstTitle=1&secondTitle=3">
+                            <img src="../static/images/other/leave.jpg" width="100%" height="100%">
+                        </a>
+                        <a href="/dynamic/index?firstTitle=1&secondTitle=3" width="100%" height="100%">
+                            <img src="../static/images/other/pen.jpg">
+                        </a>
+                        <a href="/dynamic/index?firstTitle=1&secondTitle=3">
+                            <img src="../static/images/other/room.jpg" width="100%" height="100%">
 
-                <div class="fly-panel-title fly-filter">
-                    <a>置顶</a>
-                    <a href="#signin" class="layui-hide-sm layui-show-xs-block fly-right" id="LAY_goSignin"
-                       style="color: #FF5722;">去签到</a>
+                        </a>
+                        <a href="/dynamic/index?firstTitle=1&secondTitle=3">
+                            <img src="../static/images/other/talk.jpg" width="100%" height="100%">
+                        </a>
+                    </div>
                 </div>
-
-
-                <ul class="fly-list">
-
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                                 alt="昵称">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">朋友圈</a>
-                            <a href="jie/detail.html">这是一条动态的标题</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>小占</cite>
-                            </a>
-                            <span>2017-11-23</span>
-
-                            <span class="fly-list-kiss layui-hide-xs" title="获赞"><i
-                                    class="iconfont icon-zan"></i> 60</span>
-                            <span class="fly-list-nums">
-                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-                             </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                                 alt="贤心">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">公告</a>
-                            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>贤心</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>2017-11-30</span>
-
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-                            </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                                 alt="贤心">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">公告</a>
-                            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>贤心</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-                            </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-
-                    <li>
-                        <a href="user/home.html" class="fly-avatar">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
-                                 alt="贤心">
-                        </a>
-                        <h2>
-                            <a class="layui-badge">公告</a>
-                            <a href="jie/detail.html">基于 layui 的极简社区页面模版</a>
-                        </h2>
-                        <div class="fly-list-info">
-                            <a href="user/home.html" link>
-                                <cite>贤心</cite>
-                                <!--
-                                <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
-                                <i class="layui-badge fly-badge-vip">VIP3</i>
-                                -->
-                            </a>
-                            <span>刚刚</span>
-
-                            <span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
-                            <!--<span class="layui-badge fly-badge-accept layui-hide-xs">已结</span>-->
-                            <span class="fly-list-nums">
-                                <i class="iconfont icon-pinglun1" title="回答"></i> 66
-                            </span>
-                        </div>
-                        <div class="fly-list-badge">
-                            <!--
-                            <span class="layui-badge layui-bg-black">置顶</span>
-                            <span class="layui-badge layui-bg-red">精帖</span>
-                            -->
-                        </div>
-                    </li>
-                </ul>
             </div>
 
 
@@ -604,7 +495,7 @@
                 </ul>
                 <div style="text-align: center">
                     <div class="laypage-main">
-                        <a href="jie/index.html" class="laypage-next">更多求解</a>
+                        <a href="/dynamic/index?firstTitle=1&secondTitle=3" class="laypage-next">发现更多</a>
                     </div>
                 </div>
 
@@ -620,17 +511,22 @@
                     <i class="fly-mid"></i>
                     <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
                     <i class="fly-mid"></i>
-                    <span class="fly-signin-days">已连续签到<cite>16</cite>天</span>
+                    <span id="continueSignText" class="fly-signin-days layui-hide">
+                        已连续签到
+                        <cite id="continueSignCount">16</cite>
+                        天
+                    </span>
                 </div>
                 <div class="fly-panel-main fly-signin-main">
-                    <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
-                    <span>可获得<cite>5</cite>飞吻</span>
-
+                    <div id="unSignIn" class="layui-hide">
+                        <button class="layui-btn layui-btn-danger" id="LAY_signin">今日签到</button>
+                        <span>可获得<cite id="unSignInValue">5</cite>活跃值</span>
+                    </div>
                     <!-- 已签到状态 -->
-                    <!--
-                    <button class="layui-btn layui-btn-disabled">今日已签到</button>
-                    <span>获得了<cite>20</cite>飞吻</span>
-                    -->
+                    <div id="inSignIn" class="layui-hide">
+                        <button class="layui-btn layui-btn-disabled">今日已签到</button>
+                        <span>获得了<cite id="inSignInValue">20</cite>活跃值</span>
+                    </div>
                 </div>
             </div>
 
@@ -836,26 +732,148 @@
     }).extend({
         fly: 'index'
     }).use('fly');
-    $(document).ready(function () {
-        var $unLogin = $("#unLogin");
-        var $inLogin = $("#inLogin");
-        $.ajax({
-            url: '/customer/information',
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                if (data.id != null && data.id != '') {
-                    //说明用户已经登录，改为登录状态
-                    $inLogin.removeClass("layui-hide");
-                    $unLogin.addClass("layui-hide");
-                    $("#nickName").text(data.nickName);
-                    $("#myHead").attr("src", data.headPicture);
-                }
-            },
-            error: function () {
 
-            }
+    layui.use(['layer', 'carousel'], function () {
+        var layer = layui.layer;
+        $(document).ready(function () {
+            var $unLogin = $("#unLogin");
+            var $inLogin = $("#inLogin");
+            var $customerId = $("#customerId");
+            $.ajax({
+                url: '/customer/information',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.id != null && data.id != '') {
+                        //说明用户已经登录，改为登录状态
+                        $inLogin.removeClass("layui-hide");
+                        $unLogin.addClass("layui-hide");
+                        $("#nickName").text(data.nickName);
+                        $("#myHead").attr("src", data.headPicture);
+                        $customerId.val(data.id);
+                    }
+                },
+                error: function () {
+
+                }
+            });
+
+            initSignIn();
+
+            //签到模块
+            var $signIn = $("#LAY_signin");
+            $signIn.click(function () {
+                if ($customerId.val() == null || $customerId.val() == '') {
+                    layer.msg('必须登录才可以签到哦', {icon: 5});
+                } else {
+                    $.ajax({
+                        url: '/customer/sign',
+                        type: 'get',
+                        dataType: 'json',
+                        success: function (data) {
+                            //签到是否成功 signFlag ,提示信息 signMessage
+                            if (data.signFlag) {
+                                layer.alert(data.signMessage, {icon: 6});
+                                initSignIn();
+                            } else {
+                                layer.msg(data.signMessage, {icon: 5});
+                            }
+                        },
+                        error: function () {
+
+                        }
+                    });
+                }
+            });
+
+            $(".loginCheck").click(function () {
+                if ($customerId.val() == null || $customerId.val() == '') {
+                    layer.msg('必须登录才可以查看哦', {icon: 5});
+                    return false;
+                }
+                return true;
+            });
+
         });
+
+        //初始化签到模块
+        function initSignIn() {
+            $.ajax({
+                url: '/customer/signIn',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    //是否登录 loginFlag,今日是否签到 signInFlag ,是否显示连续签到天数 showSignInCountFlag
+                    //连续签到天数 continueActiveCount,签到获得活跃值 activeValue
+                    var $continueSignText = $("#continueSignText");
+                    var $continueSignCount = $("#continueSignCount");
+                    var $unSignIn = $("#unSignIn");
+                    var $unSignInValue = $("#unSignInValue");
+                    var $inSignIn = $("#inSignIn");
+                    var $inSignInValue = $("#inSignInValue");
+                    if (data.loginFlag) {//已经登录
+                        if (data.signInFlag) {//今日已经签到
+                            //连续签到显示
+                            $continueSignText.removeClass("layui-hide");
+                            $continueSignCount.text(data.continueActiveCount);
+                            //未签到隐藏
+                            $unSignIn.removeClass("layui-hide");
+                            $unSignIn.addClass("layui-hide");
+                            //已经签到显示
+                            $inSignIn.removeClass("layui-hide");
+                            $inSignInValue.text(data.activeValue);
+                        } else {//今日还未签到
+                            if (data.showSignInCountFlag) {//连续签到
+                                //连续签到显示
+                                $continueSignText.removeClass("layui-hide");
+                                $continueSignCount.text(data.continueActiveCount);
+                                //未签到显示
+                                $unSignIn.removeClass("layui-hide");
+                                $unSignInValue.text(data.activeValue);
+                                //已经签到隐藏
+                                $inSignIn.removeClass("layui-hide");
+                                $inSignIn.addClass("layui-hide");
+                            } else {//已经断签
+                                //连续签到隐藏
+                                $continueSignText.removeClass("layui-hide");
+                                $continueSignText.addClass("layui-hide");
+                                //未签到显示
+                                $unSignIn.removeClass("layui-hide");
+                                $unSignInValue.text(data.activeValue);
+                                //已经签到隐藏
+                                $inSignIn.removeClass("layui-hide");
+                                $inSignIn.addClass("layui-hide");
+                            }
+                        }
+                    } else {//未登录
+                        //连续签到隐藏
+                        $continueSignText.removeClass("layui-hide");
+                        $continueSignText.addClass("layui-hide");
+                        //未签到显示
+                        $unSignIn.removeClass("layui-hide");
+                        //已经签到隐藏
+                        $inSignIn.removeClass("layui-hide");
+                        $inSignIn.addClass("layui-hide");
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            , width: '100%' //设置容器宽度
+            , arrow: 'always' //始终显示箭头
+            , height: '350px'
+            , anim: 'fade'
+            //,anim: 'updown' //切换动画方式
+        });
+
     });
 </script>
 

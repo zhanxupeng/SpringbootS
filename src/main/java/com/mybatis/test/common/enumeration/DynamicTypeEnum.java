@@ -30,4 +30,13 @@ public enum DynamicTypeEnum {
     public String getLabel() {
         return label;
     }
+
+    public static boolean isNeedLogin(String firstTitle, String secondTitle) {
+        if (DYNAMIC_MOOD.value.equals(firstTitle)) {
+            if (secondTitle.equals("1") || secondTitle.equals("2")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
