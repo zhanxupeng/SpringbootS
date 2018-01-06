@@ -51,7 +51,7 @@ public class DynamicController {
     @GetMapping("index")
     public String index(CurrentTitlePM currentTitlePM, Model model) {
         if (DynamicTypeEnum.isNeedLogin(currentTitlePM.getFirstTitle(), currentTitlePM.getSecondTitle())) {
-            return "redirect:user/login";
+            return "redirect:/customer/loginView";
         }
         List<Dictionary> moodList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_MOOD.getValue());
         List<Dictionary> topicList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_TOPIC.getValue());
