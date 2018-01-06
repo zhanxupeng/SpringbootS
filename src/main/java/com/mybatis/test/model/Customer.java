@@ -22,9 +22,9 @@ public class Customer extends BaseModel {
 
     private String autograph;
 
-    private int popularity;
+    private Integer popularity;
 
-    private int activeValue;
+    private Integer activeValue;
 
     private Date latestActiveDate;
 
@@ -94,19 +94,19 @@ public class Customer extends BaseModel {
         this.autograph = autograph;
     }
 
-    public int getPopularity() {
+    public Integer getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(int popularity) {
+    public void setPopularity(Integer popularity) {
         this.popularity = popularity;
     }
 
-    public int getActiveValue() {
+    public Integer getActiveValue() {
         return activeValue;
     }
 
-    public void setActiveValue(int activeValue) {
+    public void setActiveValue(Integer activeValue) {
         this.activeValue = activeValue;
     }
 

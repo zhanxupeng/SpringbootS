@@ -96,6 +96,7 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/customer/setBasic", "authc");//修改我的信息
         filterChainDefinitionMap.put("/customer/modifyHead", "authc");//修改用户头像
+        filterChainDefinitionMap.put("/customer/modifyPassword", "authc");//修改密码
         //authc页面
         filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
         filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息

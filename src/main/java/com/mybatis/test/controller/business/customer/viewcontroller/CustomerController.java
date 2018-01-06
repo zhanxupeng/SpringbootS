@@ -4,6 +4,7 @@ import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.controller.base.BaseController;
 import com.mybatis.test.controller.business.customer.paramsmodel.BasicInformationPM;
+import com.mybatis.test.controller.business.customer.paramsmodel.PasswordModifyPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.BoolVM;
@@ -89,6 +90,29 @@ public class CustomerController extends BaseController {
         Customer customer = basicInformationPM.getCustomer();
         customer.setId(CustomerUtils.getCustomer().getId());
         customerService.update(customer);
+    }
+
+    /**
+     * 修改密码
+     */
+    @PostMapping("modifyPassword")
+    @ResponseBody
+    public Map modifyPassword(PasswordModifyPM passwordModifyPM) {
+        Customer customer = customerService.selectById(CustomerUtils.getCustomer().getId());
+        Map<String, Object> map = new TreeMap<>();
+        if (!customer.getPassword().equals(passwordModifyPM.getOldPass())) {
+            map.put("msg", "当前密码输入错误，请重新输入");
+            return map;
+        }
+        Customer modifyCustomer = new Customer();
+        modifyCustomer.setId(customer.getId());
+        modifyCustomer.setPassword(passwordModifyPM.getNewPass());
+        customerService.update(modifyCustomer);
+        SecurityUtils.getSecurityManager().logout(SecurityUtils.getSubject());//退出
+        map.put("status", 0);
+        map.put("action", "/customer/loginView");
+        map.put("msg", "修改成功,请重新登录");
+        return map;
     }
 
     /**

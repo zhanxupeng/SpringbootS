@@ -93,7 +93,7 @@
         #{activeValue,jdbcType=INTEGER},
         #{latestActiveDate,jdbcType=TIMESTAMP},
         #{continueActiveCount,jdbcType=INTEGER})
-  </insert>
+    </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Customer">
         update customer
@@ -140,10 +140,10 @@
             <if test="delFlag != null">
                 del_flag = #{delFlag,jdbcType=VARCHAR},
             </if>
-            <if test="popularity != 0">
+            <if test="popularity != null">
                 popularity = #{popularity,jdbcType=INTEGER},
             </if>
-            <if test="activeValue != 0">
+            <if test="activeValue != null">
                 active_value = #{activeValue,jdbcType=INTEGER},
             </if>
             <if test="latestActiveDate != null">

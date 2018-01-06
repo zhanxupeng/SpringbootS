@@ -171,7 +171,7 @@
                 </div>
 
                 <div class="layui-form layui-form-pane layui-tab-item">
-                    <form action="/user/repass" method="post">
+                    <form action="/customer/modifyPassword" method="post">
                         <div class="layui-form-item">
                             <label for="L_oldPass" class="layui-form-label">当前密码</label>
                             <div class="layui-input-inline">
@@ -190,7 +190,8 @@
                         <div class="layui-form-item">
                             <label for="L_repass" class="layui-form-label">确认密码</label>
                             <div class="layui-input-inline">
-                                <input type="password" id="L_repass" name="repass" required lay-verify="required"
+                                <input type="password" id="L_repass" name="repass" required
+                                       lay-verify="required|checkNewPass"
                                        autocomplete="off" class="layui-input">
                             </div>
                         </div>
@@ -259,6 +260,35 @@
             }
         });
     });
+
+    layui.use(['layer', 'form'], function () {
+
+        var layer = layui.layer;
+        var form = layui.form;
+        //密码必须符合规则
+        var $password = $("#L_newPass");
+        $password.blur(function () {
+            var password = $password.val();
+            if (password.length < 6 || password.length > 16) {
+                $password.val("");
+                layer.msg("密码必须6到16个字符");
+            }
+        });
+
+        var $newPass = $("#L_newPass");
+        form.verify({
+            checkNewPass: function (value, dom) { //value：表单的值、item：表单的DOM对象
+                var newPass = $newPass.val();
+                if (value != null && value != '') {
+                    if (value != newPass) {
+                        $(dom).val("");
+                        return '确认密码不正确，请重新输入';
+                    }
+                }
+            }
+        });
+    });
+
 </script>
 
 </body>
