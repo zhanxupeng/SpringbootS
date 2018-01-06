@@ -14,12 +14,12 @@
         <a class="fly-logo" href="/">
             <img src="../../static/images/logo.png" alt="layui">
         </a>
-        <ul class="layui-nav fly-nav layui-hide-xs">
-            <li class="layui-nav-item layui-this">
-                <a href="/"><i class="iconfont icon-jiaoliu"></i>心情</a>
+        <ul class="layui-nav fly-nav layui-hide-xs" id="firstTitle">
+            <li class="layui-nav-item" value="1">
+                <a href="#"><i class="iconfont icon-jiaoliu"></i>心情</a>
             </li>
-            <li class="layui-nav-item">
-                <a href="../case/case.html"><i class="iconfont icon-iconmingxinganli"></i>话题</a>
+            <li class="layui-nav-item" value="2">
+                <a href="#"><i class="iconfont icon-iconmingxinganli"></i>话题</a>
             </li>
         </ul>
 
@@ -48,7 +48,8 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="/customer/setView"><i class="layui-icon">&#xe620;</i>基本设置</a></dd>
-                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a></dd>
+                    <dd><a href="/customer/messageView"><i class="iconfont icon-tongzhi" style="top: 4px;"></i>我的消息</a>
+                    </dd>
                     <dd><a href="/customer/home"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
@@ -64,27 +65,30 @@
 <div class="layui-hide-xs">
     <div class="fly-panel fly-column">
         <div class="layui-container">
-            <ul class="layui-clear">
+            <ul class="layui-clear" id="secondTitle">
                 <li class="layui-hide-xs layui-this"><a href="/">推荐</a></li>
-                <li><a href="jie/index.html">好友圈</a></li>
-                <li><a href="jie/index.html">身边<span class="layui-badge-dot"></span></a></li>
-                <li><a href="jie/index.html">校园</a></li>
+                <li th:each="mood:${moodList}" value="1" class="secondTitle">
+                    <a href="#" th:text="${mood.label}" th:value="${mood.key}"></a>
+                </li>
+                <li th:each="topic:${topicList}" value="2" class="secondTitle">
+                    <a href="#" th:text="${topic.label}" th:value="${topic.key}"></a>
+                </li>
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><span class="fly-mid"></span></li>
 
                 <!-- 用户登入后显示 -->
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/index.html">我的动态</a></li>
+                        href="../user/index.html" class="loginCheck">我的动态</a></li>
                 <li class="layui-hide-xs layui-hide-sm layui-show-md-inline-block"><a
-                        href="../user/index.html#collection">我的收藏</a></li>
+                        href="../user/index.html#collection" class="loginCheck">我的收藏</a></li>
             </ul>
 
             <div class="fly-column-right layui-hide-xs">
                 <span class="fly-search"><i class="layui-icon"></i></span>
-                <a href="add.html" class="layui-btn">搞事情</a>
+                <a href="/dynamic/addView" class="layui-btn">搞事情</a>
             </div>
             <div class="layui-hide-sm layui-show-xs-block"
                  style="margin-top: -10px; padding-bottom: 10px; text-align: center;">
-                <a href="add.html" class="layui-btn">搞事情</a>
+                <a href="/dynamic/addView" class="layui-btn">搞事情</a>
             </div>
         </div>
     </div>
@@ -100,7 +104,8 @@
                     <span th:text="${dynamic.label}" class="layui-badge layui-bg-green fly-detail-column">朋友圈</span>
                     <span class="layui-btn layui-btn-xs jie-admin" type="del">删除</span>
                     <span class="fly-list-nums">
-                        <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i><span th:text="${dynamic.commentsNumber}">66</span> </a>
+                        <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i><span
+                                th:text="${dynamic.commentsNumber}">66</span> </a>
                         <i class="iconfont" title="人气">&#xe60b;</i><span th:text="${dynamic.popularity}">99999</span>
                     </span>
                 </div>
@@ -272,7 +277,8 @@
                         <div class="layui-form-item layui-form-text">
                             <a name="comment"></a>
                             <input id="toCustomerId" name="toCustomerId" type="hidden" th:value="${dynamic.customerId}">
-                            <input id="dynamicId" name="dynamicId" type="hidden" th:value="${dynamic.dynamicId}" lay-verify="loginCheck">
+                            <input id="dynamicId" name="dynamicId" type="hidden" th:value="${dynamic.dynamicId}"
+                                   lay-verify="loginCheck">
                             <div class="layui-input-block">
                                 <textarea id="L_content" name="content" required lay-verify="required"
                                           placeholder="请输入内容" class="layui-textarea fly-editor"
@@ -395,6 +401,37 @@
         });
     });
 
+    $("#secondTitle").children().click(function () {
+        var $currentTitle = $(this);
+        var firstTitle = $currentTitle.attr("value");
+        var secondTitle = $currentTitle.children().attr("value");
+        window.location.href = "/dynamic/index?firstTitle=" + firstTitle + "&secondTitle=" + secondTitle;
+    });
+    $("#firstTitle").children().click(function () {
+        var $currentTitle = $(this);
+        $currentTitle.siblings().removeClass("layui-this");
+        $currentTitle.addClass("layui-this");
+        $("#secondTitle").children().filter(".secondTitle").each(function () {
+            var $this = $(this);
+            if ($this.attr("value") == $currentTitle.attr("value")) {
+                $this.removeClass("layui-hide");
+            } else {
+                $this.removeClass("layui-hide");
+                $this.addClass("layui-hide");
+            }
+        });
+        console.log($currentTitle.text);
+    });
+
+    var $customerId = $("#customerId");
+    $(".loginCheck").click(function () {
+        if ($customerId.val() == null || $customerId.val() == '') {
+            layer.msg('必须登录才可以查看哦', {icon: 5});
+            return false;
+        }
+        return true;
+    });
+
     $(document).ready(function () {
         var $unLogin = $("#unLogin");
         var $inLogin = $("#inLogin");
@@ -418,12 +455,12 @@
         });
     });
 
-    layui.use('form',function () {
-        var form =layui.form;
+    layui.use('form', function () {
+        var form = layui.form;
         form.verify({
-            loginCheck: function(value){ //value：表单的值、item：表单的DOM对象
-                var $customerId=$("#customerId");
-                if($customerId.val()==null||$customerId.val()==''){
+            loginCheck: function (value) { //value：表单的值、item：表单的DOM对象
+                var $customerId = $("#customerId");
+                if ($customerId.val() == null || $customerId.val() == '') {
                     return "必须要登录才能评论哦，快去登录吧"
                 }
             }
@@ -431,6 +468,28 @@
         });
     });
 </script>
+<script th:inline="javascript">
+    var category = [[${category}]];
 
+    var $firstTitle = $("#firstTitle");
+    $firstTitle.children().each(function () {
+        if ($(this).attr("value") == category.firstTitle) {
+            $(this).addClass("layui-this");
+        }
+    });
+
+    var $secondTitle = $("#secondTitle");
+    var $secondTitleList = $secondTitle.children().filter(".secondTitle");
+    if (category.firstTitle == '1') {
+        $secondTitleList.filter('li[value=2]').addClass("layui-hide");
+        $secondTitleList.filter('li[value=1]').children()
+            .filter("a[value=" + category.secondTitle + "]").parent().addClass("layui-this");
+
+    } else {
+        $secondTitleList.filter('li[value=1]').addClass("layui-hide");
+        $secondTitleList.filter('li[value=2]').children()
+            .filter("a[value=" + category.secondTitle + "]").parent().addClass("layui-this");
+    }
+</script>
 </body>
 </html>

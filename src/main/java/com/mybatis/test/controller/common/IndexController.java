@@ -14,16 +14,17 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * 默认页面
+     */
+    @GetMapping("/")
+    public String defaultPage() {
+        return "index";
+    }
+
     @GetMapping("404")
     public String error() {
         return "other/404";
     }
 
-    /**
-     * 分页测试
-     */
-    @GetMapping("page")
-    public String page() {
-        return "page";
-    }
 }

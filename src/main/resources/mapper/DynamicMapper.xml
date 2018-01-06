@@ -160,4 +160,22 @@
         AND a.second_title = #{secondTitle}
         AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
     </select>
+
+    <select id="findPage" resultType="com.mybatis.test.domain.DynamicIntroduction">
+        SELECT
+        a.customer_id AS customerId,
+        b.head_picture AS headPicture,
+        b.nick_name AS nickName,
+        a.id AS dynamicId,
+        a.title AS title,
+        a.create_date AS createDate,
+        a.praise AS praise,
+        a.comments_number AS commentsNumber
+        FROM dynamic a
+        INNER JOIN customer b on a.customer_id = b.id
+        WHERE a.first_title = #{firstTitle}
+        AND a.second_title = #{secondTitle}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        AND b.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+    </select>
 </mapper>

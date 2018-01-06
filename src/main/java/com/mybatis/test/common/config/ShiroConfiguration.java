@@ -73,50 +73,34 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/image/show", "anon");//显示图片接口
         filterChainDefinitionMap.put("/image/upload", "anon");//上传图片
 
+        filterChainDefinitionMap.put("/", "anon");//默认页面
         filterChainDefinitionMap.put("/index", "anon");//主页
         filterChainDefinitionMap.put("/customer/information", "anon");//用户信息
 
         filterChainDefinitionMap.put("/customer/signIn", "anon");//签到栏信息
         filterChainDefinitionMap.put("/customer/sign", "anon");//用户签到
 
+        filterChainDefinitionMap.put("/dynamic/page", "anon");//分页查询动态
+
         filterChainDefinitionMap.put("/404", "anon");
 
-        //发动态接口，暂时匿名，方便调试
-        filterChainDefinitionMap.put("/dynamic/addView", "anon");
-        filterChainDefinitionMap.put("/rest/dictionary/dynamicSecondTopic", "anon");
+        filterChainDefinitionMap.put("/rest/dictionary/dynamicSecondTopic", "anon");//动态二级标题
 
 
         //测试
-        filterChainDefinitionMap.put("/test", "anon");
-        filterChainDefinitionMap.put("/test/upload", "anon");
-        filterChainDefinitionMap.put("/page", "anon");
         filterChainDefinitionMap.put("/dynamic/index", "anon");
 
         //authc接口
         filterChainDefinitionMap.put("/dynamic/reply", "authc");
+        filterChainDefinitionMap.put("/dynamic/addView", "authc");//添加动态
 
+        filterChainDefinitionMap.put("/customer/setBasic", "authc");//修改我的信息
+        filterChainDefinitionMap.put("/customer/modifyHead", "authc");//修改用户头像
         //authc页面
-        filterChainDefinitionMap.put("/customer/setView", "anon");//基本设置
-        filterChainDefinitionMap.put("/customer/messageView", "anon");//我的消息
-        filterChainDefinitionMap.put("/customer/home", "anon");//我的主页
-        filterChainDefinitionMap.put("/customer/indexView", "anon");//用户中心
-
-/*        filterChainDefinitionMap.put("/toLogin", "anon");
-        filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/user/reg", "anon");
-        //rest接口
-        filterChainDefinitionMap.put("/rest/customer/userNameCheck", "anon");
-        filterChainDefinitionMap.put("/rest/dictionary/securityQuestion", "anon");
-        filterChainDefinitionMap.put("/rest/dictionary/humanQuestion", "anon");
-        filterChainDefinitionMap.put("/rest/customer/register", "anon");
-
-        //view页面
-        filterChainDefinitionMap.put("/view/customer/register", "anon");
-        filterChainDefinitionMap.put("/view/customer/registerView", "anon");
-        filterChainDefinitionMap.put("/user/index", "anon");
-
-        filterChainDefinitionMap.put("/user/upload", "anon");
-        filterChainDefinitionMap.put("/upload", "anon");*/
+        filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
+        filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
+        filterChainDefinitionMap.put("/customer/home", "authc");//我的主页
+        filterChainDefinitionMap.put("/customer/indexView", "authc");//用户中心
 
         filterChainDefinitionMap.put("/**", "authc");
 

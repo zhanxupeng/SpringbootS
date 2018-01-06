@@ -45,7 +45,7 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
 
     private void setSignResult(Sign sign, Customer customer) {
         customer = getRepo().selectById(customer.getId());
-        if (customer.getLatestActiveDate() == null || DateUtil.getBetweenDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) > 1) {
+        if (customer.getLatestActiveDate() == null || DateUtil.getPastDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) > 1) {
             customer.setLatestActiveDate(DateUtil.getCurrentDate());
             customer.setActiveValue(customer.getActiveValue() + ActiveValueTypeEnum.LESS_FIVE.getValue());
             customer.setContinueActiveCount(1);
@@ -54,7 +54,7 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
             sign.setSignFlag(true);
             sign.setSignMessage(String.format("签到成功，获得%s活跃值", ActiveValueTypeEnum.LESS_FIVE.getValue()));
         } else {
-            if (DateUtil.getBetweenDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) == 0) {
+            if (DateUtil.getPastDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) == 0) {
                 throw new RuntimeException("您今天已经签到过了哦");
             } else {
                 customer.setLatestActiveDate(DateUtil.getCurrentDate());
@@ -75,7 +75,7 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
 
     private void setSignMessage(SignIn signIn, Customer customer) {
         signIn.setLoginFlag(true);
-        if (customer.getLatestActiveDate() == null || DateUtil.getBetweenDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) > 1) {
+        if (customer.getLatestActiveDate() == null || DateUtil.getPastDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) > 1) {
             //说明已经断签
             signIn.setShowSignInCountFlag(false);
             signIn.setSignInFlag(false);
@@ -83,7 +83,7 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
             signIn.setActiveValue(ActiveValueTypeEnum.LESS_FIVE.getValue());
         } else {
             signIn.setShowSignInCountFlag(true);
-            if (DateUtil.getBetweenDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) == 0) {
+            if (DateUtil.getPastDays(customer.getLatestActiveDate(), DateUtil.getCurrentDate()) == 0) {
                 //今日已经签到
                 signIn.setSignInFlag(true);
                 signIn.setContinueActiveCount(customer.getContinueActiveCount());
