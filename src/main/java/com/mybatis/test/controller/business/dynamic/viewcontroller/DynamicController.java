@@ -4,15 +4,10 @@ import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.common.enumeration.DynamicTypeEnum;
 import com.mybatis.test.controller.base.BaseController;
-import com.mybatis.test.controller.business.dynamic.paramsmodel.CurrentTitlePM;
-import com.mybatis.test.controller.business.dynamic.paramsmodel.DynamicPM;
-import com.mybatis.test.controller.business.dynamic.paramsmodel.DynamicPagePM;
-import com.mybatis.test.controller.business.dynamic.paramsmodel.ReplyDynamicPM;
-import com.mybatis.test.controller.business.dynamic.viewmodel.CommentsDetailVM;
-import com.mybatis.test.controller.business.dynamic.viewmodel.CurrentTitleVM;
-import com.mybatis.test.controller.business.dynamic.viewmodel.DynamicDetailVM;
-import com.mybatis.test.controller.business.dynamic.viewmodel.DynamicIntroductionVM;
+import com.mybatis.test.controller.business.dynamic.paramsmodel.*;
+import com.mybatis.test.controller.business.dynamic.viewmodel.*;
 import com.mybatis.test.domain.DynamicIntroduction;
+import com.mybatis.test.domain.MyDynamic;
 import com.mybatis.test.model.Comments;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.Dictionary;
@@ -68,6 +63,17 @@ public class DynamicController extends BaseController {
         model.addAttribute("topicList", topicList);
         model.addAttribute("category", currentTitlePM);
         return "jie/index";
+    }
+
+    /**
+     * 分页查询我的动态
+     */
+    @PostMapping("myDynamic")
+    @ResponseBody
+    public Response myDynamic(PagePM pagePM) {
+        List<MyDynamic> myDynamicList = dynamicService.findMyDynamicList(CustomerUtils.getCustomer().getId(), pagePM.getPage());
+        List<MyDynamicVM> myDynamicVMList = myDynamicList.stream().map(MyDynamicVM::new).collect(Collectors.toList());
+        return result(myDynamicVMList);
     }
 
     /**

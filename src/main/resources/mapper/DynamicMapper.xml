@@ -178,4 +178,23 @@
         AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
         AND b.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
     </select>
+
+    <select id="findDynamicByCustomer" resultType="com.mybatis.test.domain.MyDynamic">
+        SELECT
+        a.id AS dynamicId,
+        a.title AS title,
+        a.create_date AS createDate,
+        a.popularity AS popularity,
+        a.comments_number as commentsNumber
+        FROM  dynamic a
+        WHERE a.customer_id=#{customerId}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+    </select>
+
+    <select id="getCountByCustomerId" resultType="int">
+        SELECT count(1)
+        FROM dynamic a
+        WHERE a.customer_id = #{customerId}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+    </select>
 </mapper>

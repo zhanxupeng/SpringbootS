@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>用户中心</title>
@@ -100,19 +100,14 @@
 
 
     <div class="fly-panel fly-panel-user" pad20>
-        <!--
-        <div class="fly-msg" style="margin-top: 15px;">
-          您的邮箱尚未验证，这比较影响您的帐号安全，<a href="activate.html">立即去激活？</a>
-        </div>
-        -->
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                <li data-type="mine-jie" lay-id="index" class="layui-this">我发的帖（<span>89</span>）</li>
-                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我收藏的帖（<span>16</span>）</li>
+                <li data-type="mine-jie" lay-id="index" class="layui-this">我的动态（<span th:text="${customerIndex.myDynamicCount}">89</span>）</li>
+                <li data-type="collection" data-url="/collection/find/" lay-id="collection">我的收藏（<span>16</span>）</li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">
                 <div class="layui-tab-item layui-show">
-                    <ul class="mine-view jie-row">
+                    <ul class="mine-view jie-row" id="myDynamicList">
                         <li>
                             <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
                             <i>2017/3/14 上午8:30:00</i>
@@ -128,19 +123,48 @@
                         <li>
                             <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
                             <i>2017/3/14 上午8:30:00</i>
-                            <a class="mine-edit" href="/jie/edit/8116">编辑</a>
-                            <em>661阅/10答</em>
+                            <!-- <a class="mine-edit" href="/jie/edit/8116">编辑</a>-->
+
+                            <em>
+                                <ul>
+                                    <i class="iconfont" title="人气">&#xe60b;</i>100
+                                    <i class="iconfont icon-pinglun1" title="评论"></i> 66
+                                </ul>
+                            </em>
                         </li>
                     </ul>
-                    <div id="LAY_page"></div>
+                    <script id="dynamic-template" type="text/x-handlebars-template">
+                        {{#each this}}
+                        <li>
+                            <h2>
+                                <a class="layui-badge">动态</a>
+                                <a class="jie-title" href="/dynamic/detailView?dynamicId={{dynamicId}}" target="_blank">{{title}}</a>
+                            </h2>
+                            <i>{{createDate}}</i>
+                            <em>
+                                <ul>
+                                    <i class="iconfont" title="人气">&#xe60b;</i>{{popularity}}
+                                    <i class="iconfont icon-pinglun1" title="评论"></i> {{commentsNumber}}
+                                </ul>
+                            </em>
+                        </li>
+                        {{/each}}
+                    </script>
+                    <div style="text-align: center">
+                        <div id="dynamicPage"></div>
+                    </div>
                 </div>
+
+
                 <div class="layui-tab-item">
                     <ul class="mine-view jie-row">
                         <li>
                             <a class="jie-title" href="../jie/detail.html" target="_blank">基于 layui 的极简社区页面模版</a>
                             <i>收藏于23小时前</i></li>
                     </ul>
-                    <div id="LAY_page1"></div>
+                    <div style="text-align: center">
+                        <div id="collectionPage"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -157,8 +181,9 @@
     </p>
 </div>
 <script src="../../static/jquery/jquery-3.2.1.js"></script>
+<script src="../../static/handlebars/handlebars-1.0.0.beta.6.js"></script>
 <script src="../../static/layui/layui.js"></script>
-<script>
+<script th:inline="javascript">
     layui.cache.page = 'user';
     layui.cache.user = {
         username: '游客'
@@ -192,6 +217,72 @@
                 }
             },
             error: function () {
+
+            }
+        });
+    });
+
+    var customerIndex = [[${customerIndex}]];
+    var dynamicCount=customerIndex.myDynamicCount;
+    var myCollectionCount=customerIndex.myCollectionCount;
+
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage;
+        //我的动态
+        laypage.render({
+            elem: 'dynamicPage'
+            , count: dynamicCount
+            , layout: ['prev', 'page', 'next', 'limit']
+            , limits: [10, 20, 50, 100]
+            , jump: function (obj) {
+                //count 数据总数
+                //limit 每页显示的条数
+                //当前页位置
+                /*                console.log("数据总数:" + obj.count);
+                 console.log("每页显示:" + obj.limit);
+                 console.log("当前页位置:" + obj.curr);*/
+                console.log("我的动态");
+                //调用ajax查询数据
+                var request = {
+                 limit: obj.limit,
+                 curr: obj.curr
+                 };
+                 $.ajax({
+                 url: '/dynamic/myDynamic',
+                 type: 'post',
+                 data: request,
+                 dataType: 'json',
+                 success: function (data) {
+                 console.log(data);
+                 var dataList = data.data;
+                 if (dataList.length != 0) {
+                 //注册一个Handlebars模版，通过id找到某一个模版，获取模版的html框架
+                 var myTemplate = Handlebars.compile($("#dynamic-template").html());
+
+                 //将json对象用刚刚注册的Handlebars模版封装，得到最终的html，插入到基础table中。
+                 $('#myDynamicList').html(myTemplate(dataList));
+                 }
+                 },
+                 error: function () {
+
+                 }
+                 });
+            }
+        });
+        //我的收藏
+        laypage.render({
+            elem: 'collectionPage'
+            , count: myCollectionCount
+            , layout: ['prev', 'page', 'next', 'limit']
+            , limits: [10, 20, 50, 100]
+            , jump: function (obj) {
+                //count 数据总数
+                //limit 每页显示的条数
+                //当前页位置
+                /*                console.log("数据总数:" + obj.count);
+                 console.log("每页显示:" + obj.limit);
+                 console.log("当前页位置:" + obj.curr);*/
+                console.log("我的收藏");
 
             }
         });

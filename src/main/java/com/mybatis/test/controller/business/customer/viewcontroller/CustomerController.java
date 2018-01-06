@@ -7,12 +7,10 @@ import com.mybatis.test.controller.business.customer.paramsmodel.BasicInformatio
 import com.mybatis.test.controller.business.customer.paramsmodel.PasswordModifyPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
-import com.mybatis.test.controller.business.customer.viewmodel.BoolVM;
-import com.mybatis.test.controller.business.customer.viewmodel.CustomerInformationVM;
-import com.mybatis.test.controller.business.customer.viewmodel.SignInVM;
-import com.mybatis.test.controller.business.customer.viewmodel.SignVM;
+import com.mybatis.test.controller.business.customer.viewmodel.*;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.Question;
+import com.mybatis.test.service.api.dynamic.IDynamicService;
 import com.mybatis.test.service.api.question.IQuestionService;
 import com.mybatis.test.service.api.customer.ICustomerService;
 import org.apache.shiro.SecurityUtils;
@@ -36,6 +34,8 @@ public class CustomerController extends BaseController {
     private ICustomerService customerService;
     @Resource
     private IQuestionService questionService;
+    @Resource
+    private IDynamicService dynamicService;
 
     /**
      * 获取签到信息
@@ -135,7 +135,10 @@ public class CustomerController extends BaseController {
      * 用户中心
      */
     @GetMapping("indexView")
-    public String indexView() {
+    public String indexView(Model model) {
+        CustomerIndexVM customerIndexVM=new CustomerIndexVM();
+        customerIndexVM.setMyDynamicCount(dynamicService.getMyDynamicCount(CustomerUtils.getCustomer().getId()));
+        model.addAttribute("customerIndex",customerIndexVM);
         return "user/index";
     }
 
