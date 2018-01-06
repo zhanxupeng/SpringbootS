@@ -29,4 +29,8 @@ public class MyDynamicVM {
     public Integer getCommentsNumber() {
         return myDynamic.getCommentsNumber();
     }
+
+    public String getSecondTitleLabel(){
+        return myDynamic.getSecondTitleLabel();
+    }
 }

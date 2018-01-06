@@ -6,11 +6,30 @@ import java.util.Date;
  * Created by 占大帅 on 2018/1/6.
  */
 public class MyDynamic {
+    private String firstTitle;
+    private String secondTitle;
     private String dynamicId;
     private String title;
     private Date createDate;
     private Integer popularity;
     private Integer commentsNumber;
+    private String secondTitleLabel;
+
+    public String getFirstTitle() {
+        return firstTitle;
+    }
+
+    public void setFirstTitle(String firstTitle) {
+        this.firstTitle = firstTitle;
+    }
+
+    public String getSecondTitle() {
+        return secondTitle;
+    }
+
+    public void setSecondTitle(String secondTitle) {
+        this.secondTitle = secondTitle;
+    }
 
     public String getDynamicId() {
         return dynamicId;
@@ -50,5 +69,13 @@ public class MyDynamic {
 
     public void setCommentsNumber(Integer commentsNumber) {
         this.commentsNumber = commentsNumber;
+    }
+
+    public String getSecondTitleLabel() {
+        return secondTitleLabel;
+    }
+
+    public void setSecondTitleLabel(String secondTitleLabel) {
+        this.secondTitleLabel = secondTitleLabel;
     }
 }

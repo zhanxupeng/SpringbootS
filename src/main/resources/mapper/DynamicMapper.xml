@@ -181,6 +181,8 @@
 
     <select id="findDynamicByCustomer" resultType="com.mybatis.test.domain.MyDynamic">
         SELECT
+        a.first_title AS firstTitle,
+        a.second_title AS secondTitle,
         a.id AS dynamicId,
         a.title AS title,
         a.create_date AS createDate,
