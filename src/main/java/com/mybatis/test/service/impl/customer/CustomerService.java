@@ -6,14 +6,22 @@ import com.mybatis.test.common.util.DateUtil;
 import com.mybatis.test.domain.Sign;
 import com.mybatis.test.domain.SignIn;
 import com.mybatis.test.model.Customer;
+import com.mybatis.test.model.MyAlbum;
 import com.mybatis.test.repo.CustomerMapper;
+import com.mybatis.test.repo.MyAlbumMapper;
 import com.mybatis.test.service.api.customer.ICustomerService;
 import com.mybatis.test.service.common.BaseDBService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class CustomerService extends BaseDBService<CustomerMapper, Customer> implements ICustomerService {
+
+    @Resource
+    private MyAlbumMapper myAlbumMapper;
+
     @Override
     public Customer selectByUserName(String userName) {
         return getRepo().getByUserName(userName);
@@ -95,5 +103,14 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
                 signIn.setActiveValue(ActiveValueTypeEnum.getValueByDay(customer.getContinueActiveCount()));
             }
         }
+    }
+
+    @Override
+    public void savePhoto(String photoUrl, String customerId) {
+        MyAlbum myAlbum = new MyAlbum();
+        myAlbum.init();
+        myAlbum.setImageUrl(photoUrl);
+        myAlbum.setCustomerId(customerId);
+        myAlbumMapper.insert(myAlbum);
     }
 }

@@ -20,4 +20,9 @@ public interface ICustomerService extends IBaseDBService<Customer> {
      * 用户签到
      */
     Sign sign();
+
+    /**
+     * 保存用户相册图片
+     */
+    void savePhoto(String photoUrl, String customerId);
 }

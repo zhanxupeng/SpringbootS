@@ -47,6 +47,23 @@ public class CustomerController extends BaseController {
     }
 
     /**
+     * 保存相册图片
+     */
+    @PostMapping("savePhoto")
+    @ResponseBody
+    public Map savePhoto(String photoUrl) {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("msg", "保存到相册成功");
+        try {
+            customerService.savePhoto(photoUrl, CustomerUtils.getCustomer().getId());
+            map.put("status", 0);
+        } catch (Exception e) {
+            map.put("msg", e.getMessage());
+        }
+        return map;
+    }
+
+    /**
      * 用户签到
      */
     @GetMapping("sign")
@@ -136,9 +153,9 @@ public class CustomerController extends BaseController {
      */
     @GetMapping("indexView")
     public String indexView(Model model) {
-        CustomerIndexVM customerIndexVM=new CustomerIndexVM();
+        CustomerIndexVM customerIndexVM = new CustomerIndexVM();
         customerIndexVM.setMyDynamicCount(dynamicService.getMyDynamicCount(CustomerUtils.getCustomer().getId()));
-        model.addAttribute("customerIndex",customerIndexVM);
+        model.addAttribute("customerIndex", customerIndexVM);
         return "user/index";
     }
 
