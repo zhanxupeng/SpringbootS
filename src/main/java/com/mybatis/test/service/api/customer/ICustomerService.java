@@ -3,7 +3,10 @@ package com.mybatis.test.service.api.customer;
 import com.mybatis.test.domain.Sign;
 import com.mybatis.test.domain.SignIn;
 import com.mybatis.test.model.Customer;
+import com.mybatis.test.model.MyAlbum;
 import com.mybatis.test.service.common.IBaseDBService;
+
+import java.util.List;
 
 public interface ICustomerService extends IBaseDBService<Customer> {
     /**
@@ -25,4 +28,9 @@ public interface ICustomerService extends IBaseDBService<Customer> {
      * 保存用户相册图片
      */
     void savePhoto(String photoUrl, String customerId);
+
+    /**
+     * 查询某用户的相册
+     */
+    List<MyAlbum> getCustomerAlbum(String customerId);
 }

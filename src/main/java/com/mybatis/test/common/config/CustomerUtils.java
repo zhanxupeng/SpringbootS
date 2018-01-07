@@ -12,7 +12,6 @@ public class CustomerUtils {
         Subject subject = getSubject();
         Object principal = subject.getPrincipal();
         if (principal != null) {
-            System.out.println(principal);
             return (Customer) principal;
         }
         return new Customer();

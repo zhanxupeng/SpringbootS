@@ -9,10 +9,12 @@ import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustome
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.*;
 import com.mybatis.test.model.Customer;
+import com.mybatis.test.model.MyAlbum;
 import com.mybatis.test.model.Question;
 import com.mybatis.test.service.api.dynamic.IDynamicService;
 import com.mybatis.test.service.api.question.IQuestionService;
 import com.mybatis.test.service.api.customer.ICustomerService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -24,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("customer")
@@ -36,6 +40,22 @@ public class CustomerController extends BaseController {
     private IQuestionService questionService;
     @Resource
     private IDynamicService dynamicService;
+
+    /**
+     * 我的主页
+     */
+    @GetMapping("home")
+    public String home(String customerId, Model model) {
+        //如果customerId为空，则为个人主页，需要登录
+        if (StringUtils.isBlank(customerId) && StringUtils.isBlank(CustomerUtils.getCustomer().getId())) {
+            return "redirect:/customer/loginView";
+        }
+        String resultCustomerId = StringUtils.isBlank(customerId) ? CustomerUtils.getCustomer().getId() : customerId;
+        List<MyAlbum> myAlbumList = customerService.getCustomerAlbum(resultCustomerId);
+        List<MyAlbumVM> myAlbumVMList = myAlbumList.stream().map(MyAlbumVM::new).collect(Collectors.toList());
+        model.addAttribute("myAlbumList", myAlbumVMList);
+        return "user/home";
+    }
 
     /**
      * 获取签到信息
@@ -138,14 +158,6 @@ public class CustomerController extends BaseController {
     @GetMapping("messageView")
     public String messageView() {
         return "user/message";
-    }
-
-    /**
-     * 我的主页
-     */
-    @GetMapping("home")
-    public String home() {
-        return "user/home";
     }
 
     /**

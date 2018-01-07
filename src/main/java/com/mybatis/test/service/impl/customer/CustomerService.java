@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class CustomerService extends BaseDBService<CustomerMapper, Customer> implements ICustomerService {
@@ -112,5 +113,10 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
         myAlbum.setImageUrl(photoUrl);
         myAlbum.setCustomerId(customerId);
         myAlbumMapper.insert(myAlbum);
+    }
+
+    @Override
+    public List<MyAlbum> getCustomerAlbum(String customerId) {
+        return myAlbumMapper.getListByCustomer(customerId);
     }
 }

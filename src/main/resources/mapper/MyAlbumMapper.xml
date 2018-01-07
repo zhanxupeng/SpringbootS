@@ -117,4 +117,13 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="getListByCustomer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM my_album a
+        WHERE a.customer_id = #{customerId}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        ORDER BY create_date DESC
+    </select>
 </mapper>

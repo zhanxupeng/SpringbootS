@@ -62,6 +62,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/customer/registerView", "anon");//注册页面
 
         filterChainDefinitionMap.put("/dynamic/detailView", "anon");//动态详情页面
+        filterChainDefinitionMap.put("/customer/home", "authc");//用户主页
 
         //接口anon
         filterChainDefinitionMap.put("/customer/login", "anon");//登录接口
@@ -104,7 +105,6 @@ public class ShiroConfiguration {
         //authc页面
         filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
         filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
-        filterChainDefinitionMap.put("/customer/home", "authc");//我的主页
         filterChainDefinitionMap.put("/customer/indexView", "authc");//用户中心
 
         filterChainDefinitionMap.put("/**", "authc");
