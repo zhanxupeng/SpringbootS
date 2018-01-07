@@ -2,9 +2,6 @@ package com.mybatis.test.controller.business.customer.paramsmodel;
 
 import java.util.List;
 
-/**
- * Created by 占大帅 on 2017/12/2.
- */
 public class RegisterCustomerPM {
     private String userName;                                    //用户名
     private String nickName;                                    //昵称

@@ -3,10 +3,6 @@ package com.mybatis.test.common.base;
 
 import com.mybatis.test.common.enumeration.ResultEnum;
 
-/**
- * @author liulp
- * @create 2017-07-14
- */
 public class Response<T> {
 
     private String code;

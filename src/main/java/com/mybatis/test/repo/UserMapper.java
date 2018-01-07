@@ -5,9 +5,6 @@ import com.mybatis.test.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-/**
- * Created by 占大帅 on 2017/11/26.
- */
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     /**

@@ -2,9 +2,6 @@ package com.mybatis.test.domain;
 
 import java.util.Date;
 
-/**
- * Created by 占大帅 on 2018/1/6.
- */
 public class MyDynamic {
     private String firstTitle;
     private String secondTitle;

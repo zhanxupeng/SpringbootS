@@ -2,9 +2,6 @@ package com.mybatis.test.controller.business.dynamic.paramsmodel;
 
 import com.mybatis.test.model.Dynamic;
 
-/**
- * Created by 占大帅 on 2017/12/23.
- */
 public class DynamicPM {
     private Dynamic dynamic = new Dynamic();
 

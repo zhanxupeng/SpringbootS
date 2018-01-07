@@ -1,8 +1,5 @@
 package com.mybatis.test.controller.business.customer.viewmodel;
 
-/**
- * Created by 占大帅 on 2017/12/2.
- */
 public class BoolVM {
     private boolean status;
     private String info;

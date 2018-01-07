@@ -2,9 +2,6 @@ package com.mybatis.test.model;
 
 import java.util.Date;
 
-/**
- * Created by 占大帅 on 2017/11/26.
- */
 public class User {
     private int id;
     private String username;
