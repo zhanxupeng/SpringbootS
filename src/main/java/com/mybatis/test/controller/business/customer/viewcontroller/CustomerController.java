@@ -8,10 +8,12 @@ import com.mybatis.test.controller.business.customer.paramsmodel.PasswordModifyP
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.*;
+import com.mybatis.test.domain.HomeComments;
 import com.mybatis.test.domain.LatestDynamic;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.MyAlbum;
 import com.mybatis.test.model.Question;
+import com.mybatis.test.service.api.comments.ICommentsService;
 import com.mybatis.test.service.api.dynamic.IDynamicService;
 import com.mybatis.test.service.api.question.IQuestionService;
 import com.mybatis.test.service.api.customer.ICustomerService;
@@ -41,6 +43,8 @@ public class CustomerController extends BaseController {
     private IQuestionService questionService;
     @Resource
     private IDynamicService dynamicService;
+    @Resource
+    private ICommentsService commentsService;
 
     /**
      * 我的主页
@@ -59,6 +63,10 @@ public class CustomerController extends BaseController {
         List<LatestDynamic> latestDynamicList = dynamicService.getLatestDynamic(resultCustomerId);
         List<LatestDynamicVM> latestDynamicVMList = latestDynamicList.stream().map(LatestDynamicVM::new).collect(Collectors.toList());
         model.addAttribute("dynamicList", latestDynamicVMList);
+        //最近评论
+        List<HomeComments> homeCommentsList = commentsService.getCustomerLatest(resultCustomerId);
+        List<HomeCommentsVM> homeCommentsVMList = homeCommentsList.stream().map(HomeCommentsVM::new).collect(Collectors.toList());
+        model.addAttribute("commentsList", homeCommentsVMList);
         //相册
         List<MyAlbum> myAlbumList = customerService.getCustomerAlbum(resultCustomerId);
         List<MyAlbumVM> myAlbumVMList = myAlbumList.stream().map(MyAlbumVM::new).collect(Collectors.toList());

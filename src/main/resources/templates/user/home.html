@@ -134,13 +134,14 @@
         <div class="layui-col-md6 fly-home-da">
             <div class="fly-panel">
                 <h3 class="fly-panel-title"><span th:text="${customer.nickName}">贤心</span> 最近的评论</h3>
-                <ul class="home-jieda">
-                    <li>
+                <ul class="home-jieda" th:if="${not #lists.isEmpty(commentsList)}">
+                    <li th:each="comments:${commentsList}">
                         <p>
-                            <span>1分钟前</span>
-                            在<a href="" target="_blank">tips能同时渲染多个吗?</a>中回答：
+                            <span th:text="${comments.createDate}">1分钟前</span>
+                            在<a href="" th:href="'/dynamic/detailView?dynamicId='+${comments.dynamicId}"
+                                target="_blank" th:text="${comments.title}">tips能同时渲染多个吗?</a>中评论：
                         </p>
-                        <div class="home-dacontent">
+                        <div class="home-dacontent" th:utext="${comments.content}">
                             尝试给layer.photos加上这个属性试试：
                             <pre>
                             full: true
@@ -148,17 +149,11 @@
                             文档没有提及
                         </div>
                     </li>
-                    <li>
-                        <p>
-                            <span>5分钟前</span>
-                            在<a href="" target="_blank">在Fly社区用的是什么系统啊?</a>中回答：
-                        </p>
-                        <div class="home-dacontent">
-                            Fly社区采用的是NodeJS。分享出来的只是前端模版
-                        </div>
-                    </li>
-
-                    <!-- <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;"><span>没有回答任何问题</span></div> -->
+                </ul>
+                <ul class="home-jieda" th:if="${#lists.isEmpty(commentsList)}">
+                    <div class="fly-none" style="min-height: 50px; padding:30px 0; height:auto;">
+                        <span>没有评论任何动态</span>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -227,7 +222,15 @@
         , base: '../../static/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use(['fly', 'face'], function () {
+        var $ = layui.$
+            , fly = layui.fly;
+        //如果你是采用模版自带的编辑器，你需要开启以下语句来解析。
+        $('.home-dacontent').each(function () {
+            var othis = $(this), html = othis.html();
+            othis.html(fly.content(html));
+        });
+    });
 
     $(document).ready(function () {
         var $unLogin = $("#unLogin");

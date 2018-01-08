@@ -133,4 +133,18 @@
         and del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
         order by create_date desc
     </select>
+
+    <select id="getHomeCommentsByCount" resultType="com.mybatis.test.domain.HomeComments">
+        SELECT
+        b.id AS dynamicId,
+        b.title AS title,
+        a.create_date AS createDate,
+        a.content AS content
+        FROM comments a
+        INNER JOIN dynamic b ON a.dynamic_id = b.id
+        WHERE a.customer_id = #{customerId}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        ORDER BY a.create_date desc
+        limit #{count}
+    </select>
 </mapper>
