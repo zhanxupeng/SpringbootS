@@ -199,4 +199,19 @@
         WHERE a.customer_id = #{customerId}
         AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
     </select>
+
+    <select id="getLatestDynamicByCount" resultType="com.mybatis.test.domain.LatestDynamic">
+        SELECT
+        a.id AS dynamicId,
+        a.first_title AS firstTitle,
+        a.second_title AS secondTitle,
+        a.title AS title,
+        a.create_date AS createDate,
+        a.popularity AS popularity,
+        a.comments_number AS commentsNumber
+        FROM dynamic a
+        WHERE a.customer_id = #{customerId}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        limit #{count}
+    </select>
 </mapper>

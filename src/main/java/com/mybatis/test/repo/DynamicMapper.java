@@ -2,6 +2,7 @@ package com.mybatis.test.repo;
 
 import com.mybatis.test.common.base.BaseMapper;
 import com.mybatis.test.domain.DynamicIntroduction;
+import com.mybatis.test.domain.LatestDynamic;
 import com.mybatis.test.domain.MyDynamic;
 import com.mybatis.test.model.Dynamic;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,4 +34,10 @@ public interface DynamicMapper extends BaseMapper<Dynamic> {
      * 根据用户id查询动态数量
      */
     int getCountByCustomerId(@Param("customerId") String customerId);
+
+    /**
+     * 限制数目查询动态
+     */
+    List<LatestDynamic> getLatestDynamicByCount(@Param("customerId") String customerId,
+                                                @Param("count") int count);
 }

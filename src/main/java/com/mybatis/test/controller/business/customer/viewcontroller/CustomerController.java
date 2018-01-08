@@ -8,6 +8,7 @@ import com.mybatis.test.controller.business.customer.paramsmodel.PasswordModifyP
 import com.mybatis.test.controller.business.customer.paramsmodel.RegisterCustomerPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestionPM;
 import com.mybatis.test.controller.business.customer.viewmodel.*;
+import com.mybatis.test.domain.LatestDynamic;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.MyAlbum;
 import com.mybatis.test.model.Question;
@@ -51,6 +52,14 @@ public class CustomerController extends BaseController {
             return "redirect:/customer/loginView";
         }
         String resultCustomerId = StringUtils.isBlank(customerId) ? CustomerUtils.getCustomer().getId() : customerId;
+        //个人信息
+        Customer customer = customerService.selectById(resultCustomerId);
+        model.addAttribute("customer", new CustomerHomeVM(customer));
+        //最近动态
+        List<LatestDynamic> latestDynamicList = dynamicService.getLatestDynamic(resultCustomerId);
+        List<LatestDynamicVM> latestDynamicVMList = latestDynamicList.stream().map(LatestDynamicVM::new).collect(Collectors.toList());
+        model.addAttribute("dynamicList", latestDynamicVMList);
+        //相册
         List<MyAlbum> myAlbumList = customerService.getCustomerAlbum(resultCustomerId);
         List<MyAlbumVM> myAlbumVMList = myAlbumList.stream().map(MyAlbumVM::new).collect(Collectors.toList());
         model.addAttribute("myAlbumList", myAlbumVMList);

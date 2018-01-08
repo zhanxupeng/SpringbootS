@@ -1,9 +1,6 @@
 package com.mybatis.test.service.api.dynamic;
 
-import com.mybatis.test.domain.DynamicIntroduction;
-import com.mybatis.test.domain.DynamicPage;
-import com.mybatis.test.domain.MyDynamic;
-import com.mybatis.test.domain.Page;
+import com.mybatis.test.domain.*;
 import com.mybatis.test.model.Dynamic;
 import com.mybatis.test.service.common.IBaseDBService;
 
@@ -30,4 +27,9 @@ public interface IDynamicService extends IBaseDBService<Dynamic> {
      * 查询我的动态数目
      */
     int getMyDynamicCount(String customerId);
+
+    /**
+     * 查询最近动态
+     */
+    List<LatestDynamic> getLatestDynamic(String customerId);
 }
