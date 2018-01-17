@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class CommentsService extends BaseDBService<CommentsMapper, Comments> implements ICommentsService {
-    private final static int DEFAULT_COUNT = 8;
+    private final static int DEFAULT_COUNT = 4;
 
     @Override
     public List<Comments> getDynamicComments(String dynamicId) {

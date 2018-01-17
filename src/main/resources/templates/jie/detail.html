@@ -110,14 +110,14 @@
                     </span>
                 </div>
                 <div class="detail-about">
-                    <a class="fly-avatar" href="../user/home.html">
+                    <a class="fly-avatar" href="/customer/home" th:href="'/customer/home?customerId='+${dynamic.customerId}">
                         <input type="hidden" th:value="${dynamic.customerId}">
                         <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
                              th:src="${dynamic.customerHead}"
                              alt="贤心" th:alt="${dynamic.nickName}">
                     </a>
                     <div class="fly-detail-user">
-                        <a href="../user/home.html" class="fly-link">
+                        <a href="/customer/home" th:href="'/customer/home?customerId='+${dynamic.customerId}" class="fly-link">
                             <cite th:text="${dynamic.nickName}">贤心</cite>
                         </a>
                         <span th:text="${dynamic.createDate}">2017-11-30</span>
@@ -157,7 +157,7 @@
                             <li data-id="111" class="jieda-daan">
                                 <a name="item-1111111111"></a>
                                 <div class="detail-about detail-about-reply">
-                                    <a class="fly-avatar" href="">
+                                    <a class="fly-avatar" href="" th:href="'/customer/home?customerId='+${comments.customerId}">
                                         <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
                                              th:src="${comments.customerHead}"
                                              alt=" " th:alt="${comments.nickName}">
