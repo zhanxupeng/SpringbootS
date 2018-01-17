@@ -5,9 +5,7 @@
         <id column="id" property="id" jdbcType="VARCHAR"/>
         <result column="send_customer_id" property="sendCustomerId" jdbcType="VARCHAR"/>
         <result column="receive_customer_id" property="receiveCustomerId" jdbcType="VARCHAR"/>
-        <result column="send_status" property="sendStatus" jdbcType="VARCHAR"/>
         <result column="receive_status" property="receiveStatus" jdbcType="VARCHAR"/>
-        <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
         <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
         <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
@@ -20,9 +18,7 @@
         id,
         send_customer_id,
         receive_customer_id,
-        send_status,
         receive_status,
-        content,
         remarks,
         create_by,
         create_date,
@@ -43,9 +39,7 @@
         id,
         send_customer_id,
         receive_customer_id,
-        send_status,
         receive_status,
-        content,
         remarks,
         create_by,
         create_date,
@@ -56,9 +50,7 @@
         #{id,jdbcType=VARCHAR},
         #{sendCustomerId,jdbcType=VARCHAR},
         #{receiveCustomerId,jdbcType=VARCHAR},
-        #{sendStatus,jdbcType=VARCHAR},
         #{receiveStatus,jdbcType=VARCHAR},
-        #{content,jdbcType=VARCHAR},
         #{remarks,jdbcType=VARCHAR},
         #{createBy,jdbcType=VARCHAR},
         #{createDate,jdbcType=TIMESTAMP},
@@ -76,14 +68,8 @@
             <if test="receiveCustomerId != null">
                 receive_customer_id = #{receiveCustomerId,jdbcType=VARCHAR},
             </if>
-            <if test="sendStatus != null">
-                send_status = #{sendStatus,jdbcType=VARCHAR},
-            </if>
             <if test="receiveStatus != null">
                 receive_status = #{receiveStatus,jdbcType=VARCHAR},
-            </if>
-            <if test="content != null">
-                content = #{content,jdbcType=VARCHAR},
             </if>
             <if test="remarks != null">
                 remarks = #{remarks,jdbcType=VARCHAR},
@@ -108,7 +94,7 @@
     </update>
 
     <delete id="delete" parameterType="java.lang.String">
-        delete from channel
+        delete from my_notice
         where id IN
         <foreach collection="list" open="(" close=")" separator="," item="id">
             #{id}
@@ -116,7 +102,7 @@
     </delete>
 
     <delete id="deleteByLogic" parameterType="java.lang.String">
-        UPDATE channel SET
+        UPDATE my_notice SET
         del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@YES.getValue()},
         update_date = current_timestamp()
         WHERE id IN
@@ -124,4 +110,21 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="findList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM my_notice
+        <where>
+            <if test="sendCustomerId != null">
+                AND send_customer_id = #{sendCustomerId}
+            </if>
+            <if test="receiveCustomerId != null">
+                AND receive_customer_id = #{receiveCustomerId}
+            </if>
+            <if test="receiveStatus != null">
+                AND receive_status = #{receiveStatus}
+            </if>
+        </where>
+    </select>
 </mapper>

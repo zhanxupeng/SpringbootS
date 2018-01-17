@@ -4,21 +4,11 @@ import com.mybatis.test.common.base.BaseModel;
 
 public class MyFriend extends BaseModel{
 
-    private String groupId;
-
     private String customerId;
 
     private String friendCustomerId;
 
     private Integer familiarity;
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
 
     public String getCustomerId() {
         return customerId;

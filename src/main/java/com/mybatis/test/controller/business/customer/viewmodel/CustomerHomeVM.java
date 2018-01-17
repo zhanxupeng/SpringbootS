@@ -11,6 +11,13 @@ public class CustomerHomeVM {
     }
 
     /**
+     * id
+     */
+    public String getId() {
+        return customer.getId();
+    }
+
+    /**
      * 头像
      */
     public String getHeadPicture() {

@@ -4,8 +4,6 @@
     <meta charset="utf-8">
     <title>我的消息</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content="fly,layui,前端社区">
-    <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
     <link rel="stylesheet" href="../../static/layui/css/layui.css">
     <link rel="stylesheet" href="../../static/css/global.css">
 </head>
@@ -82,13 +80,13 @@
                 基本设置
             </a>
         </li>
-        <li class="layui-nav-item  layui-this">
+        <li class="layui-nav-item">
             <a href="/customer/messageView">
                 <i class="layui-icon">&#xe611;</i>
                 我的消息
             </a>
         </li>
-        <li class="layui-nav-item">
+        <li class="layui-nav-item  layui-this">
             <a href="/customer/identityView">
                 <i class="layui-icon">&#xe6b2;</i>
                 好友验证
@@ -109,24 +107,32 @@
 
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
-            <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
-            <div id="LAY_minemsg" style="margin-top: 10px;">
+            <button class="layui-btn layui-btn" id="agree_all">同意所有</button>
+            <button class="layui-btn layui-btn-danger" id="refuse_all">拒绝所有</button>
+            <div id="identity_msg" style="margin-top: 10px;">
                 <!--<div class="fly-none">您暂时没有最新消息</div>-->
                 <ul class="mine-msg">
                     <li data-id="123">
                         <blockquote class="layui-elem-quote">
-                            <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a
-                                target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>
+                            <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>
+                            申请添加你为好友，添加好友可即时了解最近动态
                         </blockquote>
-                        <p><span>1小时前</span><a href="javascript:;"
-                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
+                        <p>
+                            <span>2018-1-17</span>
+                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn">同意</a>
+                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">拒绝</a>
+                        </p>
                     </li>
                     <li data-id="123">
                         <blockquote class="layui-elem-quote">
-                            系统消息：欢迎使用 layui
+                            <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>
+                            申请添加你为好友，添加好友可即时了解最近动态
                         </blockquote>
-                        <p><span>1小时前</span><a href="javascript:;"
-                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
+                        <p>
+                            <span>2018-1-17</span>
+                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn">同意</a>
+                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">拒绝</a>
+                        </p>
                     </li>
                 </ul>
             </div>
@@ -183,6 +189,73 @@
             error: function () {
 
             }
+        });
+    });
+
+    var $identityMsg = $('#identity_msg');
+
+    var delEnd = function (clear) {
+        if (clear || $identityMsg.find('.mine-msg li').length === 0) {
+            $identityMsg.html('<div class="fly-none">您暂时没有最新好友申请</div>');
+        }
+    };
+
+    //拒绝
+    $identityMsg.on('click', '.mine-msg li .layui-btn-danger', function () {
+        var othis = $(this).parents('li'), id = othis.data('id');
+        fly.json('/message/remove/', {
+            id: id
+        }, function (res) {
+            if (res.status === 0) {
+                othis.remove();
+                delEnd();
+            }
+        });
+    });
+
+    //拒绝全部
+    $('#refuse_all').on('click', function () {
+        var othis = $(this);
+        layer.confirm('确定清空吗？', function (index) {
+            fly.json('/message/refuseAll/', {
+                all: true
+            }, function (res) {
+                if (res.status === 0) {
+                    layer.close(index);
+                    othis.addClass('layui-hide');
+                    delEnd(true);
+                }
+            });
+        });
+    });
+
+    //同意
+    $identityMsg.on('click', '.mine-msg li .layui-btn', function () {
+        var othis = $(this).parents('li'), id = othis.data('id');
+        fly.json('/message/remove/', {
+            id: id
+        }, function (res) {
+            if (res.status === 0) {
+                othis.remove();
+                delEnd();
+            }
+        });
+    });
+
+    //同意全部
+    $('#agree_all').on('click', function () {
+        var othis = $(this);
+        layer.confirm('确定清空吗？', function (index) {
+            fly.json('/message/refuseAll/', {
+                all: true
+            }, function (res) {
+                if (res.status === 0) {
+                    layer.close(index);
+                    $(".mine-msg").children().remove();
+                    othis.addClass('layui-hide');
+                    delEnd(true);
+                }
+            });
         });
     });
 </script>

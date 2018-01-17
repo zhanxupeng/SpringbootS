@@ -3,7 +3,6 @@
 <mapper namespace="com.mybatis.test.repo.MyFriendMapper">
     <resultMap id="BaseResultMap" type="com.mybatis.test.model.MyFriend">
         <id column="id" property="id" jdbcType="VARCHAR"/>
-        <result column="group_id" property="groupId" jdbcType="VARCHAR"/>
         <result column="customer_id" property="customerId" jdbcType="VARCHAR"/>
         <result column="friend_customer_id" property="friendCustomerId" jdbcType="VARCHAR"/>
         <result column="familiarity" property="familiarity" jdbcType="INTEGER"/>
@@ -17,7 +16,6 @@
 
     <sql id="Base_Column_List">
         id,
-        group_id,
         customer_id,
         friend_customer_id,
         familiarity, remarks,
@@ -38,7 +36,6 @@
     <insert id="insert" parameterType="com.mybatis.test.model.MyFriend">
     insert into my_friend (
         id,
-        group_id,
         customer_id,
         friend_customer_id,
         familiarity,
@@ -50,7 +47,6 @@
         del_flag
         )values (
         #{id,jdbcType=VARCHAR},
-        #{groupId,jdbcType=VARCHAR},
         #{customerId,jdbcType=VARCHAR},
         #{friendCustomerId,jdbcType=VARCHAR},
         #{familiarity,jdbcType=INTEGER},
@@ -65,9 +61,6 @@
     <update id="update" parameterType="com.mybatis.test.model.MyFriend">
         update my_friend
         <set>
-            <if test="groupId != null">
-                group_id = #{groupId,jdbcType=VARCHAR},
-            </if>
             <if test="customerId != null">
                 customer_id = #{customerId,jdbcType=VARCHAR},
             </if>
@@ -116,4 +109,14 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="getMyFriendByFriendId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM my_friend
+        WHERE
+        customer_id = #{customerId}
+        AND
+        friend_customer_id = #{friendCustomerId}
+    </select>
 </mapper>

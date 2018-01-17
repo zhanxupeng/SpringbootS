@@ -2,6 +2,8 @@ package com.mybatis.test.controller.business.customer.viewcontroller;
 
 import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
+import com.mybatis.test.common.enumeration.NoticeReceiveStatusEnum;
+import com.mybatis.test.common.exception.ServiceException;
 import com.mybatis.test.controller.base.BaseController;
 import com.mybatis.test.controller.business.customer.paramsmodel.BasicInformationPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.PasswordModifyPM;
@@ -10,11 +12,11 @@ import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestio
 import com.mybatis.test.controller.business.customer.viewmodel.*;
 import com.mybatis.test.domain.HomeComments;
 import com.mybatis.test.domain.LatestDynamic;
-import com.mybatis.test.model.Customer;
-import com.mybatis.test.model.MyAlbum;
-import com.mybatis.test.model.Question;
+import com.mybatis.test.model.*;
 import com.mybatis.test.service.api.comments.ICommentsService;
 import com.mybatis.test.service.api.dynamic.IDynamicService;
+import com.mybatis.test.service.api.myfriend.IMyFriendService;
+import com.mybatis.test.service.api.mynotice.IMyNoticeService;
 import com.mybatis.test.service.api.question.IQuestionService;
 import com.mybatis.test.service.api.customer.ICustomerService;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +47,10 @@ public class CustomerController extends BaseController {
     private IDynamicService dynamicService;
     @Resource
     private ICommentsService commentsService;
+    @Resource
+    private IMyFriendService myFriendService;
+    @Resource
+    private IMyNoticeService myNoticeService;
 
     /**
      * 我的主页
@@ -175,6 +181,55 @@ public class CustomerController extends BaseController {
     @GetMapping("messageView")
     public String messageView() {
         return "user/message";
+    }
+
+    /**
+     * 好友验证
+     */
+    @GetMapping("identityView")
+    public String identityView() {
+        return "user/identity";
+    }
+
+    /**
+     * 添加好友
+     */
+    @GetMapping("addFriend")
+    @ResponseBody
+    public AddFriendVM addFriend(String customerId) {
+        AddFriendVM addFriendVM = new AddFriendVM();
+        addFriendVM.setStatus(true);
+        addFriendVM.setMsg("申请已发送，请耐心等待");
+        try {
+            addFriendValid(customerId);
+            //新增好友申请
+            addFriendApply(customerId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            addFriendVM.setStatus(false);
+            addFriendVM.setMsg(e.getMessage());
+        }
+        return addFriendVM;
+    }
+
+    private void addFriendValid(String customerId) {
+        //查询好友表是否已经有该好友
+        if (myFriendService.isAlreadyFriend(CustomerUtils.getCustomer().getId(), customerId)) {
+            throw new RuntimeException("你已经添加他为好友，不可重复添加");
+        }
+        //如果已经发送申请，并且是待确认，则不可重复发送
+        if (myNoticeService.isAlreadyApply(CustomerUtils.getCustomer().getId(), customerId)) {
+            throw new RuntimeException("你已经发送过申请，请耐心等待");
+        }
+    }
+
+    private void addFriendApply(String customerId) {
+        MyNotice myNotice = new MyNotice();
+        myNotice.init();
+        myNotice.setSendCustomerId(CustomerUtils.getCustomer().getId());
+        myNotice.setReceiveCustomerId(customerId);
+        myNotice.setReceiveStatus(NoticeReceiveStatusEnum.WAIT.getValue());
+        myNoticeService.insert(myNotice);
     }
 
     /**
