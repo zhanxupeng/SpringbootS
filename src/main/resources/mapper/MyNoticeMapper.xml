@@ -127,4 +127,20 @@
             </if>
         </where>
     </select>
+
+    <select id="getByReceiveCustomerAndStatus" resultType="com.mybatis.test.domain.FriendIdentity">
+        SELECT
+        a.send_customer_id as customerId,
+        b.nick_name AS nickName,
+        a.create_date AS createDate
+        FROM
+            (SELECT send_customer_id,create_date
+            FROM my_notice
+            WHERE receive_customer_id = #{customerId}
+            AND receive_status = #{status}
+            AND del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}) a
+        INNER JOIN customer b on a.send_customer_id = b.id
+        WHERE  b.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+    </select>
+
 </mapper>

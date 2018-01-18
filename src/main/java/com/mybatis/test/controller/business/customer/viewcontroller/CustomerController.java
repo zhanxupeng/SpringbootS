@@ -3,7 +3,6 @@ package com.mybatis.test.controller.business.customer.viewcontroller;
 import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.common.enumeration.NoticeReceiveStatusEnum;
-import com.mybatis.test.common.exception.ServiceException;
 import com.mybatis.test.controller.base.BaseController;
 import com.mybatis.test.controller.business.customer.paramsmodel.BasicInformationPM;
 import com.mybatis.test.controller.business.customer.paramsmodel.PasswordModifyPM;
@@ -12,13 +11,16 @@ import com.mybatis.test.controller.business.customer.paramsmodel.SecurityQuestio
 import com.mybatis.test.controller.business.customer.viewmodel.*;
 import com.mybatis.test.domain.HomeComments;
 import com.mybatis.test.domain.LatestDynamic;
-import com.mybatis.test.model.*;
+import com.mybatis.test.model.Customer;
+import com.mybatis.test.model.MyAlbum;
+import com.mybatis.test.model.MyNotice;
+import com.mybatis.test.model.Question;
 import com.mybatis.test.service.api.comments.ICommentsService;
+import com.mybatis.test.service.api.customer.ICustomerService;
 import com.mybatis.test.service.api.dynamic.IDynamicService;
 import com.mybatis.test.service.api.myfriend.IMyFriendService;
 import com.mybatis.test.service.api.mynotice.IMyNoticeService;
 import com.mybatis.test.service.api.question.IQuestionService;
-import com.mybatis.test.service.api.customer.ICustomerService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -34,7 +36,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Controller
 @RequestMapping("customer")
@@ -53,6 +56,50 @@ public class CustomerController extends BaseController {
     private IMyNoticeService myNoticeService;
 
     /**
+     * 拒绝好友请求
+     */
+    @GetMapping("friendRefuse")
+    @ResponseBody
+    public Map friendRefuse(String friendId) {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        return map;
+    }
+
+    /**
+     * 拒绝所有好友请求
+     */
+    @GetMapping("friendRefuseAll")
+    @ResponseBody
+    public Map friendRefuseAll(String friendId) {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        return map;
+    }
+
+    /**
+     * 同意好友请求
+     */
+    @GetMapping("friendAgree")
+    @ResponseBody
+    public Map friendAgree(String friendId) {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        return map;
+    }
+
+    /**
+     * 同意所有好友请求
+     */
+    @GetMapping("friendAgreeAll")
+    @ResponseBody
+    public Map friendAgreeAll(String friendId) {
+        Map<String, Object> map = new TreeMap<>();
+        map.put("status", 0);
+        return map;
+    }
+
+    /**
      * 我的主页
      */
     @GetMapping("home")
@@ -67,15 +114,15 @@ public class CustomerController extends BaseController {
         model.addAttribute("customer", new CustomerHomeVM(customer));
         //最近动态
         List<LatestDynamic> latestDynamicList = dynamicService.getLatestDynamic(resultCustomerId);
-        List<LatestDynamicVM> latestDynamicVMList = latestDynamicList.stream().map(LatestDynamicVM::new).collect(Collectors.toList());
+        List<LatestDynamicVM> latestDynamicVMList = latestDynamicList.stream().map(LatestDynamicVM::new).collect(toList());
         model.addAttribute("dynamicList", latestDynamicVMList);
         //最近评论
         List<HomeComments> homeCommentsList = commentsService.getCustomerLatest(resultCustomerId);
-        List<HomeCommentsVM> homeCommentsVMList = homeCommentsList.stream().map(HomeCommentsVM::new).collect(Collectors.toList());
+        List<HomeCommentsVM> homeCommentsVMList = homeCommentsList.stream().map(HomeCommentsVM::new).collect(toList());
         model.addAttribute("commentsList", homeCommentsVMList);
         //相册
         List<MyAlbum> myAlbumList = customerService.getCustomerAlbum(resultCustomerId);
-        List<MyAlbumVM> myAlbumVMList = myAlbumList.stream().map(MyAlbumVM::new).collect(Collectors.toList());
+        List<MyAlbumVM> myAlbumVMList = myAlbumList.stream().map(MyAlbumVM::new).collect(toList());
         model.addAttribute("myAlbumList", myAlbumVMList);
         return "user/home";
     }
@@ -187,7 +234,8 @@ public class CustomerController extends BaseController {
      * 好友验证
      */
     @GetMapping("identityView")
-    public String identityView() {
+    public String identityView(Model model) {
+        model.addAttribute("friendIdentityArray", myNoticeService.getWaitDeal(CustomerUtils.getCustomer().getId()).stream().map(FriendIdentityVM::new).toArray());
         return "user/identity";
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>我的消息</title>
@@ -107,12 +107,27 @@
 
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
-            <button class="layui-btn layui-btn" id="agree_all">同意所有</button>
+            <button class="layui-btn" id="agree_all">同意所有</button>
             <button class="layui-btn layui-btn-danger" id="refuse_all">拒绝所有</button>
-            <div id="identity_msg" style="margin-top: 10px;">
+            <div class="identity_msg" style="margin-top: 10px;" th:if="${not #lists.isEmpty(friendIdentityArray)}">
                 <!--<div class="fly-none">您暂时没有最新消息</div>-->
                 <ul class="mine-msg">
-                    <li data-id="123">
+                    <li data-id="123" th:each="friendIdentity:${friendIdentityArray}">
+                        <input type="hidden" th:value="${friendIdentity.customerId}">
+                        <blockquote class="layui-elem-quote">
+                            <a href="/jump?username=Absolutely"
+                               th:href="'/customer/home?customerId='+${friendIdentity.customerId}" target="_blank">
+                                <cite th:text="${friendIdentity.nickName}">Absolutely</cite>
+                            </a>
+                            申请添加你为好友，添加好友可即时了解最近动态
+                        </blockquote>
+                        <p>
+                            <span>2018-1-17</span>
+                            <a href="javascript:;" class="layui-btn layui-btn-small agree">同意</a>
+                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">拒绝</a>
+                        </p>
+                    </li>
+                    <!--<li data-id="123">
                         <blockquote class="layui-elem-quote">
                             <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>
                             申请添加你为好友，添加好友可即时了解最近动态
@@ -122,20 +137,13 @@
                             <a href="javascript:;" class="layui-btn layui-btn-small layui-btn">同意</a>
                             <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">拒绝</a>
                         </p>
-                    </li>
-                    <li data-id="123">
-                        <blockquote class="layui-elem-quote">
-                            <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>
-                            申请添加你为好友，添加好友可即时了解最近动态
-                        </blockquote>
-                        <p>
-                            <span>2018-1-17</span>
-                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn">同意</a>
-                            <a href="javascript:;" class="layui-btn layui-btn-small layui-btn-danger">拒绝</a>
-                        </p>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
+            <div class="identity_msg" style="margin-top: 10px;" th:if="${#lists.isEmpty(friendIdentityArray)}">
+                <div class="fly-none">您暂时没有收到好友申请</div>
+            </div>
+
         </div>
     </div>
 
@@ -167,97 +175,137 @@
         , base: '../../static/mods/'
     }).extend({
         fly: 'index'
-    }).use('fly');
+    }).use('fly', function () {
 
-    $(document).ready(function () {
-        var $unLogin = $("#unLogin");
-        var $inLogin = $("#inLogin");
-        $.ajax({
-            url: '/customer/information',
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                if (data.id != null && data.id != '') {
-                    //说明用户已经登录，改为登录状态
-                    $inLogin.removeClass("layui-hide");
-                    $unLogin.addClass("layui-hide");
-                    $("#nickName").text(data.nickName);
-                    $("#myHead").attr("src", data.headPicture);
-                    $("#customerId").val(data.id);
-                }
-            },
-            error: function () {
+        var fly = layui.fly;
 
-            }
-        });
-    });
+        $(document).ready(function () {
+            var $unLogin = $("#unLogin");
+            var $inLogin = $("#inLogin");
+            $.ajax({
+                url: '/customer/information',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.id != null && data.id != '') {
+                        //说明用户已经登录，改为登录状态
+                        $inLogin.removeClass("layui-hide");
+                        $unLogin.addClass("layui-hide");
+                        $("#nickName").text(data.nickName);
+                        $("#myHead").attr("src", data.headPicture);
+                        $("#customerId").val(data.id);
+                    }
+                },
+                error: function () {
 
-    var $identityMsg = $('#identity_msg');
-
-    var delEnd = function (clear) {
-        if (clear || $identityMsg.find('.mine-msg li').length === 0) {
-            $identityMsg.html('<div class="fly-none">您暂时没有最新好友申请</div>');
-        }
-    };
-
-    //拒绝
-    $identityMsg.on('click', '.mine-msg li .layui-btn-danger', function () {
-        var othis = $(this).parents('li'), id = othis.data('id');
-        fly.json('/message/remove/', {
-            id: id
-        }, function (res) {
-            if (res.status === 0) {
-                othis.remove();
-                delEnd();
-            }
-        });
-    });
-
-    //拒绝全部
-    $('#refuse_all').on('click', function () {
-        var othis = $(this);
-        layer.confirm('确定清空吗？', function (index) {
-            fly.json('/message/refuseAll/', {
-                all: true
-            }, function (res) {
-                if (res.status === 0) {
-                    layer.close(index);
-                    othis.addClass('layui-hide');
-                    delEnd(true);
                 }
             });
         });
-    });
 
-    //同意
-    $identityMsg.on('click', '.mine-msg li .layui-btn', function () {
-        var othis = $(this).parents('li'), id = othis.data('id');
-        fly.json('/message/remove/', {
-            id: id
-        }, function (res) {
-            if (res.status === 0) {
-                othis.remove();
-                delEnd();
+        var $identityMsg = $('.identity_msg');
+
+        var delEnd = function (clear) {
+            if (clear || $identityMsg.find('.mine-msg li').length === 0) {
+                $identityMsg.html('<div class="fly-none">您暂时没有最新好友申请</div>');
             }
-        });
-    });
+        };
 
-    //同意全部
-    $('#agree_all').on('click', function () {
-        var othis = $(this);
-        layer.confirm('确定清空吗？', function (index) {
-            fly.json('/message/refuseAll/', {
-                all: true
-            }, function (res) {
-                if (res.status === 0) {
-                    layer.close(index);
-                    $(".mine-msg").children().remove();
-                    othis.addClass('layui-hide');
-                    delEnd(true);
+        //拒绝
+        $identityMsg.on('click', '.mine-msg li .layui-btn-danger', function () {
+            var othis = $(this).parents('li'), id = othis.children("[type=hidden]").val();
+            console.log(id);
+            $.ajax({
+                url: '/customer/friendRefuse',
+                type: 'get',
+                data: {
+                    friendId: id
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 0) {
+                        layer.msg('您已成功拒绝该申请', {icon: 6});
+                        othis.remove();
+                        delEnd();
+                    }
+                },
+                error: function () {
+
                 }
             });
         });
+
+        //拒绝全部
+        $('#refuse_all').on('click', function () {
+            var othis = $(this);
+            layer.confirm('确定拒绝所有吗？', function (index) {
+                $.ajax({
+                    url: '/customer/friendRefuseAll',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === 0) {
+                            layer.msg('您已成功拒绝所有申请', {icon: 6});
+                            layer.close(index);
+                            $(".mine-msg").children().remove();
+                            delEnd(true);
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            });
+        });
+
+        //同意
+        $identityMsg.on('click', '.mine-msg li .agree', function () {
+            var othis = $(this).parents('li'), id = othis.children("[type=hidden]").val();
+            $.ajax({
+                url: '/customer/friendAgree',
+                type: 'get',
+                data: {
+                    friendId: id
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 0) {
+                        layer.msg('添加好友成功', {icon: 6});
+                        othis.remove();
+                        delEnd();
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        });
+
+        //同意全部
+        $('#agree_all').on('click', function () {
+            var othis = $(this);
+            layer.confirm('确定同意所有吗？', function (index) {
+                $.ajax({
+                    url: '/customer/friendAgreeAll',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.status === 0) {
+                            layer.msg('您已成功添加所有好友', {icon: 6});
+                            layer.close(index);
+                            $(".mine-msg").children().remove();
+                            delEnd(true);
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            });
+        });
+
+
     });
+
 </script>
 
 </body>

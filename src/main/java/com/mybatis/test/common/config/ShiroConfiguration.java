@@ -102,6 +102,11 @@ public class ShiroConfiguration {
 
         filterChainDefinitionMap.put("/dynamic/myDynamic", "authc");//分页查询我的动态
 
+        filterChainDefinitionMap.put("/customer/friendRefuse", "authc");//拒绝好友申请
+        filterChainDefinitionMap.put("/customer/friendRefuseAll", "authc");//拒绝所有好友申请
+        filterChainDefinitionMap.put("/customer/friendAgree", "authc");//同意好友申请
+        filterChainDefinitionMap.put("/customer/friendAgreeAll", "authc");//同意所有好友申请
+
         //authc页面
         filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
         filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
