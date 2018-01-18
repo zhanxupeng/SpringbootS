@@ -25,4 +25,24 @@ public class MyNoticeService extends BaseDBService<MyNoticeMapper, MyNotice> imp
     public List<FriendIdentity> getWaitDeal(String customerId) {
         return getRepo().getByReceiveCustomerAndStatus(customerId, NoticeReceiveStatusEnum.WAIT.getValue());
     }
+
+    @Override
+    public void refuseFriendApply(String myCustomerId, String friendCustomerId) {
+        getRepo().updateStatusByBoth(myCustomerId, friendCustomerId, NoticeReceiveStatusEnum.WAIT.getValue(), NoticeReceiveStatusEnum.REFUSE.getValue());
+    }
+
+    @Override
+    public void refuseAllFriendApply(String myCustomerId) {
+        getRepo().updateStatusByReceive(myCustomerId, NoticeReceiveStatusEnum.WAIT.getValue(), NoticeReceiveStatusEnum.REFUSE.getValue());
+    }
+
+    @Override
+    public void agreeFriendApply(String myCustomerId, String friendCustomerId) {
+        getRepo().updateStatusByBoth(myCustomerId, friendCustomerId, NoticeReceiveStatusEnum.WAIT.getValue(), NoticeReceiveStatusEnum.AGREE.getValue());
+    }
+
+    @Override
+    public void agreeAllFriendApply(String myCustomerId) {
+        getRepo().updateStatusByReceive(myCustomerId, NoticeReceiveStatusEnum.WAIT.getValue(), NoticeReceiveStatusEnum.AGREE.getValue());
+    }
 }

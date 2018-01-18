@@ -143,4 +143,20 @@
         WHERE  b.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
     </select>
 
+    <update id="updateStatusByBoth">
+        UPDATE my_notice
+        SET receive_status = #{newStatus}
+        WHERE
+        receive_customer_id = #{receiveCustomerId}
+        AND send_customer_id = #{sendCustomerId}
+        AND receive_status = #{oldStatus}
+    </update>
+
+    <update id="updateStatusByReceive">
+        UPDATE my_notice
+        SET receive_status = #{newStatus}
+        WHERE
+        receive_customer_id = #{receiveCustomerId}
+        AND receive_status = #{oldStatus}
+    </update>
 </mapper>

@@ -8,4 +8,14 @@ public interface IMyFriendService extends IBaseDBService<MyFriend> {
      * 是否已经是好友
      */
     boolean isAlreadyFriend(String myCustomerId, String friendCustomerId);
+
+    /**
+     * 添加好友
+     */
+    void addFriend(String myCustomerId, String friendCustomerId);
+
+    /**
+     * 添加所有好友
+     */
+    void addAllFriend(String myCustomerId);
 }

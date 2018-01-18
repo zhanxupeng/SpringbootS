@@ -60,10 +60,9 @@ public class CustomerController extends BaseController {
      */
     @GetMapping("friendRefuse")
     @ResponseBody
-    public Map friendRefuse(String friendId) {
-        Map<String, Object> map = new TreeMap<>();
-        map.put("status", 0);
-        return map;
+    public Response friendRefuse(String friendId) {
+        myNoticeService.refuseFriendApply(CustomerUtils.getCustomer().getId(), friendId);
+        return success();
     }
 
     /**
@@ -71,10 +70,9 @@ public class CustomerController extends BaseController {
      */
     @GetMapping("friendRefuseAll")
     @ResponseBody
-    public Map friendRefuseAll(String friendId) {
-        Map<String, Object> map = new TreeMap<>();
-        map.put("status", 0);
-        return map;
+    public Response friendRefuseAll() {
+        myNoticeService.refuseAllFriendApply(CustomerUtils.getCustomer().getId());
+        return success();
     }
 
     /**
@@ -82,10 +80,10 @@ public class CustomerController extends BaseController {
      */
     @GetMapping("friendAgree")
     @ResponseBody
-    public Map friendAgree(String friendId) {
-        Map<String, Object> map = new TreeMap<>();
-        map.put("status", 0);
-        return map;
+    public Response friendAgree(String friendId) {
+        //添加好友
+        myFriendService.addFriend(CustomerUtils.getCustomer().getId(), friendId);
+        return success();
     }
 
     /**
@@ -93,10 +91,10 @@ public class CustomerController extends BaseController {
      */
     @GetMapping("friendAgreeAll")
     @ResponseBody
-    public Map friendAgreeAll(String friendId) {
-        Map<String, Object> map = new TreeMap<>();
-        map.put("status", 0);
-        return map;
+    public Response friendAgreeAll() {
+        //添加所有好友
+        myFriendService.addAllFriend(CustomerUtils.getCustomer().getId());
+        return success();
     }
 
     /**

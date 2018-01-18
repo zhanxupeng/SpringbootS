@@ -17,4 +17,19 @@ public interface MyNoticeMapper extends BaseMapper<MyNotice> {
      */
     List<FriendIdentity> getByReceiveCustomerAndStatus(@Param("customerId") String customerId,
                                                        @Param("status") String status);
+
+    /**
+     * 根据双方修改接收状态
+     */
+    void updateStatusByBoth(@Param("receiveCustomerId") String receiveCustomerId,
+                            @Param("sendCustomerId") String sendCustomerId,
+                            @Param("oldStatus") String oldStatus,
+                            @Param("newStatus") String newStatus);
+
+    /**
+     * 根据接收方修改接收状态
+     */
+    void updateStatusByReceive(@Param("receiveCustomerId") String receiveCustomerId,
+                               @Param("oldStatus") String oldStatus,
+                               @Param("newStatus") String newStatus);
 }

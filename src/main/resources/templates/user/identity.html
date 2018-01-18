@@ -222,7 +222,7 @@
                 },
                 dataType: 'json',
                 success: function (data) {
-                    if (data.status === 0) {
+                    if (data.code === '0') {
                         layer.msg('您已成功拒绝该申请', {icon: 6});
                         othis.remove();
                         delEnd();
@@ -243,7 +243,7 @@
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {
-                        if (data.status === 0) {
+                        if (data.code === '0') {
                             layer.msg('您已成功拒绝所有申请', {icon: 6});
                             layer.close(index);
                             $(".mine-msg").children().remove();
@@ -268,7 +268,7 @@
                 },
                 dataType: 'json',
                 success: function (data) {
-                    if (data.status === 0) {
+                    if (data.code === '0') {
                         layer.msg('添加好友成功', {icon: 6});
                         othis.remove();
                         delEnd();
@@ -289,7 +289,7 @@
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {
-                        if (data.status === 0) {
+                        if (data.code === '0') {
                             layer.msg('您已成功添加所有好友', {icon: 6});
                             layer.close(index);
                             $(".mine-msg").children().remove();

@@ -17,4 +17,24 @@ public interface IMyNoticeService extends IBaseDBService<MyNotice> {
      * 获取未处理好友申请
      */
     List<FriendIdentity> getWaitDeal(String customerId);
+
+    /**
+     * 拒绝好友申请
+     */
+    void refuseFriendApply(String myCustomerId, String friendCustomerId);
+
+    /**
+     * 拒绝所有好友申请
+     */
+    void refuseAllFriendApply(String myCustomerId);
+
+    /**
+     * 同意好友申请
+     */
+    void agreeFriendApply(String myCustomerId, String friendCustomerId);
+
+    /**
+     * 同意所有好友申请
+     */
+    void agreeAllFriendApply(String myCustomerId);
 }
