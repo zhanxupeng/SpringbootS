@@ -112,6 +112,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
         filterChainDefinitionMap.put("/customer/indexView", "authc");//用户中心
         filterChainDefinitionMap.put("/customer/identityView", "authc");//好友验证
+        filterChainDefinitionMap.put("/customer/logout","authc");//退出登录
 
         filterChainDefinitionMap.put("/**", "authc");
 

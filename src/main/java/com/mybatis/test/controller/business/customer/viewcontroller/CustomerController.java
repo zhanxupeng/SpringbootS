@@ -299,6 +299,15 @@ public class CustomerController extends BaseController {
     }
 
     /**
+     * 登出页面
+     */
+    @GetMapping("logout")
+    public String logout(){
+        SecurityUtils.getSecurityManager().logout(SecurityUtils.getSubject());//退出原来用户
+        return "user/login";
+    }
+
+    /**
      * 登录接口
      */
     @PostMapping("login")
