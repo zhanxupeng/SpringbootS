@@ -20,7 +20,11 @@
         <result column="popularity" property="popularity" jdbcType="INTEGER"/>
         <result column="active_value" property="activeValue" jdbcType="INTEGER"/>
         <result column="latest_active_date" property="latestActiveDate" jdbcType="TIMESTAMP"/>
-        <result column="continue_active_count" property="continueActiveCount" javaType="INTEGER"/>
+        <result column="continue_active_count" property="continueActiveCount" jdbcType="INTEGER"/>
+        <result column="academy" property="academy" jdbcType="VARCHAR"/>
+        <result column="classroom" property="classRoom" jdbcType="VARCHAR"/>
+        <result column="bedroom" property="bedroom" jdbcType="VARCHAR"/>
+        <result column="identify" property="identify" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -42,7 +46,11 @@
         popularity,
         active_value,
         latest_active_date,
-        continue_active_count
+        continue_active_count,
+        academy,
+        classroom,
+        bedroom,
+        identify
     </sql>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -72,7 +80,11 @@
         popularity,
         active_value,
         latest_active_date,
-        continue_active_count
+        continue_active_count,
+        academy,
+        classroom,
+        bedroom,
+        identify
         )values (
         #{id,jdbcType=VARCHAR},
         #{userName,jdbcType=VARCHAR},
@@ -92,7 +104,12 @@
         #{popularity,jdbcType=INTEGER},
         #{activeValue,jdbcType=INTEGER},
         #{latestActiveDate,jdbcType=TIMESTAMP},
-        #{continueActiveCount,jdbcType=INTEGER})
+        #{continueActiveCount,jdbcType=INTEGER},
+        #{academy,jdbcType=VARCHAR},
+        #{classRoom,jdbcType=VARCHAR},
+        #{bedroom,jdbcType=VARCHAR},
+        #{identify,jdbcType=TINYINT}
+        )
     </insert>
 
     <update id="update" parameterType="com.mybatis.test.model.Customer">
@@ -151,6 +168,18 @@
             </if>
             <if test="continueActiveCount != null">
                 continue_active_count = #{continueActiveCount,jdbcType=INTEGER},
+            </if>
+            <if test="academy != null">
+                academy = #{academy,jdbcType=VARCHAR},
+            </if>
+            <if test="classRoom != null">
+                classroom = #{classRoom,jdbcType=VARCHAR},
+            </if>
+            <if test="bedroom != null">
+                bedroom = #{bedroom,jdbcType=VARCHAR},
+            </if>
+            <if test="identify != null">
+                identify = #{identify,jdbcType=TINYINT},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}

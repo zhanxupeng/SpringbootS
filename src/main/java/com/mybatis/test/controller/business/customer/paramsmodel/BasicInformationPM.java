@@ -40,6 +40,27 @@ public class BasicInformationPM {
         customer.setHeadPicture(headPicture);
     }
 
+    /**
+     * 学院
+     */
+    public void setAcademy(String academy){
+        customer.setAcademy(academy);
+    }
+
+    /**
+     * 年级
+     */
+    public void setClassRoom(String classRoom){
+        customer.setClassRoom(classRoom);
+    }
+
+    /**
+     * 寝室号
+     */
+    public void setBedroom(String bedRoom){
+        customer.setBedroom(bedRoom);
+    }
+
     public Customer getCustomer() {
         return customer;
     }

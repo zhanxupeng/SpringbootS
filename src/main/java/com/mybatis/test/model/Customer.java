@@ -30,6 +30,14 @@ public class Customer extends BaseModel {
 
     private Integer continueActiveCount;
 
+    private String academy;
+
+    private String classRoom;
+
+    private String bedroom;
+
+    private Boolean identify;
+
     public String getUserName() {
         return userName;
     }
@@ -124,5 +132,37 @@ public class Customer extends BaseModel {
 
     public void setContinueActiveCount(Integer continueActiveCount) {
         this.continueActiveCount = continueActiveCount;
+    }
+
+    public String getAcademy() {
+        return academy;
+    }
+
+    public void setAcademy(String academy) {
+        this.academy = academy;
+    }
+
+    public String getClassRoom() {
+        return classRoom;
+    }
+
+    public void setClassRoom(String classRoom) {
+        this.classRoom = classRoom;
+    }
+
+    public String getBedroom() {
+        return bedroom;
+    }
+
+    public void setBedroom(String bedroom) {
+        this.bedroom = bedroom;
+    }
+
+    public Boolean getIdentify() {
+        return identify;
+    }
+
+    public void setIdentify(Boolean identify) {
+        this.identify = identify;
     }
 }

@@ -64,6 +64,9 @@
     <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
          th:src="${customer.headPicture}"
          alt="贤心" th:alt="${customer.nickName}">
+    <span th:if="${customer.identify==true}">
+            <i class="iconfont icon-renzheng" title="实名认证"></i>
+    </span>
     <input type="hidden" id="homeCustomerId" th:value="${customer.id}">
     <h1 th:if="${customer.sex}==0">
         <span th:text="${customer.nickName}">贤心</span>
@@ -88,6 +91,20 @@
         <i class="iconfont icon-chengshi"></i>
         <span>
             来自<span th:text="${customer.city}">杭州</span>
+        </span>
+    </p>
+    <p class="fly-home-info">
+        <i class="layui-icon icon-yxj-expression"></i>
+        <span>
+            <span th:text="${customer.academy}">66666</span>
+        </span>
+        <i class="iconfont icon-wenda"></i>
+        <span>
+            <span th:text="${customer.classRoom}">6年级</span>
+        </span>
+        <i class="iconfont icon-room"></i>
+        <span>
+            寝室:<span th:text="${customer.bedroom}">b3222</span>
         </span>
     </p>
 

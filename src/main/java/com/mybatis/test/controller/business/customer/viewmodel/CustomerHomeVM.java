@@ -66,4 +66,32 @@ public class CustomerHomeVM {
         return customer.getAutograph();
     }
 
+    /**
+     * 学院
+     */
+    public String getAcademy(){
+        return customer.getAcademy();
+    }
+
+    /**
+     * 年级
+     */
+    public String getClassRoom(){
+        return customer.getClassRoom();
+    }
+
+    /**
+     * 寝室号
+     */
+    public String getBedroom(){
+        return customer.getBedroom();
+    }
+
+    /**
+     * 实名认证
+     */
+    public Boolean getIdentify(){
+        return customer.getIdentify();
+    }
+
 }

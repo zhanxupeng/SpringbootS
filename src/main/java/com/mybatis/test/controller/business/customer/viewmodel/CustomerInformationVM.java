@@ -61,4 +61,16 @@ public class CustomerInformationVM {
     public Integer getContinueActiveCount() {
         return customer.getContinueActiveCount();
     }
+
+    public String getAcademy(){
+        return customer.getAcademy();
+    }
+
+    public String getClassRoom(){
+        return customer.getClassRoom();
+    }
+
+    public String getBedroom(){
+        return customer.getBedroom();
+    }
 }
