@@ -20,10 +20,25 @@ public interface DynamicMapper extends BaseMapper<Dynamic> {
                                   @Param("secondTitle") String secondTitle);
 
     /**
-     * 获取某分类下的动态
+     * 获取某分类下的动态（仅仅用于话题）
      */
     List<DynamicIntroduction> findPage(@Param("firstTitle") String firstTitle,
                                        @Param("secondTitle") String secondTitle);
+
+    /**
+     * 获取好友圈数据
+     */
+    List<DynamicIntroduction> findFriendPage(@Param("customerId") String customerId);
+
+    /**
+     * 获取附近数据(可以查看朋友的朋友发在附近或校园的动态)
+     */
+    List<DynamicIntroduction> findNearbyPage(@Param("customerId") String customerId);
+
+    /**
+     *获取校园数据
+     */
+    List<DynamicIntroduction> findSchoolPage();
 
     /**
      * 根据用户id获取动态，按时间降序

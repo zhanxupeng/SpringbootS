@@ -1,6 +1,8 @@
 package com.mybatis.test.service.impl.dynamic;
 
 import com.github.pagehelper.PageHelper;
+import com.mybatis.test.common.config.CustomerUtils;
+import com.mybatis.test.common.enumeration.DynamicMoodEnum;
 import com.mybatis.test.common.enumeration.DynamicTypeEnum;
 import com.mybatis.test.domain.*;
 import com.mybatis.test.model.Dynamic;
@@ -11,6 +13,7 @@ import com.mybatis.test.service.common.BaseDBService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -26,8 +29,24 @@ public class DynamicService extends BaseDBService<DynamicMapper, Dynamic> implem
 
     @Override
     public List<DynamicIntroduction> findDynamicIntroductionList(DynamicPage dynamicPage) {
+        List<DynamicIntroduction> dynamicIntroductionList = new LinkedList<>();
         PageHelper.startPage(dynamicPage.getCurr(), dynamicPage.getLimit());
-        return getRepo().findPage(dynamicPage.getFirstTitle(), dynamicPage.getSecondTitle());
+        if (DynamicTypeEnum.isDynamicTopic(dynamicPage.getFirstTitle())) {//话题
+            dynamicIntroductionList = getRepo().findPage(dynamicPage.getFirstTitle(), dynamicPage.getSecondTitle());
+        } else {
+            switch (DynamicMoodEnum.getByType(dynamicPage.getSecondTitle())) {
+                case FRIEND://朋友：看到好友的所有动态
+                    dynamicIntroductionList = getRepo().findFriendPage(CustomerUtils.getCustomer().getId());
+                    break;
+                case NEARBY://附近:看到好友的好友发在附近或校园的动态
+                    dynamicIntroductionList = getRepo().findNearbyPage(CustomerUtils.getCustomer().getId());
+                    break;
+                case SCHOOL://校园:读取所有校园的动态
+                    dynamicIntroductionList = getRepo().findSchoolPage();
+                    break;
+            }
+        }
+        return dynamicIntroductionList;
     }
 
     @Override

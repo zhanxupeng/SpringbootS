@@ -15,6 +15,14 @@ public enum DynamicTypeEnum {
         this.description = description;
     }
 
+    public static boolean isDynamicMood(String value){
+        return DYNAMIC_MOOD.value.equals(value);
+    }
+
+    public static boolean isDynamicTopic(String value){
+        return DYNAMIC_TOPIC.value.equals(value);
+    }
+
     public static String getLabelByValue(String value) {
         return Arrays.stream(DynamicTypeEnum.values()).filter(x -> x.value.equals(value)).findFirst().orElse(DYNAMIC_MOOD).label;
     }
