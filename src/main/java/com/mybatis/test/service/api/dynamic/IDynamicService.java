@@ -32,4 +32,9 @@ public interface IDynamicService extends IBaseDBService<Dynamic> {
      * 查询最近动态
      */
     List<LatestDynamic> getLatestDynamic(String customerId);
+
+    /**
+     * 获取首页推荐内容
+     */
+    List<DynamicIntroduction> recommend(int recommendType);
 }

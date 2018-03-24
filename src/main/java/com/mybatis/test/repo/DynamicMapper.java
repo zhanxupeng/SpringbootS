@@ -41,6 +41,16 @@ public interface DynamicMapper extends BaseMapper<Dynamic> {
     List<DynamicIntroduction> findSchoolPage();
 
     /**
+     * 获取校园推荐数据按热度排序
+     */
+    List<DynamicIntroduction> findRecommendByPopularity(@Param("count") int count);
+
+    /**
+     * 获取校园推荐数据按时间倒序
+     */
+    List<DynamicIntroduction> findRecommendByDate(@Param("count") int count);
+
+    /**
      * 根据用户id获取动态，按时间降序
      */
     List<MyDynamic> findDynamicByCustomer(@Param("customerId") String customerId);

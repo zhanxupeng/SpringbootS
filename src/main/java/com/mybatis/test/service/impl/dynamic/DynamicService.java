@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.common.enumeration.DynamicMoodEnum;
 import com.mybatis.test.common.enumeration.DynamicTypeEnum;
+import com.mybatis.test.common.enumeration.RecommendTypeEnum;
 import com.mybatis.test.domain.*;
 import com.mybatis.test.model.Dynamic;
 import com.mybatis.test.repo.DynamicMapper;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 public class DynamicService extends BaseDBService<DynamicMapper, Dynamic> implements IDynamicService {
     private final static int LATEST_DEFAULT_COUNT = 8;
+    private final static int DEFAULT_RECOMMEND=12;
     @Resource
     private IDictionaryService dictionaryService;
 
@@ -73,5 +75,11 @@ public class DynamicService extends BaseDBService<DynamicMapper, Dynamic> implem
             x.setDynamicLabel(dictionaryService.getLabel(firstTitleType, x.getSecondTitle()));
         });
         return latestDynamicList;
+    }
+
+    @Override
+    public List<DynamicIntroduction> recommend(int recommendType) {
+        return RecommendTypeEnum.isPopularity(recommendType)?
+                getRepo().findRecommendByPopularity(DEFAULT_RECOMMEND):getRepo().findRecommendByDate(DEFAULT_RECOMMEND);
     }
 }

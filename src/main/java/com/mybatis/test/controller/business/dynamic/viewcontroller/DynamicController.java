@@ -88,6 +88,18 @@ public class DynamicController extends BaseController {
         return result(dynamicIntroductionVMList);
     }
 
+    /**
+     * 首页推荐
+     */
+    @GetMapping("recommend")
+    @ResponseBody
+    public Response recommend(RecommendPM recommendPM){
+        List<DynamicIntroduction> list=dynamicService.recommend(recommendPM.getRecommendType());
+        List<DynamicIntroductionVM> dynamicIntroductionVMList=list.stream().map(DynamicIntroductionVM::new)
+                .collect(Collectors.toList());
+        return result(dynamicIntroductionVMList);
+    }
+
     @GetMapping("addView")
     public String addView() {
         return "jie/add";

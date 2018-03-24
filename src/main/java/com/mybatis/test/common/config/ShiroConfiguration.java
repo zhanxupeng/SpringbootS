@@ -82,6 +82,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/customer/sign", "anon");//用户签到
 
         filterChainDefinitionMap.put("/dynamic/page", "anon");//分页查询动态
+        filterChainDefinitionMap.put("/dynamic/recommend","anon");//推荐动态
 
         filterChainDefinitionMap.put("/404", "anon");
 
