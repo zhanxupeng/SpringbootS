@@ -1,5 +1,7 @@
 package com.mybatis.test.service.impl.myfriend;
 
+import com.mybatis.test.common.config.CustomerUtils;
+import com.mybatis.test.domain.MyFamiliarityFriendInfo;
 import com.mybatis.test.model.MyFriend;
 import com.mybatis.test.repo.MyFriendMapper;
 import com.mybatis.test.service.api.myfriend.IMyFriendService;
@@ -9,9 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class MyFriendService extends BaseDBService<MyFriendMapper, MyFriend> implements IMyFriendService {
+
+    private final static int DEFAULT_FAMILIARITY_FRIEND_COUNT=12;
 
     @Resource
     private IMyNoticeService myNoticeService;
@@ -47,5 +52,10 @@ public class MyFriendService extends BaseDBService<MyFriendMapper, MyFriend> imp
     public void addAllFriend(String myCustomerId) {
         myNoticeService.getWaitDeal(myCustomerId).forEach(x -> addFriend(myCustomerId, x.getCustomerId()));
         myNoticeService.agreeAllFriendApply(myCustomerId);
+    }
+
+    @Override
+    public List<MyFamiliarityFriendInfo> getMyFamiliarityFriend() {
+        return getRepo().findFamiliarityFriend(CustomerUtils.getCustomer().getId(),DEFAULT_FAMILIARITY_FRIEND_COUNT);
     }
 }

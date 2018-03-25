@@ -1,4 +1,4 @@
-package com.mybatis.test.controller.business.dynamic.viewcontroller;
+package com.mybatis.test.controller.business.dynamic.paramsmodel;
 
 import com.mybatis.test.common.enumeration.RecommendTypeEnum;
 

@@ -257,70 +257,30 @@
                 </ul>
             </div>
 
-            <div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank">
+            <div class="fly-panel fly-rank fly-rank-reply layui-hide" id="recommendRank">
                 <h3 class="fly-panel-title">亲密度榜</h3>
-                <dl>
+                <dl id="recommendTable">
                     <!--<i class="layui-icon fly-loading">&#xe63d;</i>-->
-                    <dd>
+                    <dd style="float:left">
                         <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
+                            <img src="../static/images/avatar/2.jpg"><cite>替身天使</cite><i>100亲密度</i>
                         </a>
                     </dd>
-                    <dd>
+                    <dd style="float:left">
                         <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
+                            <img src="../static/images/avatar/8.jpg"><cite>小鹏</cite><i>52亲密度</i>
                         </a>
                     </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
-                    <dd>
-                        <a href="user/home.html">
-                            <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"><cite>贤心</cite><i>106次回答</i>
-                        </a>
-                    </dd>
+                    <script id="recommend-template" type="text/x-handlebars-template">
+                        {{#each this}}
+                        <dd style="float:left">
+                            <a href="/customer/home?customerId={{customerId}}">
+                                <img src="{{headPicture}}" alt="{{nickName}}">
+                                <cite>{{nickName}}</cite><i>{{familiarity}}亲密度</i>
+                            </a>
+                        </dd>
+                        {{/each}}
+                    </script>
                 </dl>
             </div>
 
@@ -451,6 +411,9 @@
                         $("#nickName").text(data.nickName);
                         $("#myHead").attr("src", data.headPicture);
                         $customerId.val(data.id);
+
+                        //亲密度榜单
+                        familiarityRank();
                     }
                 },
                 error: function () {
@@ -502,8 +465,24 @@
 
             //获取推荐数据
             recommend();
-
         });
+        //亲密度榜
+        function familiarityRank() {
+            $.ajax({
+                url: '/friend/familiarityRank',
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    var dataList = data.data;
+                    if (dataList.length !== 0) {
+                        var myTemplate = Handlebars.compile($("#recommend-template").html());
+                        $("#recommendTable").html(myTemplate(dataList));
+                        $("#recommendRank").removeClass("layui-hide");
+                    }
+                }
+            });
+        }
+
         //获取推荐数据
         function recommend() {
             var value = $(".sortStyle").filter(".layui-this").attr("data-value");

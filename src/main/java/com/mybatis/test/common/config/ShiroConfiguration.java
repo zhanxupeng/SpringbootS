@@ -82,7 +82,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/customer/sign", "anon");//用户签到
 
         filterChainDefinitionMap.put("/dynamic/page", "anon");//分页查询动态
-        filterChainDefinitionMap.put("/dynamic/recommend","anon");//推荐动态
+        filterChainDefinitionMap.put("/dynamic/recommend", "anon");//推荐动态
 
         filterChainDefinitionMap.put("/404", "anon");
 
@@ -108,12 +108,14 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/customer/friendAgree", "authc");//同意好友申请
         filterChainDefinitionMap.put("/customer/friendAgreeAll", "authc");//同意所有好友申请
 
+        filterChainDefinitionMap.put("/friend/familiarityRank", "authc");//亲密度榜单
+
         //authc页面
         filterChainDefinitionMap.put("/customer/setView", "authc");//基本设置
         filterChainDefinitionMap.put("/customer/messageView", "authc");//我的消息
         filterChainDefinitionMap.put("/customer/indexView", "authc");//用户中心
         filterChainDefinitionMap.put("/customer/identityView", "authc");//好友验证
-        filterChainDefinitionMap.put("/customer/logout","authc");//退出登录
+        filterChainDefinitionMap.put("/customer/logout", "authc");//退出登录
 
         filterChainDefinitionMap.put("/**", "authc");
 

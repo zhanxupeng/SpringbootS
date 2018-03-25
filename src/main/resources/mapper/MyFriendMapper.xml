@@ -119,4 +119,17 @@
         AND
         friend_customer_id = #{friendCustomerId}
     </select>
+
+    <select id="findFamiliarityFriend" resultType="com.mybatis.test.domain.MyFamiliarityFriendInfo">
+        SELECT
+        b.id AS customerId,
+        b.head_picture AS headPicture,
+        b.nick_name AS nickName,
+        a.familiarity AS familiarity
+        FROM my_friend a
+        INNER JOIN customer b ON a.friend_customer_id = b.id
+        WHERE a.customer_id = #{customerId}
+        ORDER BY familiarity DESC
+        limit #{count}
+    </select>
 </mapper>
