@@ -53,7 +53,7 @@
                     <dd><a href="/customer/home"><i class="layui-icon" style="margin-left: 2px; font-size: 22px;">&#xe68e;</i>我的主页</a>
                     </dd>
                     <hr style="margin: 5px 0;">
-                    <dd><a href="/user/logout/" style="text-align: center;">退出</a></dd>
+                    <dd><a href="/customer/logout" style="text-align: center;">退出</a></dd>
                 </dl>
             </li>
         </ul>
@@ -134,38 +134,38 @@
                         <div class="fly-none">没有相关数据</div>
                     </div>
                 </ul>
-                    <script id="table-template" type="text/x-handlebars-template">
-                        {{#each this}}
-                        <li>
-                            <a href="/customer/home?customerId={{customerId}}" class="fly-avatar">
-                                <img src="{{headPicture}}"
-                                     alt="{{nickName}}">
+                <script id="table-template" type="text/x-handlebars-template">
+                    {{#each this}}
+                    <li>
+                        <a href="/customer/home?customerId={{customerId}}" class="fly-avatar">
+                            <img src="{{headPicture}}"
+                                 alt="{{nickName}}">
+                        </a>
+                        <h2>
+                            <a class="layui-badge">动态</a>
+                            <a href="/dynamic/detailView?dynamicId={{dynamicId}}">{{title}}</a>
+                        </h2>
+                        <div class="fly-list-info">
+                            <a href="/customer/indexView?customerId={{customerId}}" link>
+                                <cite>{{nickName}}</cite>
                             </a>
-                            <h2>
-                                <a class="layui-badge">动态</a>
-                                <a href="/dynamic/detailView?dynamicId={{dynamicId}}">{{title}}</a>
-                            </h2>
-                            <div class="fly-list-info">
-                                <a href="/customer/indexView?customerId={{customerId}}" link>
-                                    <cite>{{nickName}}</cite>
-                                </a>
-                                <span>{{createDate}}</span>
+                            <span>{{createDate}}</span>
 
-                                <span class="fly-list-kiss layui-hide-xs" title="赞">
+                            <span class="fly-list-kiss layui-hide-xs" title="赞">
                                 <i class="iconfont icon-zan"></i> {{praise}}
                             </span>
-                                <span class="fly-list-nums">
+                            <span class="fly-list-nums">
                                 <i class="iconfont icon-pinglun1" title="评论"></i> {{commentsNumber}}
                             </span>
-                            </div>
-                        </li>
-                        {{/each}}
-                    </script>
-                    <!--<div class="fly-none">没有相关数据</div>-->
+                        </div>
+                    </li>
+                    {{/each}}
+                </script>
+                <!--<div class="fly-none">没有相关数据</div>-->
 
-                    <div style="text-align: center">
-                        <div id="dividePage"></div>
-                    </div>
+                <div style="text-align: center">
+                    <div id="dividePage"></div>
+                </div>
             </div>
         </div>
         <div class="layui-col-md4">
@@ -282,8 +282,8 @@
         var secondTitle = $currentTitle.children().attr("value");
         window.location.href = "/dynamic/index?firstTitle=" + firstTitle + "&secondTitle=" + secondTitle;
         /*        $currentTitle.siblings().removeClass("layui-this");
-                $currentTitle.addClass("layui-this");
-                console.log($currentTitle.text());*/
+         $currentTitle.addClass("layui-this");
+         console.log($currentTitle.text());*/
     });
     $("#firstTitle").children().click(function () {
         var $currentTitle = $(this);
