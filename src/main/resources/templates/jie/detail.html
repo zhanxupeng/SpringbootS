@@ -110,14 +110,16 @@
                     </span>
                 </div>
                 <div class="detail-about">
-                    <a class="fly-avatar" href="/customer/home" th:href="'/customer/home?customerId='+${dynamic.customerId}">
+                    <a class="fly-avatar" href="/customer/home"
+                       th:href="'/customer/home?customerId='+${dynamic.customerId}">
                         <input type="hidden" th:value="${dynamic.customerId}">
                         <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
                              th:src="${dynamic.customerHead}"
                              alt="贤心" th:alt="${dynamic.nickName}">
                     </a>
                     <div class="fly-detail-user">
-                        <a href="/customer/home" th:href="'/customer/home?customerId='+${dynamic.customerId}" class="fly-link">
+                        <a href="/customer/home" th:href="'/customer/home?customerId='+${dynamic.customerId}"
+                           class="fly-link">
                             <cite th:text="${dynamic.nickName}">贤心</cite>
                         </a>
                         <span th:text="${dynamic.createDate}">2017-11-30</span>
@@ -157,7 +159,8 @@
                             <li data-id="111" class="jieda-daan">
                                 <a name="item-1111111111"></a>
                                 <div class="detail-about detail-about-reply">
-                                    <a class="fly-avatar" href="" th:href="'/customer/home?customerId='+${comments.customerId}">
+                                    <a class="fly-avatar" href=""
+                                       th:href="'/customer/home?customerId='+${comments.customerId}">
                                         <img src="https://tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg"
                                              th:src="${comments.customerHead}"
                                              alt=" " th:alt="${comments.nickName}">
@@ -293,58 +296,34 @@
             </div>
         </div>
         <div class="layui-col-md4">
-            <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">本周热议</dt>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
-                </dd>
-
-                <!-- 无数据时 -->
-                <!--
-                <div class="fly-none">没有相关数据</div>
-                -->
-            </dl>
+            <div class="fly-panel">
+                <h3 class="fly-panel-title">温馨通道</h3>
+                <ul class="fly-panel-main fly-list-static">
+                    <li>
+                        <a href="https://github.com/zhanxupeng/SpringbootS" target="_blank">项目的GitHub，欢迎Star</a>
+                    </li>
+                    <li>
+                        <a href="https://blog.csdn.net/tomorrow_fine" target="_blank">
+                            作者的CSDN博客
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.layui.com/" target="_blank">layui（经典模块化前端框架） 官网</a>
+                    </li>
+                    <li>
+                        <a href="https://projects.spring.io/spring-boot/" target="_blank">
+                            spring boot 官网
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.mybatis.org/mybatis-3/" target="_blank">mybatis3入门</a>
+                    </li>
+                </ul>
+            </div>
 
             <div class="fly-panel">
                 <div class="fly-panel-title">
-                    这里可作为广告区域
+                    广告区域
                 </div>
                 <div class="fly-panel-main">
                     <a href="http://layim.layui.com/?from=fly" target="_blank" class="fly-zanzhu"
@@ -352,9 +331,18 @@
                 </div>
             </div>
 
-            <div class="fly-panel" style="padding: 20px 0; text-align: center;">
-                <img src="../../static/images/weixin.jpg" style="max-width: 100%;" alt="layui">
-                <p style="position: relative; color: #666;">微信扫码关注 layui 公众号</p>
+            <div class="fly-panel fly-link">
+                <h3 class="fly-panel-title">友情链接</h3>
+                <dl class="fly-panel-main">
+                    <dd><a href="http://www.layui.com/" target="_blank">layui</a>
+                    <dd>
+                    <dd><a href="http://layim.layui.com/" target="_blank">WebIM</a>
+                    <dd>
+                    <dd><a href="http://layer.layui.com/" target="_blank">layer</a>
+                    <dd>
+                    <dd><a href="http://www.layui.com/laydate/" target="_blank">layDate</a>
+                    <dd>
+                </dl>
             </div>
 
         </div>
