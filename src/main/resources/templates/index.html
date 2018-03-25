@@ -470,6 +470,7 @@
         function familiarityRank() {
             $.ajax({
                 url: '/friend/familiarityRank',
+                contentType: "application/json; charset=utf-8",
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
