@@ -16,6 +16,7 @@ import com.mybatis.test.service.api.comments.ICommentsService;
 import com.mybatis.test.service.api.customer.ICustomerService;
 import com.mybatis.test.service.api.dictionary.IDictionaryService;
 import com.mybatis.test.service.api.dynamic.IDynamicService;
+import com.mybatis.test.service.api.myfriend.IMyFriendService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,9 @@ public class DynamicController extends BaseController {
 
     @Resource
     private ICommentsService commentsService;
+
+    @Resource
+    private IMyFriendService myFriendService;
 
     /**
      * 查看动态
@@ -93,9 +97,9 @@ public class DynamicController extends BaseController {
      */
     @GetMapping("recommend")
     @ResponseBody
-    public Response recommend(RecommendPM recommendPM){
-        List<DynamicIntroduction> list=dynamicService.recommend(recommendPM.getRecommendType());
-        List<DynamicIntroductionVM> dynamicIntroductionVMList=list.stream().map(DynamicIntroductionVM::new)
+    public Response recommend(RecommendPM recommendPM) {
+        List<DynamicIntroduction> list = dynamicService.recommend(recommendPM.getRecommendType());
+        List<DynamicIntroductionVM> dynamicIntroductionVMList = list.stream().map(DynamicIntroductionVM::new)
                 .collect(Collectors.toList());
         return result(dynamicIntroductionVMList);
     }
@@ -132,6 +136,9 @@ public class DynamicController extends BaseController {
         //用户查看，需要把人气加1
         dynamic.setPopularity(dynamic.getPopularity() + 1);
         dynamicService.update(dynamic);
+        //如果查看的是好友的动态，双方亲密度+2
+        myFriendService.viewAddFamiliarity(dynamic.getCustomerId());
+
         model.addAttribute("dynamic", dynamicDetailVM);
 
         List<Dictionary> moodList = dictionaryService.getDynamicSecondTitle(DynamicTypeEnum.DYNAMIC_MOOD.getValue());
@@ -150,6 +157,11 @@ public class DynamicController extends BaseController {
     @ResponseBody
     public Map reply(ReplyDynamicPM replyDynamicPM) {
         saveComments(replyDynamicPM);
+        Dynamic dynamic=dynamicService.selectById(replyDynamicPM.getComments().getDynamicId());
+        //如果评论的动态是好友的动态，亲密度加5
+        myFriendService.replyAddFamiliarity(dynamic.getCustomerId());
+        //如果评论的人是好友，亲密度加5
+        myFriendService.replyAddFamiliarity(replyDynamicPM.getComments().getToCustomerId());
         Map<String, Object> map = new TreeMap<>();
         map.put("status", 0);
         map.put("action", "/dynamic/detailView?dynamicId=" + replyDynamicPM.getComments().getDynamicId());

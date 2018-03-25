@@ -132,4 +132,11 @@
         ORDER BY familiarity DESC
         limit #{count}
     </select>
+
+    <update id="addFamiliarity">
+        UPDATE my_friend
+        SET familiarity = familiarity + #{increment}
+        WHERE customer_id = #{customerId}
+        AND friend_customer_id = #{friendCustomerId}
+    </update>
 </mapper>

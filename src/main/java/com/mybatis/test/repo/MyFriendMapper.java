@@ -21,4 +21,11 @@ public interface MyFriendMapper extends BaseMapper<MyFriend> {
      */
     List<MyFamiliarityFriendInfo> findFamiliarityFriend(@Param("customerId") String customerId,
                                                         @Param("count") int count);
+
+    /**
+     * 增加亲密度
+     */
+    void addFamiliarity(@Param("customerId") String customerId,
+                        @Param("friendCustomerId") String friendCustomerId,
+                        @Param("increment") int increment);
 }

@@ -2,6 +2,7 @@ package com.mybatis.test.service.impl.myfriend;
 
 import com.mybatis.test.common.config.CustomerUtils;
 import com.mybatis.test.domain.MyFamiliarityFriendInfo;
+import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.MyFriend;
 import com.mybatis.test.repo.MyFriendMapper;
 import com.mybatis.test.service.api.myfriend.IMyFriendService;
@@ -16,7 +17,9 @@ import java.util.List;
 @Service
 public class MyFriendService extends BaseDBService<MyFriendMapper, MyFriend> implements IMyFriendService {
 
-    private final static int DEFAULT_FAMILIARITY_FRIEND_COUNT=12;
+    private final static int DEFAULT_FAMILIARITY_FRIEND_COUNT = 12;
+    private final static int VIEW_ADD_FAMILIARITY = 2;
+    private final static int REPLY_ADD_FAMILIARITY = 5;
 
     @Resource
     private IMyNoticeService myNoticeService;
@@ -56,6 +59,24 @@ public class MyFriendService extends BaseDBService<MyFriendMapper, MyFriend> imp
 
     @Override
     public List<MyFamiliarityFriendInfo> getMyFamiliarityFriend() {
-        return getRepo().findFamiliarityFriend(CustomerUtils.getCustomer().getId(),DEFAULT_FAMILIARITY_FRIEND_COUNT);
+        return getRepo().findFamiliarityFriend(CustomerUtils.getCustomer().getId(), DEFAULT_FAMILIARITY_FRIEND_COUNT);
+    }
+
+    @Override
+    public void viewAddFamiliarity(String dynamicCustomerId) {
+        Customer customer = CustomerUtils.getCustomer();
+        if (customer != null) {
+            getRepo().addFamiliarity(customer.getId(), dynamicCustomerId, VIEW_ADD_FAMILIARITY);
+            getRepo().addFamiliarity(dynamicCustomerId, customer.getId(), VIEW_ADD_FAMILIARITY);
+        }
+    }
+
+    @Override
+    public void replyAddFamiliarity(String dynamicCustomerId) {
+        Customer customer = CustomerUtils.getCustomer();
+        if (customer != null) {
+            getRepo().addFamiliarity(customer.getId(), dynamicCustomerId, REPLY_ADD_FAMILIARITY);
+            getRepo().addFamiliarity(dynamicCustomerId, customer.getId(), REPLY_ADD_FAMILIARITY);
+        }
     }
 }

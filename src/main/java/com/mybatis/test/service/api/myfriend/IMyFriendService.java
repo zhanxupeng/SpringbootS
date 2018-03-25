@@ -22,5 +22,18 @@ public interface IMyFriendService extends IBaseDBService<MyFriend> {
      */
     void addAllFriend(String myCustomerId);
 
+    /**
+     * 获取我的亲密好友
+     */
     List<MyFamiliarityFriendInfo> getMyFamiliarityFriend();
+
+    /**
+     * 查看增加好友亲密度
+     */
+    void viewAddFamiliarity(String dynamicCustomerId);
+
+    /**
+     * 回复增加好友亲密度
+     */
+    void replyAddFamiliarity(String dynamicCustomerId);
 }
