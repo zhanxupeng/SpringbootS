@@ -302,7 +302,7 @@ public class CustomerController extends BaseController {
      * 登出页面
      */
     @GetMapping("logout")
-    public String logout(){
+    public String logout() {
         SecurityUtils.getSecurityManager().logout(SecurityUtils.getSubject());//退出原来用户
         return "user/login";
     }
@@ -399,6 +399,11 @@ public class CustomerController extends BaseController {
         customer.setPassword(registerCustomerPM.getPassword());
         customer.setSex(registerCustomerPM.getSex());
         customer.setHeadPicture("\\image\\show?imagePath=G%3A%5Clunwen%5Cpicture%5C15140023287112.jpg");//默认头像
+        customer.setActiveValue(0);
+        customer.setPraise(0);
+        customer.setContinueActiveCount(0);
+        customer.setPopularity(0);
+        customer.setIdentify(false);
         customerService.insert(customer);
         if (registerCustomerPM.isSecurity()) {
             for (SecurityQuestionPM securityQuestionPM : registerCustomerPM.getSecurityQuestionPMList()) {

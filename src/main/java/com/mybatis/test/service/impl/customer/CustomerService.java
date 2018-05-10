@@ -47,6 +47,7 @@ public class CustomerService extends BaseDBService<CustomerMapper, Customer> imp
             checkSign(customer);
             setSignResult(sign, customer);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             sign.setSignMessage(e.getMessage());
         }
         return sign;

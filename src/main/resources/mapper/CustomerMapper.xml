@@ -209,4 +209,17 @@
         from customer
         where user_name = #{userName,jdbcType=VARCHAR}
     </select>
+
+    <select id="getByIdentifyStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM customer
+        WHERE `identify` = #{identify}
+    </select>
+
+    <update id="changeIdentifyStatus">
+        UPDATE customer
+        SET identify = #{identify}
+        WHERE id = #{customerId}
+    </update>
 </mapper>

@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -157,7 +158,7 @@ public class DynamicController extends BaseController {
     @ResponseBody
     public Map reply(ReplyDynamicPM replyDynamicPM) {
         saveComments(replyDynamicPM);
-        Dynamic dynamic=dynamicService.selectById(replyDynamicPM.getComments().getDynamicId());
+        Dynamic dynamic = dynamicService.selectById(replyDynamicPM.getComments().getDynamicId());
         //如果评论的动态是好友的动态，亲密度加5
         myFriendService.replyAddFamiliarity(dynamic.getCustomerId());
         //如果评论的人是好友，亲密度加5

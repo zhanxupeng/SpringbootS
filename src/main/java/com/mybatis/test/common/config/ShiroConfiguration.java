@@ -26,18 +26,6 @@ public class ShiroConfiguration {
         return filterRegistration;
     }
 
-    /**
-     * ShiroFilterFactoryBean 处理拦截资源文件问题。
-     * 注意：单独一个ShiroFilterFactoryBean配置是或报错的，以为在
-     * 初始化ShiroFilterFactoryBean的时候需要注入：SecurityManager
-     * <p>
-     * Filter Chain定义说明
-     * 1、一个URL可以配置多个Filter，使用逗号分隔
-     * 2、当设置多个过滤器时，全部验证通过，才视为通过
-     * 3、部分过滤器可指定参数，如perms，roles
-     */
-
-
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         System.out.println("ShiroConfiguration.shirFilter()");
@@ -87,6 +75,12 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/404", "anon");
 
         filterChainDefinitionMap.put("/rest/dictionary/dynamicSecondTopic", "anon");//动态二级标题
+
+        //微信小程序接口
+        filterChainDefinitionMap.put("/admin/login", "anon");
+        filterChainDefinitionMap.put("/admin/unIdentify", "anon");
+        filterChainDefinitionMap.put("/admin/refuseIdentify", "anon");
+        filterChainDefinitionMap.put("/admin/agreeIdentify", "anon");
 
 
         //测试
