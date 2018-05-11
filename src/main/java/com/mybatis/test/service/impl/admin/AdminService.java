@@ -2,6 +2,7 @@ package com.mybatis.test.service.impl.admin;
 
 import com.mybatis.test.common.enumeration.IdentifyStatusEnum;
 import com.mybatis.test.common.login.AdminCache;
+import com.mybatis.test.domain.IdentifyCustomer;
 import com.mybatis.test.model.Customer;
 import com.mybatis.test.model.UnIdentifyCustomer;
 import com.mybatis.test.repo.CustomerMapper;
@@ -39,5 +40,17 @@ public class AdminService implements IAdminService {
     @Override
     public void agreeIdentify(String customerId) {
         customerMapper.changeIdentifyStatus(customerId, IdentifyStatusEnum.YES.getValue());
+    }
+
+    @Override
+    public List<IdentifyCustomer> rightIdentifyCustomer() {
+        List<Customer> customerList = customerMapper.getByIdentifyStatus(IdentifyStatusEnum.YES.getValue());
+        return customerList.stream().map(IdentifyCustomer::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<IdentifyCustomer> denyIdentifyCustomer() {
+        List<Customer> customerList = customerMapper.getByIdentifyStatus(IdentifyStatusEnum.REFUSE.getValue());
+        return customerList.stream().map(IdentifyCustomer::new).collect(Collectors.toList());
     }
 }

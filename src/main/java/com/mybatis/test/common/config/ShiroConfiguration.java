@@ -81,6 +81,8 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/admin/unIdentify", "anon");
         filterChainDefinitionMap.put("/admin/refuseIdentify", "anon");
         filterChainDefinitionMap.put("/admin/agreeIdentify", "anon");
+        filterChainDefinitionMap.put("/admin/rightIdentifyCustomer", "anon");
+        filterChainDefinitionMap.put("/admin/denyIdentifyCustomer", "anon");
 
 
         //测试

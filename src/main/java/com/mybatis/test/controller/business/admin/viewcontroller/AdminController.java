@@ -3,10 +3,7 @@ package com.mybatis.test.controller.business.admin.viewcontroller;
 import com.mybatis.test.common.base.Response;
 import com.mybatis.test.common.login.AdminCache;
 import com.mybatis.test.controller.base.BaseController;
-import com.mybatis.test.controller.business.admin.paramsmodel.AgreeIdentifyPM;
-import com.mybatis.test.controller.business.admin.paramsmodel.LoginPM;
-import com.mybatis.test.controller.business.admin.paramsmodel.RefuseIdentifyPM;
-import com.mybatis.test.controller.business.admin.paramsmodel.UnIdentifyPM;
+import com.mybatis.test.controller.business.admin.paramsmodel.*;
 import com.mybatis.test.service.api.admin.IAdminService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,4 +55,24 @@ public class AdminController extends BaseController {
         adminService.agreeIdentify(agreeIdentifyPM.getCustomerId());
         return success();
     }
+
+    /**
+     * 获取已认证用户信息
+     */
+    @PostMapping("rightIdentifyCustomer")
+    public Response rightIdentifyCustomer(@RequestBody RightIdentifyCustomerPM rightIdentifyCustomerPM) {
+        AdminCache.checkAdmin(rightIdentifyCustomerPM.getIdentify());
+        return result(adminService.rightIdentifyCustomer());
+    }
+
+    /**
+     * 获取认证失败用户信息
+     */
+    @PostMapping("denyIdentifyCustomer")
+    public Response denyIdentifyCustomer(@RequestBody DenyIdentifyCustomer denyIdentifyCustomer) {
+        AdminCache.checkAdmin(denyIdentifyCustomer.getIdentify());
+        return result(adminService.denyIdentifyCustomer());
+    }
+
+
 }
