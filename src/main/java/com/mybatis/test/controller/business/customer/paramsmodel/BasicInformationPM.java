@@ -43,22 +43,29 @@ public class BasicInformationPM {
     /**
      * 学院
      */
-    public void setAcademy(String academy){
+    public void setAcademy(String academy) {
         customer.setAcademy(academy);
     }
 
     /**
      * 年级
      */
-    public void setClassRoom(String classRoom){
+    public void setClassRoom(String classRoom) {
         customer.setClassRoom(classRoom);
     }
 
     /**
      * 寝室号
      */
-    public void setBedroom(String bedRoom){
+    public void setBedroom(String bedRoom) {
         customer.setBedroom(bedRoom);
+    }
+
+    /**
+     * 真实姓名
+     */
+    public void setRealName(String realName) {
+        customer.setRealName(realName);
     }
 
     public Customer getCustomer() {

@@ -38,6 +38,8 @@ public class Customer extends BaseModel {
 
     private Boolean identify;
 
+    private String realName;
+
     public String getUserName() {
         return userName;
     }
@@ -164,5 +166,13 @@ public class Customer extends BaseModel {
 
     public void setIdentify(Boolean identify) {
         this.identify = identify;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

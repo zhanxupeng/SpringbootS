@@ -25,6 +25,7 @@
         <result column="classroom" property="classRoom" jdbcType="VARCHAR"/>
         <result column="bedroom" property="bedroom" jdbcType="VARCHAR"/>
         <result column="identify" property="identify" jdbcType="TINYINT"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -50,7 +51,8 @@
         academy,
         classroom,
         bedroom,
-        identify
+        identify,
+        real_name
     </sql>
 
     <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String">
@@ -84,7 +86,8 @@
         academy,
         classroom,
         bedroom,
-        identify
+        identify,
+        real_name
         )values (
         #{id,jdbcType=VARCHAR},
         #{userName,jdbcType=VARCHAR},
@@ -108,7 +111,8 @@
         #{academy,jdbcType=VARCHAR},
         #{classRoom,jdbcType=VARCHAR},
         #{bedroom,jdbcType=VARCHAR},
-        #{identify,jdbcType=TINYINT}
+        #{identify,jdbcType=TINYINT},
+        #{realName,jdbcType=VARCHAR}
         )
     </insert>
 
@@ -180,6 +184,9 @@
             </if>
             <if test="identify != null">
                 identify = #{identify,jdbcType=TINYINT},
+            </if>
+            <if test="realName != null">
+                real_name = #{realName,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=VARCHAR}

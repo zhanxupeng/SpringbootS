@@ -18,7 +18,7 @@ public class IdentifyCustomer {
         this.customerId = customer.getId();
         this.createDate = DateUtil.convertDateToString(customer.getCreateDate(), DateUtil.YYYY_MM_DD);
         this.sex = SexEnum.getDescriptionByValue(customer.getSex());
-        this.realName = customer.getUserName();
+        this.realName = customer.getRealName();
         this.academy = customer.getAcademy();
         this.classroom = customer.getClassRoom();
         this.bedroom = customer.getBedroom();

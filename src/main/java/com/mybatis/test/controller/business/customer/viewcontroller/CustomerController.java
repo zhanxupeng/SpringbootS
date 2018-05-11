@@ -404,6 +404,10 @@ public class CustomerController extends BaseController {
         customer.setContinueActiveCount(0);
         customer.setPopularity(0);
         customer.setIdentify(false);
+        customer.setAcademy("未知学院");
+        customer.setClassRoom("未知年级");
+        customer.setBedroom("未知寝室");
+        customer.setRealName("未知");
         customerService.insert(customer);
         if (registerCustomerPM.isSecurity()) {
             for (SecurityQuestionPM securityQuestionPM : registerCustomerPM.getSecurityQuestionPMList()) {

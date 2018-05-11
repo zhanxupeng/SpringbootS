@@ -10,7 +10,7 @@ public class UnIdentifyCustomer {
 
     public UnIdentifyCustomer(Customer customer) {
         this.customerId = customer.getId();
-        this.realName = customer.getNickName();
+        this.realName = customer.getRealName();
         this.description = String.format("性别%s,来自%s%s,寝室号%s", SexEnum.getDescriptionByValue(customer.getSex()),
                 customer.getAcademy(), customer.getClassRoom(), customer.getBedroom());
         this.headPicture = customer.getHeadPicture();
