@@ -1,5 +1,6 @@
 package com.mybatis.test.service.api.admin;
 
+import com.mybatis.test.domain.AdminCountData;
 import com.mybatis.test.domain.IdentifyCustomer;
 import com.mybatis.test.model.UnIdentifyCustomer;
 
@@ -43,4 +44,9 @@ public interface IAdminService {
      * 获取认证未通过用户信息
      */
     List<IdentifyCustomer> denyIdentifyCustomer();
+
+    /**
+     * 获取统计数据
+     */
+    AdminCountData getAdminCountData();
 }

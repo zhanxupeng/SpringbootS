@@ -83,7 +83,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/admin/agreeIdentify", "anon");
         filterChainDefinitionMap.put("/admin/rightIdentifyCustomer", "anon");
         filterChainDefinitionMap.put("/admin/denyIdentifyCustomer", "anon");
-
+        filterChainDefinitionMap.put("/admin/adminCountData", "anon");
 
         //测试
         filterChainDefinitionMap.put("/dynamic/index", "anon");

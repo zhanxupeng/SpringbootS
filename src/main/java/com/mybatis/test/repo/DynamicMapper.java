@@ -8,6 +8,7 @@ import com.mybatis.test.model.Dynamic;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -36,7 +37,7 @@ public interface DynamicMapper extends BaseMapper<Dynamic> {
     List<DynamicIntroduction> findNearbyPage(@Param("customerId") String customerId);
 
     /**
-     *获取校园数据
+     * 获取校园数据
      */
     List<DynamicIntroduction> findSchoolPage();
 
@@ -65,4 +66,9 @@ public interface DynamicMapper extends BaseMapper<Dynamic> {
      */
     List<LatestDynamic> getLatestDynamicByCount(@Param("customerId") String customerId,
                                                 @Param("count") int count);
+
+    /**
+     * 查询某天的动态数量
+     */
+    int getDayCount(@Param("createDate") Date createDate);
 }

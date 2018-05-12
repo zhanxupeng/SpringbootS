@@ -74,5 +74,13 @@ public class AdminController extends BaseController {
         return result(adminService.denyIdentifyCustomer());
     }
 
+    /**
+     * 获取统计数据
+     */
+    @PostMapping("adminCountData")
+    public Response adminCountData(@RequestBody AdminCountDataPM adminCountDataPM) {
+        AdminCache.checkAdmin(adminCountDataPM.getIdentify());
+        return result(adminService.getAdminCountData());
+    }
 
 }

@@ -215,7 +215,7 @@
         AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
         limit #{count}
     </select>
-    
+
     <select id="findFriendPage" resultType="com.mybatis.test.domain.DynamicIntroduction">
         SELECT
         a.customer_id AS customerId,
@@ -320,5 +320,12 @@
         AND b.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
         ORDER BY a.create_date DESC
         limit #{count}
+    </select>
+
+    <select id="getDayCount" resultType="int">
+        SELECT
+        IFNULL(COUNT(1),0)
+        FROM dynamic
+        WHERE date_format(create_date,'%Y-%m-%d') = date_format(#{createDate},'%y-%m-%d')
     </select>
 </mapper>

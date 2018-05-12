@@ -229,4 +229,25 @@
         SET identify = #{identify}
         WHERE id = #{customerId}
     </update>
+
+    <select id="dayRegister" resultType="int">
+        SELECT
+        IFNULL(COUNT(1),0)
+        FROM customer
+        WHERE date_format(create_date,'%Y-%m-%d') = date_format(#{registerDate},'%Y-%m-%d')
+    </select>
+
+    <select id="dayActive" resultType="int">
+        SELECT
+        IFNULL(COUNT(1),0)
+        FROM customer
+        WHERE date_format(identify,'%Y-%m-%d') = date_format(#{activeDate},'%Y-%m-%d')
+    </select>
+    
+    <select id="getCountByIdentifyStatus" resultType="int">
+        SELECT
+        IFNULL(COUNT(1),0)
+        FROM customer
+        WHERE `identify`= #{identify}
+    </select>
 </mapper>
