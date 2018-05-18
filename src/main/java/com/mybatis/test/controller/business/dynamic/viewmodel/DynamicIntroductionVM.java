@@ -1,6 +1,6 @@
 package com.mybatis.test.controller.business.dynamic.viewmodel;
 
-import com.mybatis.test.common.util.DateUtil;
+import com.mybatis.test.common.enumeration.DistanceDateEnum;
 import com.mybatis.test.domain.DynamicIntroduction;
 
 public class DynamicIntroductionVM {
@@ -31,7 +31,7 @@ public class DynamicIntroductionVM {
     }
 
     public String getCreateDate() {
-        return DateUtil.convertDateToString(dynamicIntroduction.getCreateDate(), DateUtil.YYYY_MM_DD);
+        return  DistanceDateEnum.getDistanceDate(dynamicIntroduction.getCreateDate());
     }
 
     public int getPraise() {

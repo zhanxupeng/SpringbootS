@@ -1,6 +1,6 @@
 package com.mybatis.test.controller.business.dynamic.viewmodel;
 
-import com.mybatis.test.common.util.DateUtil;
+import com.mybatis.test.common.enumeration.DistanceDateEnum;
 import com.mybatis.test.domain.MyDynamic;
 
 public class MyDynamicVM {
@@ -19,7 +19,7 @@ public class MyDynamicVM {
     }
 
     public String getCreateDate() {
-        return DateUtil.convertDateToString(myDynamic.getCreateDate(), DateUtil.YYYY_MM_DDHHMMSS);
+        return DistanceDateEnum.getDistanceDate(myDynamic.getCreateDate());
     }
 
     public Integer getPopularity() {
@@ -30,7 +30,7 @@ public class MyDynamicVM {
         return myDynamic.getCommentsNumber();
     }
 
-    public String getSecondTitleLabel(){
+    public String getSecondTitleLabel() {
         return myDynamic.getSecondTitleLabel();
     }
 }

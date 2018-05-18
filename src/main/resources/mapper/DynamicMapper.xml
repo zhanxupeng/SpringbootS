@@ -192,6 +192,7 @@
         FROM  dynamic a
         WHERE a.customer_id=#{customerId}
         AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        order by a.create_date desc
     </select>
 
     <select id="getCountByCustomerId" resultType="int">

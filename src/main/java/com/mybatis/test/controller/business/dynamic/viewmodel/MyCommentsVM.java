@@ -1,6 +1,6 @@
 package com.mybatis.test.controller.business.dynamic.viewmodel;
 
-import com.mybatis.test.common.util.DateUtil;
+import com.mybatis.test.common.enumeration.DistanceDateEnum;
 import com.mybatis.test.domain.DynamicComments;
 
 public class MyCommentsVM {
@@ -22,7 +22,7 @@ public class MyCommentsVM {
         this.dynamicName = dynamicComments.getDynamicName();
         this.commentsCustomerId = dynamicComments.getCommentsCustomerId();
         this.commentsCustomerName = dynamicComments.getCommentsCustomerName();
-        this.commentsDate = DateUtil.convertDateToString(dynamicComments.getCommentsDate(), DateUtil.YYYY_MM_DD);
+        this.commentsDate = DistanceDateEnum.getDistanceDate(dynamicComments.getCommentsDate());
         this.dynamicCommentsFlag = dynamicComments.isDynamicCommentsFlag();
     }
 
