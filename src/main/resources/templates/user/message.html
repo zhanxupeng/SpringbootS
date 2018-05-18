@@ -109,43 +109,60 @@
 
     <div class="fly-panel fly-panel-user" pad20>
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
-            <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
             <div id="LAY_minemsg" style="margin-top: 10px;">
-                <!--<div class="fly-none">您暂时没有最新消息</div>-->
-                <ul class="mine-msg">
+                <div class="fly-none">您暂时没有最新消息</div>
+                <!--<ul class="mine-msg">
                     <li data-id="123">
                         <blockquote class="layui-elem-quote">
                             <a href="/jump?username=Absolutely" target="_blank"><cite>Absolutely</cite></a>回答了您的求解<a
                                 target="_blank" href="/jie/8153.html/page/0/#item-1489505778669"><cite>layui后台框架</cite></a>
                         </blockquote>
-                        <p><span>1小时前</span><a href="javascript:;"
-                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
+                        <p><span>1小时前</span></p>
                     </li>
                     <li data-id="123">
                         <blockquote class="layui-elem-quote">
                             系统消息：欢迎使用 layui
                         </blockquote>
-                        <p><span>1小时前</span><a href="javascript:;"
-                                               class="layui-btn layui-btn-small layui-btn-danger fly-delete">删除</a></p>
+                        <p><span>1小时前</span></p>
                     </li>
-                </ul>
+                </ul>-->
             </div>
         </div>
     </div>
 
 </div>
-
+<script id="comments-template" type="text/x-handlebars-template">
+    <ul class="mine-msg">
+        {{#each this}}
+        <li data-id="123">
+            {{#if dynamicCommentsFlag}}
+            <blockquote class="layui-elem-quote">
+                <a href="/customer/home?customerId={{commentsCustomerId}}" target="_blank"><cite>{{commentsCustomerName}}</cite></a>在您的动态<a
+                    target="_blank" href="/dynamic/detailView?dynamicId={{dynamicId}}"><cite>{{dynamicName}}</cite></a>中添加了评论
+            </blockquote>
+            {{else}}
+            <blockquote class="layui-elem-quote">
+                <a href="/customer/home?customerId={{commentsCustomerId}}" target="_blank"><cite>{{commentsCustomerName}}</cite></a>在动态<a
+                    target="_blank" href="/dynamic/detailView?dynamicId={{dynamicId}}"><cite>{{dynamicName}}</cite></a>中回复了您
+            </blockquote>
+            {{/if}}
+            <p><span>{{commentsDate}}</span></p>
+        </li>
+        {{/each}}
+    </ul>
+</script>
 
 <div class="fly-footer">
-<!--    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/"
-                                                                                target="_blank">layui.com 出品</a></p>
-    <p>
-        <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
-        <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
-        <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
-    </p>-->
+    <!--    <p><a href="http://fly.layui.com/" target="_blank">Fly社区</a> 2017 &copy; <a href="http://www.layui.com/"
+                                                                                    target="_blank">layui.com 出品</a></p>
+        <p>
+            <a href="http://fly.layui.com/jie/3147/" target="_blank">付费计划</a>
+            <a href="http://www.layui.com/template/fly/" target="_blank">获取Fly社区模版</a>
+            <a href="http://fly.layui.com/jie/2461/" target="_blank">微信公众号</a>
+        </p>-->
 </div>
 <script src="../../static/jquery/jquery-3.2.1.js"></script>
+<script src="../../static/handlebars/handlebars-1.0.0.beta.6.js"></script>
 <script src="../../static/layui/layui.js"></script>
 <script>
     layui.cache.page = 'user';
@@ -184,6 +201,24 @@
 
             }
         });
+
+        $.ajax({
+            url: '/dynamic/myComments',
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                if (data.code === "0") {
+                    var dataList = data.data;
+                    //注册一个Handlebars模版，通过id找到某一个模版，获取模版的html框架
+                    var myTemplate = Handlebars.compile($("#comments-template").html());
+
+                    //将json对象用刚刚注册的Handlebars模版封装，得到最终的html，插入到基础table中。
+                    $('#LAY_minemsg').html(myTemplate(dataList));
+                }
+            }
+        })
+
+
     });
 </script>
 

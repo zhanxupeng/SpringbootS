@@ -147,4 +147,21 @@
         ORDER BY a.create_date desc
         limit #{count}
     </select>
+
+    <select id="getCustomerComments" resultType="com.mybatis.test.domain.DynamicComments">
+        SELECT
+        b.id AS dynamicId,
+        b.title AS dynamicName,
+        b.customer_id AS dynamicCustomerId,
+        c.id AS commentsCustomerId,
+        c.nick_name AS commentsCustomerName,
+        a.create_date AS commentsDate
+        FROM comments a
+        INNER JOIN dynamic b ON a.dynamic_id = b.id
+        INNER JOIN customer c ON a.customer_id = c.id
+        WHERE a.to_customer_id = #{toCustomerId}
+        AND a.del_flag = ${@com.mybatis.test.common.enumeration.DelFlagEnum@NO.getValue()}
+        AND c.id != #{toCustomerId}
+        ORDER BY a.create_date desc
+    </select>
 </mapper>

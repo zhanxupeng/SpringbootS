@@ -1,6 +1,7 @@
 package com.mybatis.test.repo;
 
 import com.mybatis.test.common.base.BaseMapper;
+import com.mybatis.test.domain.DynamicComments;
 import com.mybatis.test.domain.HomeComments;
 import com.mybatis.test.model.Comments;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,4 +21,6 @@ public interface CommentsMapper extends BaseMapper<Comments> {
      */
     List<HomeComments> getHomeCommentsByCount(@Param("customerId") String customerId,
                                               @Param("count") int count);
+
+    List<DynamicComments> getCustomerComments(@Param("toCustomerId") String toCustomerId);
 }

@@ -91,6 +91,7 @@ public class ShiroConfiguration {
         //authc接口
         filterChainDefinitionMap.put("/dynamic/reply", "authc");
         filterChainDefinitionMap.put("/dynamic/addView", "authc");//添加动态
+        filterChainDefinitionMap.put("/dynamic/myComments", "authc");
 
         filterChainDefinitionMap.put("/customer/setBasic", "authc");//修改我的信息
         filterChainDefinitionMap.put("/customer/modifyHead", "authc");//修改用户头像

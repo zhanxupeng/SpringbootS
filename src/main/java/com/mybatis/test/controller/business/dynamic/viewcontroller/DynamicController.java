@@ -6,6 +6,7 @@ import com.mybatis.test.common.enumeration.DynamicTypeEnum;
 import com.mybatis.test.controller.base.BaseController;
 import com.mybatis.test.controller.business.dynamic.paramsmodel.*;
 import com.mybatis.test.controller.business.dynamic.viewmodel.*;
+import com.mybatis.test.domain.DynamicComments;
 import com.mybatis.test.domain.DynamicIntroduction;
 import com.mybatis.test.domain.MyDynamic;
 import com.mybatis.test.model.Comments;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -168,6 +168,17 @@ public class DynamicController extends BaseController {
         map.put("action", "/dynamic/detailView?dynamicId=" + replyDynamicPM.getComments().getDynamicId());
         map.put("msg", "评论成功~");
         return map;
+    }
+
+    /**
+     * 获取我的评论
+     */
+    @GetMapping("myComments")
+    @ResponseBody
+    public Response myComments() {
+        List<DynamicComments> dynamicCommentsList = commentsService.getMyComments(CustomerUtils.getCustomer().getId());
+        List<MyCommentsVM> list = dynamicCommentsList.stream().map(MyCommentsVM::new).collect(Collectors.toList());
+        return result(list);
     }
 
     private List<CommentsDetailVM> getCommentsDetailVMList(List<Comments> commentsList) {
